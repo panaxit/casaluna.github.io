@@ -1,0 +1,15 @@
+﻿<?xml-stylesheet type="text/xsl" href="sitemap.xslt" target="#sitemap"?>
+<?xml-stylesheet type="text/xsl" href="sitemap_horizontal.xslt" target="#sitemap_horizontal"?>
+<sitemap>
+	<item title="Comercial">
+		<item title="Dashboard" target="#dashboard_comercial"></item>
+		<item title="Leads" target="#leads"></item>
+		<item title="Citas" target="#citas"></item>
+		<item title="Guías" target="#guias"></item>
+		<item title="Configuración" target="#dashboard_comercial_configuracion"></item>
+	</item>
+	<item title="Configuración">
+		<item title="Perfil Empresa" target="#perfil_empresa"></item>
+		<item title="Usuarios" target="#usuarios"></item>
+	</item>
+</sitemap>

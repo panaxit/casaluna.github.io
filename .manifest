@@ -1,0 +1,12 @@
+{
+  "sources": {
+    "#sitemap": "sitemap.xml",
+    "#settings": "settings.xml",
+    "#menus": "menus.xml"
+  },
+  "settings": {
+    "#shell": {
+      "hash": ""
+    }
+  }
+}
