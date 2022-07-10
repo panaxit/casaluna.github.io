@@ -1,4 +1,9 @@
 {
+  "server": {
+    "login": "server/login.asp",
+    "logout": "server/logout.asp",
+    "session": "server/session.asp"
+  },
   "sources": {
     "#sitemap": "sitemap.xml",
     "#settings": "settings.xml",

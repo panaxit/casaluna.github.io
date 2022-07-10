@@ -1,0 +1,131 @@
+﻿<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:x="http://panax.io/xover"
+xmlns:session="http://panax.io/session"
+xmlns:sitemap="http://panax.io/sitemap"
+xmlns:shell="http://panax.io/shell"
+xmlns:state="http://panax.io/state"
+xmlns:source="http://panax.io/xover/binding/source"
+xmlns:js="http://panax.io/languages/javascript"
+exclude-result-prefixes="#default x session sitemap shell state source js"
+>
+	<xsl:output method="xml"
+	   omit-xml-declaration="yes"
+	   indent="yes"/>
+
+	<xsl:param name="session:user_login"/>
+	<xsl:param name="session:status"/>
+	<xsl:param name="session:connection_id">main</xsl:param>
+	<xsl:param name="js:secure"><![CDATA[location.protocol.indexOf('https')!=-1 || location.hostname=='localhost']]></xsl:param>
+
+	<xsl:template match="/*" priority="-1">
+		<div class="login">
+			<style>
+				<![CDATA[
+.login {
+	display: -ms-flexbox;
+	display: -webkit-box;
+	display: flex;
+	-ms-flex-align: center;
+	-ms-flex-pack: center;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
+
+.form-signin {
+	width: 100%;
+	max-width: 330px;
+	padding: 15px;
+	margin: 0 auto;
+}
+
+.form-signin .checkbox {
+	font-weight: 400;
+}
+
+.form-signin .form-control {
+	position: relative;
+	box-sizing: border-box;
+	height: auto;
+	padding: 10px;
+	font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+	z-index: 2;
+}
+
+.form-signin input[type="email"] {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+	margin-bottom: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+			]]></style>
+			<script>
+				<![CDATA[
+Object.defineProperty(xo.session, 'login', {
+    value: async function (username, password, connection_id) {
+        try {
+			xover.session.user_login = username
+            xover.session.status = 'authorizing';
+            let response = await xover.server.login(new URLSearchParams({ 'connection_id': connection_id }), { headers: { authorization: `Basic ${btoa(username + ':' + password)}` } });
+            xover.session.status = 'authorized';
+            xover.stores.active.render();
+        } catch (e) {
+            xover.session.status = 'unauthorized';
+            if (e.message) alert(e.message);
+        }
+    }, writable: true, configurable: true
+})
+
+Object.defineProperty(xo.session, 'logout', {
+    value: async function () {
+        try {
+            let response = await xover.server.logout();
+            xover.session.status = 'unauthorized';
+        } catch (e) {
+            if (e.message) alert(e.message);
+        }
+    }, writable: true, configurable: true
+})
+
+			]]></script>
+			<form class="form-signin" onsubmit="var username=document.getElementById('username'); var password=document.getElementById('password'); xover.session.login( username.value, xover.cryptography.encodeMD5(password.value), `{$session:connection_id}`);" action="javascript:void(0);">
+				<img src="assets/logotype-black-alpha.png" alt="" height="72" class="mx-auto"/>
+				<h1 class="h3 mb-3 font-weight-normal mx-auto">Bienvenido</h1>
+				<label for="username" class="sr-only">Username</label>
+				<input type="text" id="username" class="form-control" placeholder="Username" autocomplete="username" value="{$session:user_login}" required="" autofocus=""/>
+				<label for="password" class="sr-only">Password</label>
+				<input type="password" id="password" class="form-control" placeholder="Password" autocomplete="current-password" required="">
+					<xsl:if test="$session:status='authorizing' or $session:status='authorized'">
+						<xsl:attribute name="style">visibility:hidden;</xsl:attribute>
+					</xsl:if>
+				</input>
+				<button class="btn btn-lg btn-primary btn-block color-orange" type="submit">
+					<xsl:choose>
+						<xsl:when test="$session:status='authorized'">
+							<xsl:attribute name="onclick">xo.state.hash='#'</xsl:attribute>
+							Continuar
+						</xsl:when>
+						<xsl:when test="$session:status='authorizing'">
+							Autorizando... <i class="fas fa-spinner fa-spin"></i>
+						</xsl:when>
+						<xsl:otherwise>Ingresar</xsl:otherwise>
+					</xsl:choose>
+				</button>
+				<p class="mt-5 mb-3 text-muted mx-auto">©Panax 2022</p>
+			</form>
+		</div>
+	</xsl:template>
+
+</xsl:stylesheet>
