@@ -104,9 +104,9 @@ Object.defineProperty(xo.session, 'logout', {
 				<img src="assets/logotype-black-alpha.png" alt="" height="72" class="mx-auto"/>
 				<h1 class="h3 mb-3 font-weight-normal mx-auto">Bienvenido</h1>
 				<label for="username" class="sr-only">Username</label>
-				<input type="text" id="username" class="form-control" placeholder="Username" autocomplete="username" value="{$session:user_login}" required="" autofocus=""/>
+				<input type="text" id="username" class="form-control" placeholder="Username" autocomplete="username" value="{$session:user_login}" required="" autofocus="" oninvalid="this.setCustomValidity('Escriba su usuario')" oninput="this.setCustomValidity('')"/>
 				<label for="password" class="sr-only">Password</label>
-				<input type="password" id="password" class="form-control" placeholder="Password" autocomplete="current-password" required="">
+				<input type="password" id="password" class="form-control" placeholder="Password" autocomplete="current-password" required="" oninvalid="this.setCustomValidity('Escriba su contraseña')" oninput="this.setCustomValidity('')">
 					<xsl:if test="$session:status='authorizing' or $session:status='authorized'">
 						<xsl:attribute name="style">visibility:hidden;</xsl:attribute>
 					</xsl:if>
