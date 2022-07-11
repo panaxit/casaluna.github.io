@@ -38,7 +38,7 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 			</script>
 			<style>
 			</style>
-			<div class="wrapper">
+			<div class="wrapper" style="background-image: url(assets/logotype-white-alpha.png);">
 				<aside class="sidebar" xo-store="#sitemap" xo-stylesheet="sitemap.xslt" id="sitemap"/>
 				<div class="main">
 					<nav class="navbar navbar-expand navbar-light bg-white" style="padding:.6rem 1.25rem; z-index: 100; position: sticky; top: 0;">
