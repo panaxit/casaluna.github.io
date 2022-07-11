@@ -22,8 +22,10 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 			<script>
 					<![CDATA[
 				function toggleSidebar(show) {
-					let width = Number.parseInt(document.querySelector('.sidebar').style.width);
-					document.querySelector('.sidebar').style.width = width || show === false ? 0 : '250px';
+					let sidebar = document.querySelector('.sidebar');
+					if (!sidebar) return
+					let width = Number.parseInt(sidebar.style.width);
+					sidebar.style.width = width || show === false ? 0 : '250px';
 				}
 				
 				xover.listener.on('keyup', async function (event) {

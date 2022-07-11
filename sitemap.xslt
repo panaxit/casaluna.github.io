@@ -34,10 +34,6 @@ body {
   padding-top: 60px;
 }
 
-.sidebar::after {
-    background-image: url(assets/img/background-1.jpg);
-}
-
 .sidebar a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;

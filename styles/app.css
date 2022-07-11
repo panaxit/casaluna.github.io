@@ -18,9 +18,9 @@ the user cannot interact with anything outside it. */
 /*MyColors*/
 :root {
     /*--bg-primary: #205d83;*/
-    --bg-primary: hsla(203, 61%, 32%, 1);
-    --bg-primary-ps: hsla(203, 61%, 27%, 1) !important;
-    --bg-primary-sbg: hsla(203, 61%, 87%, 0.9) !important;
+    --bg-primary: hsla(43, 71%, 61%, 1);
+    --bg-primary-ps: hsla(43, 71%, 50%, 1) !important;
+    --bg-primary-sbg: hsla(43, 71%, 87%, 0.9) !important;
     --bg-primary-second: linear-gradient(-45deg, #205d83 0%, #205d83 100%);
     --bg-white: #ffffff;
     --bg-black: #000000;
@@ -826,7 +826,6 @@ img.img-profile.rounded-circle {
 
 /*Sitemap*/
 .sidebar-bottom, .sidebar {
-    min-width: 260px !important;
     max-width: 260px !important;
     direction: ltr !important;
 }
