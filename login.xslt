@@ -21,6 +21,18 @@ exclude-result-prefixes="#default x session sitemap shell state source js"
 		<div class="login">
 			<style>
 				<![CDATA[
+html { 
+  background: url(images/cover_1.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+body {
+	background-color: transparent !important;
+}
+
 .login {
 	display: -ms-flexbox;
 	display: -webkit-box;
@@ -33,7 +45,7 @@ exclude-result-prefixes="#default x session sitemap shell state source js"
 	justify-content: center;
 	padding-top: 40px;
 	padding-bottom: 40px;
-	background-color: #f5f5f5;
+	transform: translateY(40px);
 }
 
 .form-signin {
@@ -99,7 +111,6 @@ exclude-result-prefixes="#default x session sitemap shell state source js"
 						<xsl:otherwise>Ingresar</xsl:otherwise>
 					</xsl:choose>
 				</button>
-				<p class="mt-5 mb-3 text-muted mx-auto">©Panax 2022</p>
 			</form>
 		</div>
 	</xsl:template>

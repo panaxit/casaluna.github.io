@@ -376,7 +376,6 @@ body {
 }
 
 ._2dKrisdaHIKdDLi7JIp0gy {
-    /*background-image: url(../images/valtus_admi_logo.png);*/
     background-repeat: no-repeat;
     background-position: 50%;
     background-size: contain;
@@ -503,26 +502,6 @@ form {
 }
 
 
-.btn_loginvaltus {
-    width: 250px;
-    background-color: var(--bg-primary);
-    border: none;
-    outline: none;
-    height: 49px;
-    border-radius: 6px;
-    color: var(--bg-white);
-    text-transform: uppercase;
-    font-weight: 600;
-    margin: 10px 0;
-    cursor: pointer;
-    transition: 0.5s;
-    font-size: 16px;
-}
-
-    .btn_loginvaltus:hover {
-        background-color: var(--bg-primary);
-    }
-
 .panels-container {
     position: absolute;
     height: 100%;
@@ -587,16 +566,6 @@ form {
 .panel p {
     font-size: 0.95rem;
     padding: 0.7rem 0;
-}
-
-.btn_loginvaltus.transparent {
-    margin: 0;
-    background: none;
-    border: 2px solid var(--bg-white);
-    width: 130px;
-    height: 41px;
-    font-weight: 600;
-    font-size: 0.8rem;
 }
 
 .right-panel .image,
@@ -729,12 +698,6 @@ form {
     .panel p {
         font-size: 0.7rem !important;
         padding: 0.5rem 0 !important;
-    }
-
-    .btn_loginvaltus.transparent {
-        width: 110px !important;
-        height: 35px !important;
-        font-size: 0.7rem !important;
     }
 
     .container_login:before {
