@@ -41,11 +41,16 @@ the user cannot interact with anything outside it. */
     --bg-input-placeholder: #aaa;
     --bg-social: #333;
     --bg-wizard-text: rgb(126,128,131);
-
+    --border-right-sidebar: hsla(43, 71%, 61%, 1);
+    --color-title-header: hsla(43, 71%, 61%, 1);
     --margin-top: 65px;
+    --margin-top-sitemap: 65px;
     --margin-bottom: 71px;
-
     --bg-shell-footer: #fff;
+}
+
+.navbar {
+    background-color: #fff;
 }
 
 body {
@@ -57,6 +62,13 @@ body {
     background-color: var(--bg-body) !important;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0,0,0,0)
+}
+
+
+
+.wrapper {
+    background-image: url(/assets/logotype-alpha-white.png);
+    background-color: hsla(354, 80%, 92%, .2);
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {

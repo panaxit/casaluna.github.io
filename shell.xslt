@@ -41,11 +41,6 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 			</script>
 			<style>
 				<![CDATA[
-				.wrapper { 
-					background-image: url(assets/logotype-alpha-white.png); 
-					background-color: hsla(354, 80%, 92%, .2);
-				}
-
 				main { 
 				    margin-top: var(--margin-top);
 					margin-bottom: var(--margin-bottom);
@@ -53,7 +48,7 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 				}
 				
 				nav header h1 {
-					color: hsla(43, 71%, 61%, 1);
+					color: var(--color-title-header);
 					margin-bottom: 0;
 					margin-left: 5px;
 				}
@@ -68,7 +63,7 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 					width: 100%;
 				}]]>
 			</style>
-			<nav class="navbar navbar-expand navbar-light bg-white" style="padding:.6rem 1.25rem; z-index: 100; position: sticky; top: 0;">
+			<nav class="navbar navbar-expand navbar-light" style="padding:.6rem 1.25rem; position: sticky; top: 0;">
 				<span style="font-size:30px;cursor:pointer" onclick="toggleSidebar()">
 					&#9776; <img src=""/>
 				</span>

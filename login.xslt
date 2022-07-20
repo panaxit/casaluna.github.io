@@ -86,7 +86,7 @@ body {
 			<form class="form-signin" onsubmit="var username=document.getElementById('username'); var password=document.getElementById('password'); xover.session.login( username.value, password.value, `{$session:connection_id}`);" action="javascript:void(0);">
 				<xsl:if test="$session:status='authorized'">
 					<xsl:attribute name="onsubmit"></xsl:attribute>
-					<xsl:attribute name="action">#</xsl:attribute>
+					<xsl:attribute name="action">/</xsl:attribute>
 				</xsl:if>
 				<img src="assets/logotype-alpha-black.png" alt="" height="72" class="mx-auto"/>
 				<h1 class="h3 mb-3 font-weight-normal mx-auto">Bienvenido</h1>

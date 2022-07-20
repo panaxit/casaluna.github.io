@@ -41,7 +41,7 @@ body {
   background-color: rgba(50, 62, 72, 0.9);
   overflow-x: hidden;
   transition: 0.5s;
-  margin-top: var(--margin-top);
+  margin-top: var(--margin-top-sitemap);
   padding-bottom: var(--margin-bottom);
   overflow-y: hidden;
 }
@@ -110,11 +110,11 @@ a.sidebar-brand {
 }
 
 .sidebar li.sidebar-item:not(.menu) a {
-    border-right: 5px solid hsla(43, 71%, 61%, 1);
+    border-right: 5px solid var(--border-right-sidebar);
 }
 
 .sidebar li.sidebar-item.menu:has(:scope > ul:not(.collapse)) a {
-    border-right: 5px solid hsla(43, 71%, 61%, 1);
+    border-right: 5px solid var(--border-right-sidebar);
 }
 
 li.sidebar-item {
