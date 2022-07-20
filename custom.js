@@ -23,3 +23,12 @@ Object.defineProperty(xo.session, 'logout', {
         }
     }, writable: true, configurable: true
 })
+
+app = {}
+
+app.request = async function (object_name, mode) {
+    let parts = object_name.split('/') || [];
+    let name = parts.pop();
+    let schema = parts.pop();
+    return xo.sources.defaults["#" + name] || xo.xml.createDocument(`<?xml-stylesheet type="text/xsl" href="form.xslt" target="@#shell main"?><?xml-stylesheet type="text/xsl" href="title.xslt" target="@#shell nav header h1"?><?xml-stylesheet type="text/xsl" href="shell_buttons.xslt" target="@#shell #shell_buttons" action="replace"?><${name} schema="${schema}"/>`)
+}

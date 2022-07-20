@@ -1,16 +1,12 @@
 ﻿<?xml-stylesheet type="text/xsl" href="menus.xslt" target="@#shell @#menus"?>
 <menus>
 	<edit>
-		<item>Hay una nueva alerta</item>
+		<item>Sin elementos</item>
 	</edit>
 	<view>
-		<item>Hay una nueva alerta</item>
+		<item>Sin elementos</item>
 	</view>
-	<notifications>
-		<item>Hay una nueva alerta</item>
-	</notifications>
-	<messages>
-		<item>Hay un nuevo mensaje del cliente 1</item>
-		<item>Hay un nuevo mensaje del cliente 2</item>
-	</messages>
+	<notifications/>
+	<messages/>
+	<cart/>
 </menus>

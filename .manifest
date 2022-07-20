@@ -5,6 +5,11 @@
     "session": "server/session.asp"
   },
   "sources": {
+    "@#([^\\.]+\\..+)": { "app.request": [ "{$1}" ] },
+    "@#([^\\/]+\\/[^~]+)~(.+)?": { "app.request": [ "{$1}", "{$2}" ] },
+    "@#([^\\/]+\\/[^~]+)$": { "app.request": [ "{$1}" ] },
+    "#notifications": "notifications.xml",
+    "#messages": "messages.xml",
     "#sitemap": "sitemap.xml",
     "#settings": "settings.xml",
     "#menus": "menus.xml"

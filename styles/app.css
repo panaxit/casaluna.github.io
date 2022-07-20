@@ -41,6 +41,11 @@ the user cannot interact with anything outside it. */
     --bg-input-placeholder: #aaa;
     --bg-social: #333;
     --bg-wizard-text: rgb(126,128,131);
+
+    --margin-top: 65px;
+    --margin-bottom: 71px;
+
+    --bg-shell-footer: #fff;
 }
 
 body {
@@ -789,7 +794,7 @@ img.img-profile.rounded-circle {
 
 /*Sitemap*/
 .sidebar-bottom, .sidebar {
-    max-width: 260px !important;
+    max-width: 300px !important;
     direction: ltr !important;
 }
 
@@ -896,11 +901,10 @@ img.img-profile.rounded-circle {
     }
 
 /*Modal*/
-.modal-backdrop.fade.show {
-    z-index: -1;
+/*.modal-backdrop.fade.show {
     background: rgba(0, 0, 0, 0.4);
     opacity: 0.1;
-}
+}*/
 
 .modal.fade.show {
     background: rgba(0, 0, 0, 0.7);

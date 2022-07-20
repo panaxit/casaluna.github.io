@@ -1,0 +1,7 @@
+﻿<?xml-stylesheet type="text/xsl" href="menu_item.xslt" target="@#menus @#notifications" action="replace"?>
+<notifications>
+	<item>Sin elementos</item>
+	<item>Sin elementos</item>
+	<item>Sin elementos</item>
+	<item>Sin elementos</item>
+</notifications>
