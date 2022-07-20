@@ -175,8 +175,11 @@ li.sidebar-item.menu > a {
 		<xsl:variable name="type">
 			<xsl:if test="item">menu</xsl:if>
 		</xsl:variable>
+		<xsl:variable name="collapsed_status">
+			<xsl:if test="item">collapsed</xsl:if>
+		</xsl:variable>
 		<li class="sidebar-item {$type}">
-			<a href="#{translate(substring(@target,2),'.','/')}" class="sidebar-link" onclick="classList.toggle('collapsed'); parentElement.querySelector(':scope > ul').classList.toggle('show')">
+			<a href="#{translate(substring(@target,2),'.','/')}" class="sidebar-link {$collapsed_status}" onclick="classList.toggle('collapsed'); parentElement.querySelector(':scope > ul').classList.toggle('show')">
 				<xsl:if test="$type='menu'">
 					<xsl:attribute name="data-toggle">collapse</xsl:attribute>
 					<!--<xsl:attribute name="onclick">
@@ -190,7 +193,8 @@ li.sidebar-item.menu > a {
 				</xsl:if>
 				<xsl:value-of select="@title"/>
 			</a>
-			<ul id="{generate-id()}" class="sidebar-dropdown list-unstyled collapse">
+			<xsl:variable name="show_status"><xsl:if test="$collapsed_status!='collapsed'">show</xsl:if></xsl:variable>
+			<ul id="{generate-id()}" class="sidebar-dropdown list-unstyled collapse {$show_status}">
 				<xsl:apply-templates/>
 			</ul>
 		</li>

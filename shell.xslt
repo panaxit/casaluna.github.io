@@ -90,7 +90,7 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 									</svg>
 								</a>
 
-								<span xo-store="#menus">
+								<span xo-store="#menu">
 								</span>
 
 							</li>

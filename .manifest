@@ -12,7 +12,8 @@
     "#messages": "messages.xml",
     "#sitemap": "sitemap.xml",
     "#settings": "settings.xml",
-    "#menus": "menus.xml"
+    "#menu": "menu.xml",
+    "#cart": "cart.xml"
   },
   "settings": {
     "#shell": {

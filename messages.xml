@@ -1,4 +1,4 @@
-﻿<?xml-stylesheet type="text/xsl" href="menu_item.xslt" target="@#menus @#messages" action="replace"?>
+﻿<?xml-stylesheet type="text/xsl" href="menu_item.xslt" target="@#menu @#messages" action="replace"?>
 <messages>
 	<item>Sin elementos</item>
 	<item>Sin elementos</item>
