@@ -81,6 +81,17 @@ exclude-result-prefixes="#default session sitemap shell"
 	</a>-->
 	</xsl:template>
 
+	<xsl:template match="cart" mode="menu">
+		<xsl:apply-templates/>
+		<hr class="dropdown-divider"/>
+		<a class="dropdown-item text-center small text-gray-500" href="#" xo-scope="{@x:id}" onclick="scope.$$('self::*/item').remove()">
+			<xsl:choose>
+				<xsl:when test="item">Borrar todo</xsl:when>
+				<xsl:otherwise>No hay elementos</xsl:otherwise>
+			</xsl:choose>
+		</a>
+	</xsl:template>
+
 	<xsl:template match="messages" mode="menu">
 		<h6 class="dropdown-header">
 			Mensajes
@@ -88,7 +99,12 @@ exclude-result-prefixes="#default session sitemap shell"
 		<hr class="dropdown-divider"/>
 		<xsl:apply-templates/>
 		<hr class="dropdown-divider"/>
-		<a class="dropdown-item text-center small text-gray-500" href="#">Leer más mensajes</a>
+		<a class="dropdown-item text-center small text-gray-500" href="#" xo-scope="{@x:id}" onclick="scope.$$('self::*/item').remove()">
+			<xsl:choose>
+				<xsl:when test="item">Borrar todo</xsl:when>
+				<xsl:otherwise>No hay elementos</xsl:otherwise>
+			</xsl:choose>
+		</a>
 	</xsl:template>
 
 	<xsl:template match="idioms" mode="menu">
@@ -171,10 +187,6 @@ exclude-result-prefixes="#default session sitemap shell"
 							<xsl:value-of select="Precio/text()"/>
 						</li>
 					</ul>
-					<!--<span>
-            <xsl:text> $</xsl:text>
-            <xsl:value-of select="Precio/text()"/>
-          </span>-->
 				</div>
 				<div class="cart-popup-item__quantity">
 					<span onclick="scope.remove()">
@@ -182,11 +194,6 @@ exclude-result-prefixes="#default session sitemap shell"
 					</span>
 				</div>
 			</div>
-			<!--<div class="delete_prod">
-        <span onclick="cart.remove({Id})">
-          <i class="fas fa-trash-alt" ></i>
-        </span>
-      </div>-->
 		</a>
 	</xsl:template>
 </xsl:stylesheet>
