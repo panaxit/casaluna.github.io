@@ -2,15 +2,18 @@
   "server": {
     "login": "server/login.asp",
     "logout": "server/logout.asp",
-    "session": "server/session.asp"
+    "session": "server/session.asp",
+    "request": "server/request.asp",
+    "sitemap": "server/sitemap.asp"
   },
   "sources": {
-    "@#([^\\.]+\\..+)": { "app.request": [ "{$1}" ] },
-    "@#([^\\/]+\\/[^~]+)~(.+)?": { "app.request": [ "{$1}", "{$2}" ] },
-    "@#([^\\/]+\\/[^~]+)$": { "app.request": [ "{$1}" ] },
+    "^data:(.*)": { "px.getData": [ ] },
+    "^#([^\\.]+\\..+)": { "app.request": [ "{$1}" ] },
+    "^#([^\\/]+\\/[^~]+)~(.+)?": { "px.request": [ "{$1}", "{$2}" ] },
+    "^#([^\\/]+\\/[^~]+)$": { "px.request": [ "{$1}" ] },
     "#notifications": "notifications.xml",
     "#messages": "messages.xml",
-    "#sitemap": "sitemap.xml",
+    "#sitemap": { "sitemap": [ ] },
     "#settings": "settings.xml",
     "#menu": "menu.xml",
     "#cart": "cart.xml"

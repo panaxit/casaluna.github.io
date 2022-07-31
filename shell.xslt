@@ -63,7 +63,7 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 					width: 100%;
 				}]]>
 			</style>
-			<nav class="navbar navbar-expand navbar-light" style="padding:.6rem 1.25rem; position: sticky; top: 0;">
+			<nav class="navbar navbar-expand navbar-light" style="padding:.6rem 1.25rem; position: sticky; top: 0; z-index:1000">
 				<span style="font-size:30px;cursor:pointer" onclick="toggleSidebar()">
 					&#9776; <img src=""/>
 				</span>

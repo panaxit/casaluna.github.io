@@ -3,7 +3,7 @@
 	<item title="Catálogos de Sistema">
 		<item title="Bancos" target="#CatalogosSistema.Banco"></item>
 		<item title="Asentamiento" target="#CatalogosSistema.Asentamiento"></item>
-		<item title="Categoria" target="#CatalogosSistema.Categoria"></item>
+		<item title="Categoria" target="#Catalogos.Categoria"></item>
 		<item title="Codigo Postal" target="#CatalogosSistema.CodigoPostal"></item>
 		<item title="Documentacion" target="#CatalogosSistema.Documentacion"></item>
 		<item title="Estado" target="#CatalogosSistema.Estado"></item>

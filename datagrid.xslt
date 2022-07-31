@@ -17,7 +17,7 @@
   xmlns:px="http://panax.io/entity"
   exclude-result-prefixes="xo state xsl CardView data height width data story temp"
 >
-	<xsl:import href="templates/form.xslt"/>
+	<xsl:import href="templates/datagrid.xslt"/>
 	<xsl:template match="/">
 		<div class="container">
 			<xsl:apply-templates/>

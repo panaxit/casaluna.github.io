@@ -5,18 +5,20 @@ xmlns:session="http://panax.io/session"
 xmlns:sitemap="http://panax.io/sitemap"
 xmlns:shell="http://panax.io/shell"
 xmlns:state="http://panax.io/state"
-xmlns:x="http://panax.io/xdom"
+xmlns:xo="http://panax.io/xover"
 exclude-result-prefixes="#default session sitemap shell state"
 >
 	<xsl:output method="xml"
 	   omit-xml-declaration="yes"
 	   indent="yes"/>
 
-	<xsl:key name="item" match="item" use="'#any'"/>
+	<xsl:key name="item" match="sitemap:menu" use="'#any'"/>
+	<xsl:key name="item" match="sitemap:catalog" use="'#any'"/>
+	<xsl:key name="menu-item" match="sitemap:menu" use="@xo:id"/>
 
 	<xsl:template match="text()"/>
 
-	<xsl:template match="sitemap">
+	<xsl:template match="/">
 		<aside class="sidebar">
 			<script>
 				<![CDATA[xo.listener.on('click', function(){ 
@@ -152,8 +154,6 @@ li.sidebar-item.menu > a {
     -webkit-transition: all .2s ease-out;
     transition: all .2s ease-out;
 }
-
-
 ]]>
 			</style>
 			<div style="height:100%; overflow-y:scroll; margin-bottom: var(--margin-bottom)">
@@ -162,9 +162,6 @@ li.sidebar-item.menu > a {
 					<img src="assets/logotype-alpha-white.png" width="190px"/>
 				</a>
 				<ul class="sidebar-nav">
-					<li class="sidebar-header">
-						<xsl:value-of select="@title"/>
-					</li>
 					<xsl:apply-templates/>
 				</ul>
 			</div>
@@ -173,13 +170,13 @@ li.sidebar-item.menu > a {
 
 	<xsl:template match="key('item','#any')">
 		<xsl:variable name="type">
-			<xsl:if test="item">menu</xsl:if>
+			<xsl:if test="key('menu-item',@xo:id)">menu</xsl:if>
 		</xsl:variable>
 		<xsl:variable name="collapsed_status">
 			<xsl:if test="item">collapsed</xsl:if>
 		</xsl:variable>
 		<li class="sidebar-item {$type}">
-			<a href="#{translate(substring(@target,2),'.','/')}" class="sidebar-link {$collapsed_status}" onclick="classList.toggle('collapsed'); parentElement.querySelector(':scope > ul').classList.toggle('show')">
+			<a href="#{concat(translate(substring-before(@catalogName,'].['),'[]',''),'/',translate(substring-after(@catalogName,'].['),'[]',''))}" class="sidebar-link {$collapsed_status}" onclick="classList.toggle('collapsed'); parentElement.querySelector(':scope > ul').classList.toggle('show')">
 				<xsl:if test="$type='menu'">
 					<xsl:attribute name="data-toggle">collapse</xsl:attribute>
 					<!--<xsl:attribute name="onclick">

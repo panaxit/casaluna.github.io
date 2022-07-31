@@ -16,8 +16,8 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <div class="{@type}" role="alertdialog">
-      <div class="messages">
+    <div class="messages {@type}" role="alertdialog">
+      <div>
         <!--<span onclick="this.parentElement.style.display='none'; xover.data.remove('{@x:id}')" class="w3-button w3-large w3-display-topright" >
           <img src="./custom/images/circle-x.svg" width="30" height="30" class="gwt-Image" style="cursor: pointer;"/>
         </span>-->
@@ -25,7 +25,7 @@
           <div class="modal-content message-error w-100">
             <div class="modal-header alert">
               <h2 class="modal-title font-weight-bold mt-2" style="margin-left: 4rem !important;">¡Aviso!</h2>
-              <div type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="xover.data.removeMessage('{@x:id}')">
+              <div type="button" class="btn close" data-dismiss="modal" aria-label="Close" onclick="closest('.messages').remove()">
                 <!--<img class="gwt-Image mt-2 mr-2" src="./custom/images/circle-x.svg" width="30" height="30"/>-->
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-x-circle x-circle-icon" viewBox="0 0 24 24">
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
