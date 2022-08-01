@@ -16,9 +16,14 @@
   xmlns:width = "http://panax.io/state/width"
   xmlns:px="http://panax.io/entity"
   xmlns:layout="http://panax.io/layout"
-  exclude-result-prefixes="xo state xsl CardView data height width data story temp px"
+  exclude-result-prefixes="xo state xsl CardView data height width data story temp px layout"
 >
 	<xsl:import href="cardview.xslt"/>
+	<xsl:import href="values.xslt"/>
+
+	<xsl:key name="combobox" match="px:Association[px:Entity/@xsi:type='combobox:control']" use="@Name"/>
+	<xsl:key name="money" match="px:Field[@DataType='money']" use="@Name"/>
+
 	<xsl:key name="selected" match="*[@state:active]" use="''"/>
 	<xsl:key name="selected" match="/*[not(//@state:active)]" use="''"/>
 	<xsl:key name="verified" match="*[@verified='true']" use="@xo:id"/>
@@ -79,7 +84,7 @@
 	</xsl:template>
 
 	<xsl:template mode="datagrid.body" match="data:rows/*">
-		<xsl:param name="layout"/>
+		<xsl:param name="layout" select="dummy"/>
 		<xsl:apply-templates mode="datagrid.body" select="$layout">
 			<xsl:with-param name="row" select="current()"/>
 		</xsl:apply-templates>
@@ -106,9 +111,8 @@
 
 	<xsl:template mode="datagrid.body" match="layout:layout">
 		<xsl:param name="row" select="dummy"/>
-		<tr>
+		<tr xo-scope="{$row/@xo:id}" onclick="window.location.href='#{$row/ancestor::px:Entity[1]/@Schema}/{$row/ancestor::px:Entity[1]/@Name}~edit:{$row/@value}'" style="cursor:pointer">
 			<th scope="row">
-				<!--<xsl:value-of select="count($row/preceding-sibling::*)+1"/>-->
 				<xsl:value-of select="$row/@state:position"/>
 			</th>
 			<xsl:apply-templates mode="datagrid.body">
@@ -120,7 +124,7 @@
 	<xsl:template mode="datagrid.body" match="layout:layout//*">
 		<xsl:param name="row" select="dummy"/>
 		<td>
-			<xsl:value-of select="$row/@*[name()=current()/@name]"/>
+			<xsl:apply-templates select="$row/@*[name()=current()/@name]"/>
 		</td>
 	</xsl:template>
 
@@ -138,319 +142,5 @@
 			<!--<span class="text-muted">$12</span>-->
 		</li>
 	</xsl:template>
-
-	<xsl:template mode="datagrid.item" match="data:rows/*">
-		<h4 class="mb-3">Billing address</h4>
-		<datagrid class="needs-validation" novalidate="">
-			<div class="row g-3">
-				<div class="col-sm-6">
-					<label for="firstName" class="datagrid-label">First name</label>
-					<input type="text" class="datagrid-control" id="firstName" placeholder="" value="{@text}" required=""/>
-					<div class="invalid-feedback">
-						Valid first name is required.
-					</div>
-				</div>
-
-				<div class="col-sm-6">
-					<label for="lastName" class="datagrid-label">Last name</label>
-					<input type="text" class="datagrid-control" id="lastName" placeholder="" value="" required=""/>
-					<div class="invalid-feedback">
-						Valid last name is required.
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="username" class="datagrid-label">Username</label>
-					<div class="input-group has-validation">
-						<span class="input-group-text">@</span>
-						<input type="text" class="datagrid-control" id="username" placeholder="Username" required=""/>
-						<div class="invalid-feedback">
-							Your username is required.
-						</div>
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="email" class="datagrid-label">
-						Email <span class="text-muted">(Optional)</span>
-					</label>
-					<input type="email" class="datagrid-control" id="email" placeholder="you@example.com"/>
-					<div class="invalid-feedback">
-						Please enter a valid email address for shipping updates.
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="address" class="datagrid-label">Address</label>
-					<input type="text" class="datagrid-control" id="address" placeholder="1234 Main St" required=""/>
-					<div class="invalid-feedback">
-						Please enter your shipping address.
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="address2" class="datagrid-label">
-						Address 2 <span class="text-muted">(Optional)</span>
-					</label>
-					<input type="text" class="datagrid-control" id="address2" placeholder="Apartment or suite"/>
-				</div>
-
-				<div class="col-md-5">
-					<label for="country" class="datagrid-label">Country</label>
-					<select class="datagrid-select" id="country" required="">
-						<option value="">Choose...</option>
-						<option>United States</option>
-					</select>
-					<div class="invalid-feedback">
-						Please select a valid country.
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<label for="state" class="datagrid-label">State</label>
-					<select class="datagrid-select" id="state" required="">
-						<option value="">Choose...</option>
-						<option>California</option>
-					</select>
-					<div class="invalid-feedback">
-						Please provide a valid state.
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<label for="zip" class="datagrid-label">Zip</label>
-					<input type="text" class="datagrid-control" id="zip" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Zip code required.
-					</div>
-				</div>
-			</div>
-
-			<hr class="my-4"/>
-
-			<div class="datagrid-check">
-				<input type="checkbox" class="datagrid-check-input" id="same-address"/>
-				<label class="datagrid-check-label" for="same-address">Shipping address is the same as my billing address</label>
-			</div>
-
-			<div class="datagrid-check">
-				<input type="checkbox" class="datagrid-check-input" id="save-info"/>
-				<label class="datagrid-check-label" for="save-info">Save this information for next time</label>
-			</div>
-
-			<hr class="my-4"/>
-
-			<h4 class="mb-3">Payment</h4>
-
-			<div class="my-3">
-				<div class="datagrid-check">
-					<input id="credit" name="paymentMethod" type="radio" class="datagrid-check-input" checked="" required=""/>
-					<label class="datagrid-check-label" for="credit">Credit card</label>
-				</div>
-				<div class="datagrid-check">
-					<input id="debit" name="paymentMethod" type="radio" class="datagrid-check-input" required=""/>
-					<label class="datagrid-check-label" for="debit">Debit card</label>
-				</div>
-				<div class="datagrid-check">
-					<input id="paypal" name="paymentMethod" type="radio" class="datagrid-check-input" required=""/>
-					<label class="datagrid-check-label" for="paypal">PayPal</label>
-				</div>
-			</div>
-
-			<div class="row gy-3">
-				<div class="col-md-6">
-					<label for="cc-name" class="datagrid-label">Name on card</label>
-					<input type="text" class="datagrid-control" id="cc-name" placeholder="" required=""/>
-					<small class="text-muted">Full name as displayed on card</small>
-					<div class="invalid-feedback">
-						Name on card is required
-					</div>
-				</div>
-
-				<div class="col-md-6">
-					<label for="cc-number" class="datagrid-label">Credit card number</label>
-					<input type="text" class="datagrid-control" id="cc-number" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Credit card number is required
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<label for="cc-expiration" class="datagrid-label">Expiration</label>
-					<input type="text" class="datagrid-control" id="cc-expiration" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Expiration date required
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<label for="cc-cvv" class="datagrid-label">CVV</label>
-					<input type="text" class="datagrid-control" id="cc-cvv" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Security code required
-					</div>
-				</div>
-			</div>
-
-		</datagrid>
-	</xsl:template>
-
-	<xsl:template mode="datagrid.item" match="data:rows/*">
-		<h4 class="mb-3">Billing address</h4>
-		<datagrid class="needs-validation" novalidate="">
-			<div class="row g-3">
-				<div class="col-sm-6">
-					<label for="firstName" class="datagrid-label">First name</label>
-					<input type="text" class="datagrid-control" id="firstName" placeholder="" value="{@text}" required=""/>
-					<div class="invalid-feedback">
-						Valid first name is required.
-					</div>
-				</div>
-
-				<div class="col-sm-6">
-					<label for="lastName" class="datagrid-label">Last name</label>
-					<input type="text" class="datagrid-control" id="lastName" placeholder="" value="" required=""/>
-					<div class="invalid-feedback">
-						Valid last name is required.
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="username" class="datagrid-label">Username</label>
-					<div class="input-group has-validation">
-						<span class="input-group-text">@</span>
-						<input type="text" class="datagrid-control" id="username" placeholder="Username" required=""/>
-						<div class="invalid-feedback">
-							Your username is required.
-						</div>
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="email" class="datagrid-label">
-						Email <span class="text-muted">(Optional)</span>
-					</label>
-					<input type="email" class="datagrid-control" id="email" placeholder="you@example.com"/>
-					<div class="invalid-feedback">
-						Please enter a valid email address for shipping updates.
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="address" class="datagrid-label">Address</label>
-					<input type="text" class="datagrid-control" id="address" placeholder="1234 Main St" required=""/>
-					<div class="invalid-feedback">
-						Please enter your shipping address.
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="address2" class="datagrid-label">
-						Address 2 <span class="text-muted">(Optional)</span>
-					</label>
-					<input type="text" class="datagrid-control" id="address2" placeholder="Apartment or suite"/>
-				</div>
-
-				<div class="col-md-5">
-					<label for="country" class="datagrid-label">Country</label>
-					<select class="datagrid-select" id="country" required="">
-						<option value="">Choose...</option>
-						<option>United States</option>
-					</select>
-					<div class="invalid-feedback">
-						Please select a valid country.
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<label for="state" class="datagrid-label">State</label>
-					<select class="datagrid-select" id="state" required="">
-						<option value="">Choose...</option>
-						<option>California</option>
-					</select>
-					<div class="invalid-feedback">
-						Please provide a valid state.
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<label for="zip" class="datagrid-label">Zip</label>
-					<input type="text" class="datagrid-control" id="zip" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Zip code required.
-					</div>
-				</div>
-			</div>
-
-			<hr class="my-4"/>
-
-			<div class="datagrid-check">
-				<input type="checkbox" class="datagrid-check-input" id="same-address"/>
-				<label class="datagrid-check-label" for="same-address">Shipping address is the same as my billing address</label>
-			</div>
-
-			<div class="datagrid-check">
-				<input type="checkbox" class="datagrid-check-input" id="save-info"/>
-				<label class="datagrid-check-label" for="save-info">Save this information for next time</label>
-			</div>
-
-			<hr class="my-4"/>
-
-			<h4 class="mb-3">Payment</h4>
-
-			<div class="my-3">
-				<div class="datagrid-check">
-					<input id="credit" name="paymentMethod" type="radio" class="datagrid-check-input" checked="" required=""/>
-					<label class="datagrid-check-label" for="credit">Credit card</label>
-				</div>
-				<div class="datagrid-check">
-					<input id="debit" name="paymentMethod" type="radio" class="datagrid-check-input" required=""/>
-					<label class="datagrid-check-label" for="debit">Debit card</label>
-				</div>
-				<div class="datagrid-check">
-					<input id="paypal" name="paymentMethod" type="radio" class="datagrid-check-input" required=""/>
-					<label class="datagrid-check-label" for="paypal">PayPal</label>
-				</div>
-			</div>
-
-			<div class="row gy-3">
-				<div class="col-md-6">
-					<label for="cc-name" class="datagrid-label">Name on card</label>
-					<input type="text" class="datagrid-control" id="cc-name" placeholder="" required=""/>
-					<small class="text-muted">Full name as displayed on card</small>
-					<div class="invalid-feedback">
-						Name on card is required
-					</div>
-				</div>
-
-				<div class="col-md-6">
-					<label for="cc-number" class="datagrid-label">Credit card number</label>
-					<input type="text" class="datagrid-control" id="cc-number" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Credit card number is required
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<label for="cc-expiration" class="datagrid-label">Expiration</label>
-					<input type="text" class="datagrid-control" id="cc-expiration" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Expiration date required
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<label for="cc-cvv" class="datagrid-label">CVV</label>
-					<input type="text" class="datagrid-control" id="cc-cvv" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Security code required
-					</div>
-				</div>
-			</div>
-
-		</datagrid>
-	</xsl:template>
-
-	<xsl:template mode="datagrid.item" match="data:rows/*[not(key('selected', @xo:id))]"/>
 
 </xsl:stylesheet>

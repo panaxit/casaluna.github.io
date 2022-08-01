@@ -24,6 +24,15 @@ Object.defineProperty(xo.session, 'logout', {
     }, writable: true, configurable: true
 })
 
+xo.listener.on('change::xo:r/@*', function ({ element, attribute, old }) {
+    if (!(element.getAttributeNodeNS('http://panax.io/xover/state/initial', attribute.localName))) {
+        element.set(`initial:${attribute.localName}`, old);
+    }
+    if (!["http://panax.io/xover/state", "http://panax.io/state"].includes(attribute.namespaceURI.split(/\//g, 5).join('/'))) {
+        element.set(`prev:${attribute.localName}`, old);
+    }
+})
+
 app = {}
 
 app.request = async function (object_name, mode) {
@@ -66,7 +75,8 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
         on_success = (request_or_entity_name["on_success"] || on_success);
         rebuild = request_or_entity_name["rebuild"]
     }
-
+    let identity;
+    [mode, identity] = mode.split(':')
     page_size = (page_size || xover.manifest.getSettings(`#${schema}/${mode}:${entity_name}`, "pageSize").pop());
     page_index = (page_index || xover.manifest.getSettings(`#${schema}/${mode}:${entity_name}`, "pageIndex").pop());
     let mock_store = xo.Store(xo.xml.createDocument(`<entity ${xover.json.toAttributes({ filters, mode, page_size, page_index, Name: entity_name, Schema: schema })}/>`), { tag: `${schema}/${mode}:${entity_name}`.toLowerCase() });
@@ -93,29 +103,33 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
         })
         Request.requester = ref;
         if (!(Response instanceof xover.Store) && Response && Response.documentElement) {
-            let control_type = Response.$('//px:Entity').get("xsi:type").replace(':control','.xslt')
+            let control_type = Response.$('//px:Entity').get("xsi:type").replace(':control', '.xslt')
             Response.addStylesheet({ href: control_type, target: "@#shell main" });
             Response.addStylesheet({ href: "title.xslt", target: "@#shell nav header h1" });
             Response.addStylesheet({ href: "page_controls.xslt", target: "@#shell #page_controls" });
             Response.addStylesheet({ href: "shell_buttons.xslt", target: "@#shell #shell_buttons", action: "replace" });
             Response.documentElement.setAttributeNS(xover.spaces["xmlns"], "xmlns:data", "http://panax.io/source");
 
-            let entity = Response.$('//px:Entity');
-            let id = entity.$$(`px:Record/px:Field[@IsIdentity="1"]|px:Record[not(*[2])]/px:Field`).shift()
-            let text = entity.$$(`px:Record/px:Field[not(@IsIdentity="1")][1]|px:Record[not(*[2])]/px:Field`).shift()
+            let root_entity = Response.$('//px:Entity')
+            for (entity of Response.$$('//px:Entity')) {
+                let id = entity.$$(`px:Record/px:Field[@IsIdentity="1"]|px:Record[not(*[2])]/px:Field`).shift()
+                let text = entity.$$(`px:Record/px:Field[not(@IsIdentity="1")][1]|px:Record[not(*[2])]/px:Field`).shift()
 
-            let fields = Object.fromEntries(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => [field.$("@Name|@Referencee").value, (field.$("self::px:Field/@Name|self::px:Mapping/@Referencee") || {}).value || `(SELECT ${field.$("px:Entity/@*[local-name()='value']").value} FROM [${field.$("px:Entity/@Schema").value}].[${field.$("px:Entity/@Name").value}] parent WHERE ${field.$$('px:Mappings/px:Mapping').map(map => '['+entity.get("Name")+'].[' + map.get("Referencee") + '] = parent.[' + map.get("Referencer") + ']').join(' AND ')})`
-            ]))
-            
-            //fields = fields.map(field => `[@${field}]=RTRIM([${field}])`);
-            if (text && !fields['@text']) {
-                fields["text"] = `RTRIM([${text.get("Name")}])`;
+                let predicate = identity && entity == root_entity && `[${id.get("Name")}]=${identity}` || ''
+
+                let fields = Object.fromEntries(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => [field.$("@Name|@Referencer").value, (field.$("self::px:Field/@Name|self::px:Mapping/@Referencer") || {}).value || `(SELECT ${field.$("px:Entity/@*[local-name()='value']").value} FROM [${field.$("px:Entity/@Schema").value}].[${field.$("px:Entity/@Name").value}] parent WHERE ${field.$$('px:Mappings/px:Mapping').map(map => '[' + entity.get("Name") + '].[' + map.get("Referencee") + '] = parent.[' + map.get("Referencer") + ']').join(' AND ')})`
+                ]))
+
+                //fields = fields.map(field => `[@${field}]=RTRIM([${field}])`);
+                if (text && !fields['@text']) {
+                    fields["text"] = `RTRIM([${text.get("Name")}])`;
+                }
+                if (id && !fields['@value']) {
+                    fields["value"] = `RTRIM([${id.get("Name")}])`;
+                }
+                entity.setAttribute("data:rows", `${Object.entries(fields).map(([key, value]) => `[@${key}]=${value}`).join(',')}~>[${entity.get("Schema")}].[${entity.get("Name")}]=>${predicate || ''}#:=1/20`)
             }
-            if (id && !fields['@value']) {
-                fields["value"]=`RTRIM([${id.get("Name")}])`;
-            }
-            entity.setAttribute("data:rows", `${Object.entries(fields).map(([key, value]) => `[@${key}]=${value}`).join(',')}~>[${entity.get("Schema")}].[${entity.get("Name")}]#:=1/20`)
-            return entity.ownerDocument;
+            return Response;
             /*
             <?xml-stylesheet type="text/xsl" href="form.xslt" target="@#shell main"?><?xml-stylesheet type="text/xsl" href="title.xslt" target="@#shell nav header h1"?><?xml-stylesheet type="text/xsl" href="shell_buttons.xslt" target="@#shell #shell_buttons" action="replace"?>
              */
@@ -196,4 +210,28 @@ px.getData = function (...args) {
     args.push(settings);
     return xo.server.request.apply(this, args);
     /*return this.source.fetch.apply(this, args)*/
+}
+
+function submit(data_rows) {
+    let entity = data_rows.parentNode;
+    for (let row of data_rows.$$('xo:r')) {
+        let id = entity.$$(`px:Record/px:Field[@IsIdentity="1"]|px:Record[not(*[2])]/px:Field`).shift()
+        let data = `<batch xmlns="http://panax.io/persistence" xmlns:state="http://panax.io/state">
+  <dataTable name="[${entity.get("Schema")}].[${entity.get("Name")}]" identityKey="${id.get("Name")}">
+    <updateRow identityValue="${row.get(id.get("Name"))}">${
+            entity.$$('px:Record/px:Field/@Name|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping/@Referencer').map((field) => 
+                `<field name="${field.value}">${[row.get(field.value)].map(val => !val && 'null' || `'${val}'` )}</field>`
+            ).join('')
+    }</updateRow>
+  </dataTable>
+</batch>`
+        payload = xover.xml.createDocument(`<x:post xmlns:x="http://panax.io/xover"><x:source>${row.toString()}</x:source><x:submit>${data.toString()}</x:submit></x:post>`);
+        xover.server.submit(payload, { responseHandler: (return_value, request, response) => [return_value, request, response] })
+            .then(([result, request]) => {
+                console.log(result)
+            })
+    }
+    //xo.server.post({
+    //    body: body
+    //})
 }
