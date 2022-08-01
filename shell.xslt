@@ -106,9 +106,12 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 						<xsl:value-of select="$session:user_login"/>
 					</span>
 				</div>
-
-				<ul id="shell_buttons" class="nav col-md-4 justify-content-end list-unstyled d-flex">
-				</ul>
+				<div id="page_controls">
+				</div>
+				<div id="shell_buttons" class="col-md-4 d-flex align-items-center">
+					<ul class="col-12 nav justify-content-end list-unstyled d-flex">
+					</ul>
+				</div>
 			</footer>
 			<aside class="sidebar" xo-store="#sitemap" xo-stylesheet="sitemap.xslt" id="sitemap"/>
 			<div class="settings" xo-store="#settings" xo-stylesheet="settings.xslt"/>

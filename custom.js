@@ -96,6 +96,7 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
             let control_type = Response.$('//px:Entity').get("xsi:type").replace(':control','.xslt')
             Response.addStylesheet({ href: control_type, target: "@#shell main" });
             Response.addStylesheet({ href: "title.xslt", target: "@#shell nav header h1" });
+            Response.addStylesheet({ href: "page_controls.xslt", target: "@#shell #page_controls" });
             Response.addStylesheet({ href: "shell_buttons.xslt", target: "@#shell #shell_buttons", action: "replace" });
             Response.documentElement.setAttributeNS(xover.spaces["xmlns"], "xmlns:data", "http://panax.io/source");
 
@@ -113,7 +114,7 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
             if (id && !fields['@value']) {
                 fields["value"]=`RTRIM([${id.get("Name")}])`;
             }
-            entity.setAttribute("data:item", `${Object.entries(fields).map(([key, value]) => `[@${key}]=${value}`).join(',')}~>[${entity.get("Schema")}].[${entity.get("Name")}]`)
+            entity.setAttribute("data:rows", `${Object.entries(fields).map(([key, value]) => `[@${key}]=${value}`).join(',')}~>[${entity.get("Schema")}].[${entity.get("Name")}]#:=1/20`)
             return entity.ownerDocument;
             /*
             <?xml-stylesheet type="text/xsl" href="form.xslt" target="@#shell main"?><?xml-stylesheet type="text/xsl" href="title.xslt" target="@#shell nav header h1"?><?xml-stylesheet type="text/xsl" href="shell_buttons.xslt" target="@#shell #shell_buttons" action="replace"?>
@@ -162,7 +163,8 @@ px.getData = function (...args) {
         if (typeof (parameters) === 'string') {
             //let [request_with_fields, ...predicate] = command.split(/=>|&filters=/);
             //let [fields, request] = comnd.match('(?:(.*)~>)?(.+)');
-            let [rest, predicate = ''] = parameters.split("=>");
+            [rest, page] = parameters.indexOf("#:=") != -1 && parameters.split("#:=") || [parameters, "1/20"];
+            [rest, predicate = ''] = rest.split("=>");
             [fields, request] = rest.indexOf("~>") != -1 && rest.split("~>") || ["*", rest];
             //let [, fields, request, predicate = ''] = command.match('(?:(.*)~>|^)?((?:(?<!=>).)+)(?:=>(.+))?$');
 
@@ -179,6 +181,8 @@ px.getData = function (...args) {
             , "x-original-request": command
             , "x-namespaces": `'${node.resolveNS(node.prefix)}' as ${node.prefix}`
             , "x-Root-Node": root_node
+            , "x-Page-Index": page.split("/")[0]
+            , "x-Page-Size": page.split("/")[1]
             , "x-Detect-Missing-Variables": "false"
             , "x-Debugging": xover.debug.enabled
             , "x-data-text": (node.getAttribute('source_text:' + attribute_base_name) || node.getAttribute('dataText') || "")

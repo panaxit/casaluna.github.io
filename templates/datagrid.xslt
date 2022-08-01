@@ -26,7 +26,7 @@
 	<xsl:key name="file_type" match="attachment[contains(@metadata:value, 'application/')]" use="generate-id()"/>
 	<xsl:key name="file_type" match="attachment[@type='file']" use="generate-id()"/>
 	<xsl:key name="data_types" match="item[@type='data' or @type='field' or @type='indicator' or @type='formula' or @type='table' or @type='database' or @type='file' or @type='server']" use="@xo:id"/>
-	<xsl:key name="data_types" match="data:item" use="@xo:id"/>
+	<xsl:key name="data_types" match="data:rows" use="@xo:id"/>
 	<xsl:key name="data_types" match="item[@type='story']" use="@xo:id"/>
 	<xsl:key name="data_types" match="item[@type='component']" use="@xo:id"/>
 	<xsl:key name="data_types" match="item[@type='document']" use="@xo:id"/>
@@ -34,13 +34,13 @@
 	<xsl:key name="data_types" match="item[@type='service']" use="@xo:id"/>
 	<xsl:key name="user_types" match="item[@type='user']" use="@xo:id"/>
 	<xsl:key name="other_types" match="item[@type='info']" use="@xo:id"/>
-	<xsl:key name="ref" match="data:item|item" use="concat(translate(@title, '_', ' '),'::',string(@type))"/>
-	<xsl:key name="ref_items" match="data:item" use="concat(translate(../@title, '_', ' '),'::',string(../@type))"/>
+	<xsl:key name="ref" match="data:rows|item" use="concat(translate(@title, '_', ' '),'::',string(@type))"/>
+	<xsl:key name="ref_items" match="data:rows" use="concat(translate(../@title, '_', ' '),'::',string(../@type))"/>
 	<xsl:key name="ref_items" match="item" use="concat(translate(../@title, '_', ' '),'::',string(../@type))"/>
 	<xsl:key name="ref_fields" match="item[@type='field'][item[@type='table']]" use="concat(translate(item[@type='table']/@title, '_', ' '),'::',@type)"/>
 	<xsl:key name="ref_fields" match="item[@type='table'][item[@type='database']]" use="concat(translate(item[@type='database']/@title, '_', ' '),'::',@type)"/>
-	<xsl:key name="ref_data" match="data:item" use="concat(translate(../@title, '_', ' '),'::',string(../@type))"/>
-	<xsl:key name="distinct" match="data:item" use="concat(../@title,'::',@title)"/>
+	<xsl:key name="ref_data" match="data:rows" use="concat(translate(../@title, '_', ' '),'::',string(../@type))"/>
+	<xsl:key name="distinct" match="data:rows" use="concat(../@title,'::',@title)"/>
 	<xsl:template match="/">
 		<div class="container">
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>
@@ -57,7 +57,7 @@
 	</xsl:template>
 
 	<xsl:template match="px:Entity">
-		<xsl:variable name="rows" select=".//data:item/*"/>
+		<xsl:variable name="rows" select=".//data:rows/*"/>
 		<div class="row g-5">
 			<table class="table table-striped table-hover">
 				<thead>
@@ -78,7 +78,7 @@
 		</div>
 	</xsl:template>
 
-	<xsl:template mode="datagrid.body" match="data:item/*">
+	<xsl:template mode="datagrid.body" match="data:rows/*">
 		<xsl:param name="layout"/>
 		<xsl:apply-templates mode="datagrid.body" select="$layout">
 			<xsl:with-param name="row" select="current()"/>
@@ -108,7 +108,8 @@
 		<xsl:param name="row" select="dummy"/>
 		<tr>
 			<th scope="row">
-				<xsl:value-of select="count($row/preceding-sibling::*)+1"/>
+				<!--<xsl:value-of select="count($row/preceding-sibling::*)+1"/>-->
+				<xsl:value-of select="$row/@row_number"/>
 			</th>
 			<xsl:apply-templates mode="datagrid.body">
 				<xsl:with-param name="row" select="$row"/>
@@ -127,7 +128,7 @@
 
 	<xsl:template mode="datagrid.list" match="*|text()"/>
 
-	<xsl:template mode="datagrid.list" match="data:item/*">
+	<xsl:template mode="datagrid.list" match="data:rows/*">
 		<li class="list-group-item d-flex justify-content-between lh-sm" xo-scope="{@xo:id}">
 			<div onclick="scope.parentNode.selectNodes('*/@state:selected').remove(); scope.set('state:selected',true)">
 				<h6 class="my-0">
@@ -138,7 +139,7 @@
 		</li>
 	</xsl:template>
 
-	<xsl:template mode="datagrid.item" match="data:item/*">
+	<xsl:template mode="datagrid.item" match="data:rows/*">
 		<h4 class="mb-3">Billing address</h4>
 		<datagrid class="needs-validation" novalidate="">
 			<div class="row g-3">
@@ -294,7 +295,7 @@
 		</datagrid>
 	</xsl:template>
 
-	<xsl:template mode="datagrid.item" match="data:item/*">
+	<xsl:template mode="datagrid.item" match="data:rows/*">
 		<h4 class="mb-3">Billing address</h4>
 		<datagrid class="needs-validation" novalidate="">
 			<div class="row g-3">
@@ -450,6 +451,6 @@
 		</datagrid>
 	</xsl:template>
 
-	<xsl:template mode="datagrid.item" match="data:item/*[not(key('selected', @xo:id))]"/>
+	<xsl:template mode="datagrid.item" match="data:rows/*[not(key('selected', @xo:id))]"/>
 
 </xsl:stylesheet>
