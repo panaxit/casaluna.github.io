@@ -194,7 +194,7 @@ i.text-info {
     border-color: var(--bg-primary) !important;
 }
 
-.page-item:not(:first-child) .page-link {
+.page-item .page-link {
     color: var(--bg-black);
 }
 /*Footer*/

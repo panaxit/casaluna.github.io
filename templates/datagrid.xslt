@@ -109,7 +109,7 @@
 		<tr>
 			<th scope="row">
 				<!--<xsl:value-of select="count($row/preceding-sibling::*)+1"/>-->
-				<xsl:value-of select="$row/@row_number"/>
+				<xsl:value-of select="$row/@state:position"/>
 			</th>
 			<xsl:apply-templates mode="datagrid.body">
 				<xsl:with-param name="row" select="$row"/>
