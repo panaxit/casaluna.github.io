@@ -112,8 +112,7 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
             Response.addStylesheet({ href: "page_controls.xslt", target: "@#shell #page_controls" });
             Response.addStylesheet({ href: "shell_buttons.xslt", target: "@#shell #shell_buttons", action: "replace" });
             Response.documentElement.setAttributeNS(xover.spaces["xmlns"], "xmlns:data", "http://panax.io/source");
-            px.loadData([Response.$('px:Entity')], mode=='add' && 'NULL' || identity)
-            px.loadData([Response.$('//px:Record/px:Association[@Type="belongsTo"]/px:Entity')])
+            px.loadData([Response.$('px:Entity')], mode == 'add' && 'NULL' || identity)
             return Response;
             /*
             <?xml-stylesheet type="text/xsl" href="form.xslt" target="@#shell main"?><?xml-stylesheet type="text/xsl" href="title.xslt" target="@#shell nav header h1"?><?xml-stylesheet type="text/xsl" href="shell_buttons.xslt" target="@#shell #shell_buttons" action="replace"?>
@@ -151,16 +150,16 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
     }
 }
 
-px.loadData = function(entities, identity) {
+px.loadData = function (entities, identity) {
     for (entity of entities.filter(el => el)) {
         let id = entity.$$(`@combobox:value|px:Record/px:Field[@IsIdentity="1"]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift()
         let text = entity.$$(`@combobox:text|px:Record/px:Field[not(@IsIdentity="1")][1]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift()
 
-        let predicate = id && identity && `[${id.value}] IN (${(identity ? `'${identity}'` : null) || 'null'})` || ''
+        let predicate = id && identity && `[${id.value}] IN (${(identity && identity != 'NULL' ? `'${identity}'` : null) || 'null'})` || ''
         let parent_entity = entity.$('ancestor::px:Entity');
         if (parent_entity && parent_entity.$('data:rows/*')) {
             let parent_relationship = entity.$('parent::px:Association[@Type="hasMany"]/px:Mappings')
-            let mappings = parent_relationship.$$('px:Mapping').map(map => `[${entity.get("Name")}].[${map.get("Referencer")}] IN (${parent_entity.$$('data:rows/*').map(row => (row.get(map.get("Referencee")) || 'NULL')).join(',')})`);
+            let mappings = parent_relationship && parent_relationship.$$('px:Mapping').map(map => `[${entity.get("Name")}].[${map.get("Referencer")}] IN (${parent_entity.$$('data:rows/*').map(row => (row.get(map.get("Referencee")) || 'NULL')).join(',')})`) || [];
             predicate && mappings.unshift(predicate);
             predicate = mappings.join(' AND ')
         }
@@ -231,7 +230,15 @@ px.getData = async function (...args) {
 }
 
 xo.listener.on('appendChildren::data:rows', function ({ node }) {
-    px.loadData(node.parentNode.$$(`px:Record/px:Association[not(@Type="belongsTo")]/px:Entity`));
+    let empty_node = node.$('xo:empty')
+    if (empty_node) {
+        let entity = node.$('parent::px:Entity[//px:Entity[@mode="add"]]')
+        if (entity) {
+            let fields = [...new Set(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => field.$("@Name|@Referencer").value + '=""'))].join(' ')
+            empty_node.replace(xo.xml.createNode(`<xo:r xmlns:xo="http://panax.io/xover" ${fields}/>`))
+        }
+    }
+    px.loadData(node.parentNode.$$(`px:Record/px:Association/px:Entity`));
 })
 
 function submit(data_rows) {
@@ -252,15 +259,15 @@ function submit(data_rows) {
                 }</deleteRow></dataTable>`))
         } else if (entity.get("mode") == 'add') {
             post.append(xo.xml.createNode(`<dataTable xmlns="http://panax.io/persistence" name="[${entity.get("Schema")}].[${entity.get("Name")}]"${id ? ` identityKey="${id.get("Name")}"` : ''}>
-    <insertRow>${entity.$$('px:Record/px:Field').map((field) => {
+    <insertRow>${entity.$$('px:Record/px:Field[not(@IsIdentity="1" or @formula)]').map((field) => {
                 let field_name = field.get("Name");
                 let isPK = field.$(`ancestor::px:Entity/px:PrimaryKeys/px:PrimaryKey[@Field_Name="${field_name}"]`)
-                return `<field name="${field.get("Name")}"${isPK ? ` isPK="true"` : ''}>${[row.get(field.get("Name"))].map(val => !val && 'null' || `'${val}'`)}</field>`
+                return `<field name="${field.get("Name")}"${isPK ? ` isPK="true"` : ''}>${[row.get(field.get("Name"))].map(val => !val && (field.get("defaultValue") || 'null') || `'${val}'`)}</field>`
             }).join('')
                 }</insertRow></dataTable>`))
 
         } else {
-            post.append(xo.xml.createNode(`<dataTable xmlns="http://panax.io/persistence" name="[${entity.get("Schema")}].[${entity.get("Name")}]"${id ? ` identityKey="${id.get("Name")}"` : ''}><updateRow${id ? ` identityValue="${row.get(id.get("Name"))}"` : ''}>${entity.$$('px:Record/px:Field[not(@IsIdentity="1")]').map((field) => {
+            post.append(xo.xml.createNode(`<dataTable xmlns="http://panax.io/persistence" name="[${entity.get("Schema")}].[${entity.get("Name")}]"${id ? ` identityKey="${id.get("Name")}"` : ''}><updateRow${id ? ` identityValue="${row.get(id.get("Name"))}"` : ''}>${entity.$$('px:Record/px:Field[not(@IsIdentity="1" or @formula)]').map((field) => {
                 let field_name = field.get("Name");
                 let new_value = row.get(field_name);
                 let isPK = field.$(`ancestor::px:Entity/px:PrimaryKeys/px:PrimaryKey[@Field_Name="${field_name}"]`)
@@ -270,6 +277,7 @@ function submit(data_rows) {
             ).join('')
                 }</updateRow></dataTable>`))
         }
+        row.setAttribute("xmlns:session", "http://panax.io/session")
         payload = xover.xml.createDocument(`<x:post xmlns:x="http://panax.io/xover" xmlns:session="http://panax.io/session"><x:source>${row.toString()}</x:source><x:submit>${post.toString()}</x:submit></x:post>`);
         xover.server.submit(payload, { responseHandler: (return_value, request, response) => [return_value, request, response] })
             .then(([result, request]) => {

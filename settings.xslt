@@ -16,7 +16,7 @@ exclude-result-prefixes="#default session sitemap shell"
 	<xsl:template match="text()"/>
 	<xsl:param name="session:debug">false</xsl:param>
 	<xsl:param name="session:autoRebuild">false</xsl:param>
-	<xsl:param name="session:disableCache">false</xsl:param>
+	<xsl:param name="session:disableCache">true</xsl:param>
 	<xsl:param name="js:cache_name">xover.session.cache_name.split('_').pop()</xsl:param>
 	<xsl:key name="expanded" match="*[@state:expanded='true']" use="true()"/>
 

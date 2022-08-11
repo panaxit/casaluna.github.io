@@ -661,4 +661,50 @@
 		</label>
 	</xsl:template>
 
+	<xsl:template mode="control" match="@CantidadDisponible[key('formula',name())]" priority="5">
+		<xsl:param name="current" select="."/>
+		<xsl:param name="field" select="dummy"/>
+		<xsl:param name="row" select="dummy"/>
+
+		<xsl:variable name="CantidadComprada">
+			<xsl:choose>
+				<xsl:when test="number(../@CantidadComprada)=../@CantidadComprada">
+					<xsl:value-of select="number(../@CantidadComprada)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="CantidadVendida">
+			<xsl:choose>
+				<xsl:when test="number(../@CantidadVendida)=../@CantidadVendida">
+					<xsl:value-of select="number(../@CantidadVendida)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="CantidadMermada">
+			<xsl:choose>
+				<xsl:when test="number(../@CantidadMermada)=../@CantidadMermada">
+					<xsl:value-of select="number(../@CantidadMermada)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="CantidadApartados">
+			<xsl:choose>
+				<xsl:when test="number(../@CantidadApartados)=../@CantidadApartados">
+					<xsl:value-of select="number(../@CantidadApartados)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="amount" select="$CantidadComprada - $CantidadVendida - $CantidadMermada - $CantidadApartados"/>
+		<xsl:variable name="class">
+			<xsl:if test="$amount&lt;0">text-danger</xsl:if>
+		</xsl:variable>
+		<label for="{@xo:id}" class="form-input {$class}">
+			<xsl:value-of select="format-number($amount,'#,##0.00')"/>
+		</label>
+	</xsl:template>
+
 </xsl:stylesheet>
