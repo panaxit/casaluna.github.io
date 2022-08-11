@@ -282,7 +282,11 @@ function submit(data_rows) {
         xover.server.submit(payload, { responseHandler: (return_value, request, response) => [return_value, request, response] })
             .then(([result, request]) => {
                 if (result.$$('//result').every(r => r.get("status") == 'success')) {
-                    entity.ownerDocument.store.remove();
+                    if (entity.get("control:type").indexOf('form') != -1) {
+                        entity.ownerDocument.store.remove();
+                    } else {
+                        entity.$$('//data:rows').remove()
+                    }
                 }
             }).catch(response => {
                 try {

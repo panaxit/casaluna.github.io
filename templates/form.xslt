@@ -707,4 +707,96 @@
 		</label>
 	</xsl:template>
 
+	<xsl:template mode="control" match="key('entity','Inventarios.Articulos')/data:rows/*/@PrecioVenta" priority="5">
+		<xsl:param name="current" select="."/>
+		<xsl:param name="field" select="dummy"/>
+		<xsl:param name="row" select="dummy"/>
+
+		<xsl:variable name="PrecioPesos">
+			<xsl:choose>
+				<xsl:when test="number(../@PrecioPesos)=../@PrecioPesos">
+					<xsl:value-of select="number(../@PrecioPesos)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="PrecioAjustes">
+			<xsl:choose>
+				<xsl:when test="number(../@PrecioAjustes)=../@PrecioAjustes">
+					<xsl:value-of select="number(../@PrecioAjustes)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="Gastos">
+			<xsl:choose>
+				<xsl:when test="number(../@Gastos)=../@Gastos">
+					<xsl:value-of select="number(../@Gastos)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="Paqueteria">
+			<xsl:choose>
+				<xsl:when test="number(../@Paqueteria)=../@Paqueteria">
+					<xsl:value-of select="number(../@Paqueteria)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="CubreCertificado">
+			<xsl:choose>
+				<xsl:when test="number(../@CubreCertificado)=../@CubreCertificado">
+					<xsl:value-of select="number(../@CubreCertificado)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="Accesorios">
+			<xsl:choose>
+				<xsl:when test="number(../@Accesorios)=../@Accesorios">
+					<xsl:value-of select="number(../@Accesorios)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="Comision">
+			<xsl:choose>
+				<xsl:when test="number(../@Comision)=../@Comision">
+					<xsl:value-of select="number(../@Comision)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="Utilidad">
+			<xsl:choose>
+				<xsl:when test="number(../@Utilidad)=../@Utilidad">
+					<xsl:value-of select="number(../@Utilidad)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="PrecioVenta">
+			<xsl:choose>
+				<xsl:when test="number(.)=.">
+					<xsl:value-of select="number(.)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="amount" select="$PrecioPesos + $PrecioAjustes + $Gastos + $Paqueteria + $CubreCertificado + $Accesorios + $Comision + $Utilidad"/>
+		<xsl:variable name="class">
+			<xsl:if test="$amount&lt;0">text-danger</xsl:if>
+		</xsl:variable>
+		<label for="{@xo:id}" class="form-input {$class}">
+			<xsl:value-of select="format-number($PrecioVenta,'$#,##0.00')"/>
+		</label>
+		<xsl:if test="$PrecioVenta - $amount &lt; 0">
+			<br/>
+			<label for="{@xo:id}" class="form-input text-danger">
+				<xsl:text/>El precio de venta no puede ser menor a los gatos (<xsl:text/> <xsl:value-of select="format-number($amount,'$#,##0.00')"/><xsl:text/>)<xsl:text/>
+			</label>
+		</xsl:if>
+	</xsl:template>
+
 </xsl:stylesheet>
