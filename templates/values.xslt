@@ -21,7 +21,11 @@
 	<xsl:key name="money" match="dummy" use="@Name"/>
 
 	<xsl:template match="@*[key('money',name())]">
-		<xsl:value-of select="format-number(.,'$#,###.00###')"/>
+		<xsl:value-of select="format-number(.,'$#,##0.00###;-$#,##0.00###')"/>
+	</xsl:template>
+
+	<xsl:template match="@*[.='']">
+		<xsl:value-of select="."/>
 	</xsl:template>
 
 </xsl:stylesheet>

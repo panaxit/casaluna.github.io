@@ -106,7 +106,7 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 						<xsl:value-of select="$session:user_login"/>
 					</span>
 				</div>
-				<div id="page_controls">
+				<div id="page_controls" class="justify-content-center">
 				</div>
 				<div id="shell_buttons" class="col-md-4 d-flex align-items-center">
 					<ul class="col-12 nav justify-content-end list-unstyled d-flex">

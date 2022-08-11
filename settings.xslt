@@ -15,6 +15,8 @@ exclude-result-prefixes="#default session sitemap shell"
 
 	<xsl:template match="text()"/>
 	<xsl:param name="session:debug">false</xsl:param>
+	<xsl:param name="session:autoRebuild">false</xsl:param>
+	<xsl:param name="session:disableCache">false</xsl:param>
 	<xsl:param name="js:cache_name">xover.session.cache_name.split('_').pop()</xsl:param>
 	<xsl:key name="expanded" match="*[@state:expanded='true']" use="true()"/>
 
@@ -267,6 +269,30 @@ exclude-result-prefixes="#default session sitemap shell"
 														<xsl:otherwise>
 															<xsl:attribute name="onclick">xover.session.debug=true</xsl:attribute>
 															Depurar
+														</xsl:otherwise>
+													</xsl:choose>
+												</button>
+												<button type="button" class="list-group-item list-group-item-action">
+													<xsl:choose>
+														<xsl:when test="$session:autoRebuild='true'">
+															<xsl:attribute name="onclick">xover.session.autoRebuild=false</xsl:attribute>
+															Deshabilitar rebuild
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:attribute name="onclick">xover.session.autoRebuild=true</xsl:attribute>
+															Habilitar rebuild
+														</xsl:otherwise>
+													</xsl:choose>
+												</button>
+												<button type="button" class="list-group-item list-group-item-action">
+													<xsl:choose>
+														<xsl:when test="$session:disableCache='true'">
+															<xsl:attribute name="onclick">xover.session.disableCache=false</xsl:attribute>
+															Habilitar caché
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:attribute name="onclick">xover.session.disableCache=true</xsl:attribute>
+															Deshabilitar caché
 														</xsl:otherwise>
 													</xsl:choose>
 												</button>

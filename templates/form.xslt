@@ -21,8 +21,13 @@
 	<xsl:import href="values.xslt"/>
 	<xsl:import href="cardview.xslt"/>
 
+	<xsl:key name="entity" match="px:Entity" use="concat(@Schema,'.',@Name)"/>
+
 	<xsl:key name="combobox" match="px:Association[px:Entity/@xsi:type='combobox:control']" use="@Name"/>
 	<xsl:key name="money" match="px:Field[@DataType='money']" use="@Name"/>
+
+	<xsl:key name="readonly" match="px:Record/px:Field[@mode='readonly']" use="@Name"/>
+	<xsl:key name="formula" match="px:Record/px:Field[@formula]" use="@Name"/>
 
 	<xsl:key name="selected" match="*[@state:active]" use="''"/>
 	<xsl:key name="selected" match="/*[not(//@state:active)]" use="''"/>
@@ -169,7 +174,7 @@
 					</div>
 				</form>
 			</div>-->
-			<div class="col-md-7 col-lg-8">
+			<div class="col-md-9 col-lg-11">
 				<xsl:apply-templates mode="form.body" select="$rows">
 					<xsl:with-param name="fields" select="px:Record"/>
 					<xsl:with-param name="layout" select="layout:layout"/>
@@ -194,162 +199,6 @@
 		</li>
 	</xsl:template>
 
-	<xsl:template mode="form.item" match="data:rows/*">
-		<h4 class="mb-3">Billing address</h4>
-		<form class="needs-validation" novalidate="">
-			<div class="row g-3">
-				<div class="col-sm-6">
-					<label for="firstName" class="form-label">First name</label>
-					<input type="text" class="form-control" id="firstName" placeholder="" value="{@text}" required=""/>
-					<div class="invalid-feedback">
-						Valid first name is required.
-					</div>
-				</div>
-
-				<div class="col-sm-6">
-					<label for="lastName" class="form-label">Last name</label>
-					<input type="text" class="form-control" id="lastName" placeholder="" value="" required=""/>
-					<div class="invalid-feedback">
-						Valid last name is required.
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="username" class="form-label">Username</label>
-					<div class="input-group has-validation">
-						<span class="input-group-text">@</span>
-						<input type="text" class="form-control" id="username" placeholder="Username" required=""/>
-						<div class="invalid-feedback">
-							Your username is required.
-						</div>
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="email" class="form-label">
-						Email <span class="text-muted">(Optional)</span>
-					</label>
-					<input type="email" class="form-control" id="email" placeholder="you@example.com"/>
-					<div class="invalid-feedback">
-						Please enter a valid email address for shipping updates.
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="address" class="form-label">Address</label>
-					<input type="text" class="form-control" id="address" placeholder="1234 Main St" required=""/>
-					<div class="invalid-feedback">
-						Please enter your shipping address.
-					</div>
-				</div>
-
-				<div class="col-12">
-					<label for="address2" class="form-label">
-						Address 2 <span class="text-muted">(Optional)</span>
-					</label>
-					<input type="text" class="form-control" id="address2" placeholder="Apartment or suite"/>
-				</div>
-
-				<div class="col-md-5">
-					<label for="country" class="form-label">Country</label>
-					<select class="form-select" id="country" required="">
-						<option value="">Choose...</option>
-						<option>United States</option>
-					</select>
-					<div class="invalid-feedback">
-						Please select a valid country.
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<label for="state" class="form-label">State</label>
-					<select class="form-select" id="state" required="">
-						<option value="">Choose...</option>
-						<option>California</option>
-					</select>
-					<div class="invalid-feedback">
-						Please provide a valid state.
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<label for="zip" class="form-label">Zip</label>
-					<input type="text" class="form-control" id="zip" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Zip code required.
-					</div>
-				</div>
-			</div>
-
-			<hr class="my-4"/>
-
-			<div class="form-check">
-				<input type="checkbox" class="form-check-input" id="same-address"/>
-				<label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-			</div>
-
-			<div class="form-check">
-				<input type="checkbox" class="form-check-input" id="save-info"/>
-				<label class="form-check-label" for="save-info">Save this information for next time</label>
-			</div>
-
-			<hr class="my-4"/>
-
-			<h4 class="mb-3">Payment</h4>
-
-			<div class="my-3">
-				<div class="form-check">
-					<input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required=""/>
-					<label class="form-check-label" for="credit">Credit card</label>
-				</div>
-				<div class="form-check">
-					<input id="debit" name="paymentMethod" type="radio" class="form-check-input" required=""/>
-					<label class="form-check-label" for="debit">Debit card</label>
-				</div>
-				<div class="form-check">
-					<input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required=""/>
-					<label class="form-check-label" for="paypal">PayPal</label>
-				</div>
-			</div>
-
-			<div class="row gy-3">
-				<div class="col-md-6">
-					<label for="cc-name" class="form-label">Name on card</label>
-					<input type="text" class="form-control" id="cc-name" placeholder="" required=""/>
-					<small class="text-muted">Full name as displayed on card</small>
-					<div class="invalid-feedback">
-						Name on card is required
-					</div>
-				</div>
-
-				<div class="col-md-6">
-					<label for="cc-number" class="form-label">Credit card number</label>
-					<input type="text" class="form-control" id="cc-number" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Credit card number is required
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<label for="cc-expiration" class="form-label">Expiration</label>
-					<input type="text" class="form-control" id="cc-expiration" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Expiration date required
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<label for="cc-cvv" class="form-label">CVV</label>
-					<input type="text" class="form-control" id="cc-cvv" placeholder="" required=""/>
-					<div class="invalid-feedback">
-						Security code required
-					</div>
-				</div>
-			</div>
-
-		</form>
-	</xsl:template>
-
 	<xsl:template mode="form.body" match="data:rows/*">
 		<xsl:param name="fields" select="dummy"/>
 		<xsl:param name="layout" select="dummy"/>
@@ -369,7 +218,6 @@
 					<xsl:with-param name="row" select="$row"/>
 				</xsl:apply-templates>
 			</div>
-
 		</form>
 	</xsl:template>
 
@@ -379,7 +227,7 @@
 		<xsl:variable name="field" select="$fields/*[@Id=current()/@id]"/>
 		<xsl:variable name="data" select="$row/@*[name()=current()/@name]"/>
 		<div class="col-sm-12">
-			<label for="{@id}" class="form-label">
+			<label for="{@xo:id}" class="form-label">
 				<xsl:value-of select="$field/@headerText"/>
 				<xsl:text>: </xsl:text>
 			</label>
@@ -389,6 +237,263 @@
 		</div>
 	</xsl:template>
 
+	<!--<xsl:template mode="form.body" match="key('entity','Ingresos.Venta')/layout:layout">
+		<div class="row g-5">
+			<div class="col-md-5 col-lg-4 order-md-last">
+				<h4 class="d-flex justify-content-between align-items-center mb-3">
+					<span class="text-primary">Your cart</span>
+					<span class="badge bg-primary rounded-pill">3</span>
+				</h4>
+				<ul class="list-group mb-3">
+					<li class="list-group-item d-flex justify-content-between lh-sm">
+						<div>
+							<h6 class="my-0">Product name</h6>
+							<small class="text-muted">Brief description</small>
+						</div>
+						<span class="text-muted">$12</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between lh-sm">
+						<div>
+							<h6 class="my-0">Second product</h6>
+							<small class="text-muted">Brief description</small>
+						</div>
+						<span class="text-muted">$8</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between lh-sm">
+						<div>
+							<h6 class="my-0">Third item</h6>
+							<small class="text-muted">Brief description</small>
+						</div>
+						<span class="text-muted">$5</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between bg-light">
+						<div class="text-success">
+							<h6 class="my-0">Promo code</h6>
+							<small>EXAMPLECODE</small>
+						</div>
+						<span class="text-success">−$5</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between">
+						<span>Total (USD)</span>
+						<strong>$20</strong>
+					</li>
+				</ul>
+
+				<form class="card p-2">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Promo code"/>
+						<button type="submit" class="btn btn-secondary">Redeem</button>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-7 col-lg-8">
+				<h4 class="mb-3">Billing address</h4>
+				<form class="needs-validation" novalidate="">
+					<div class="row g-3">
+						<div class="col-sm-6">
+							<label for="firstName" class="form-label">First name</label>
+							<input type="text" class="form-control" id="firstName" placeholder="" value="" required=""/>
+							<div class="invalid-feedback">
+								Valid first name is required.
+							</div>
+						</div>
+
+						<div class="col-sm-6">
+							<label for="lastName" class="form-label">Last name</label>
+							<input type="text" class="form-control" id="lastName" placeholder="" value="" required=""/>
+							<div class="invalid-feedback">
+								Valid last name is required.
+							</div>
+						</div>
+
+						<div class="col-12">
+							<label for="username" class="form-label">Username</label>
+							<div class="input-group has-validation">
+								<span class="input-group-text">@</span>
+								<input type="text" class="form-control" id="username" placeholder="Username" required=""/>
+								<div class="invalid-feedback">
+									Your username is required.
+								</div>
+							</div>
+						</div>
+
+						<div class="col-12">
+							<label for="email" class="form-label">
+								Email <span class="text-muted">(Optional)</span>
+							</label>
+							<input type="email" class="form-control" id="email" placeholder="you@example.com"/>
+							<div class="invalid-feedback">
+								Please enter a valid email address for shipping updates.
+							</div>
+						</div>
+
+						<div class="col-12">
+							<label for="address" class="form-label">Address</label>
+							<input type="text" class="form-control" id="address" placeholder="1234 Main St" required=""/>
+							<div class="invalid-feedback">
+								Please enter your shipping address.
+							</div>
+						</div>
+
+						<div class="col-12">
+							<label for="address2" class="form-label">
+								Address 2 <span class="text-muted">(Optional)</span>
+							</label>
+							<input type="text" class="form-control" id="address2" placeholder="Apartment or suite"/>
+						</div>
+
+						<div class="col-md-5">
+							<label for="country" class="form-label">Country</label>
+							<select class="form-select" id="country" required="">
+								<option value="">Choose...</option>
+								<option>United States</option>
+							</select>
+							<div class="invalid-feedback">
+								Please select a valid country.
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<label for="state" class="form-label">State</label>
+							<select class="form-select" id="state" required="">
+								<option value="">Choose...</option>
+								<option>California</option>
+							</select>
+							<div class="invalid-feedback">
+								Please provide a valid state.
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<label for="zip" class="form-label">Zip</label>
+							<input type="text" class="form-control" id="zip" placeholder="" required=""/>
+							<div class="invalid-feedback">
+								Zip code required.
+							</div>
+						</div>
+					</div>
+
+					<hr class="my-4"/>
+
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="same-address"/>
+						<label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
+					</div>
+
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="save-info"/>
+						<label class="form-check-label" for="save-info">Save this information for next time</label>
+					</div>
+
+					<hr class="my-4"/>
+
+					<h4 class="mb-3">Payment</h4>
+
+					<div class="my-3">
+						<div class="form-check">
+							<input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required=""/>
+							<label class="form-check-label" for="credit">Credit card</label>
+						</div>
+						<div class="form-check">
+							<input id="debit" name="paymentMethod" type="radio" class="form-check-input" required=""/>
+							<label class="form-check-label" for="debit">Debit card</label>
+						</div>
+						<div class="form-check">
+							<input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required=""/>
+							<label class="form-check-label" for="paypal">PayPal</label>
+						</div>
+					</div>
+
+					<div class="row gy-3">
+						<div class="col-md-6">
+							<label for="cc-name" class="form-label">Name on card</label>
+							<input type="text" class="form-control" id="cc-name" placeholder="" required=""/>
+							<small class="text-muted">Full name as displayed on card</small>
+							<div class="invalid-feedback">
+								Name on card is required
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<label for="cc-number" class="form-label">Credit card number</label>
+							<input type="text" class="form-control" id="cc-number" placeholder="" required=""/>
+							<div class="invalid-feedback">
+								Credit card number is required
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<label for="cc-expiration" class="form-label">Expiration</label>
+							<input type="text" class="form-control" id="cc-expiration" placeholder="" required=""/>
+							<div class="invalid-feedback">
+								Expiration date required
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<label for="cc-cvv" class="form-label">CVV</label>
+							<input type="text" class="form-control" id="cc-cvv" placeholder="" required=""/>
+							<div class="invalid-feedback">
+								Security code required
+							</div>
+						</div>
+					</div>
+
+					<hr class="my-4"/>
+
+					<button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+				</form>
+			</div>
+		</div>
+	</xsl:template>-->
+
+	<xsl:template mode="form.body" match="key('entity','Ingresos.Venta')/layout:layout">
+		<xsl:param name="row" select="dummy"/>
+		<xsl:param name="fields" select="dummy"/>
+		<xsl:variable name="articulos" select="../px:Record/px:Association[@AssociationName='FK_OrdenDetalle_Orden']/px:Entity/data:rows/*"/>
+		<div class="row g-5">
+			<div class="col-md-5 col-lg-4 order-md-last">
+				<h4 class="d-flex justify-content-between align-items-center mb-3">
+					<span class="text-primary">Artículos:
+				</span>
+					<span class="badge bg-primary rounded-pill">
+						<xsl:value-of select="count($articulos)"/>
+					</span>
+				</h4>
+				<ul class="list-group mb-3">
+					<xsl:for-each select="$articulos">
+						<li class="list-group-item d-flex justify-content-between lh-sm">
+							<div>
+								<h6 class="my-0"><xsl:value-of select="@FK_OrdenDetalle_Articulos"/></h6>
+								<!--<small class="text-muted">
+									<xsl:value-of select="@FK_OrdenDetalle_Articulos"/>
+								</small>-->
+							</div>
+							<span class="text-muted"><xsl:apply-templates select="@CostoTotal"/></span>
+						</li>
+					</xsl:for-each>
+				</ul>
+
+				<form class="card p-2">
+					<div class="input-group">
+						<button type="submit" class="btn btn-secondary"><a href="#Ingresos/VentaDetalle~add">Agregar nuevo articulo</a></button>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-7 col-lg-8">
+				<form class="needs-validation" novalidate="">
+					<div class="row g-3">
+						<xsl:apply-templates mode="form.body">
+							<xsl:with-param name="fields" select="$fields"/>
+							<xsl:with-param name="row" select="$row"/>
+						</xsl:apply-templates>
+					</div>
+				</form>
+			</div>
+		</div>
+	</xsl:template>
+
+	<xsl:key name="radiogroup" match="dummy" use="@Name"/>
 	<xsl:key name="combobox" match="dummy" use="@Name"/>
 	<xsl:key name="money" match="dummy" use="@Name"/>
 
@@ -406,7 +511,7 @@
 		</div>-->
 	</xsl:template>
 
-	<xsl:template mode="control" match="@*[key('combobox',name())]">
+	<xsl:template mode="control" match="@*[key('radiogroup',name())]">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
@@ -417,7 +522,7 @@
 					<xsl:if test="$current = @value">checked</xsl:if>
 				</xsl:variable>
 				<div class="form-check form-check-inline" xo-scope="{$current/../@xo:id}">
-					<input class="form-check-input" type="radio" value="{@value}" id="{$field/@id}" xo-attribute="{name($current)}">
+					<input class="form-check-input" type="radio" value="{@value}" id="{$field/@xo:id}_{position()}" xo-attribute="{name($current)}">
 						<xsl:for-each select="$field/px:Mappings/px:Mapping">
 							<xsl:attribute name="onclick">
 								<xsl:text/>scope.parentNode.set('<xsl:value-of select="@Referencer"/>','<xsl:value-of select="$option/@*[name()=current()/@Referencee]"/>');<xsl:text/>
@@ -427,12 +532,133 @@
 							<xsl:attribute name="checked"/>
 						</xsl:if>
 					</input>
-					<label class="form-check-label" for="{name($current)}">
+					<label class="form-check-label" for="{name($current)}_{$field/@xo:id}_{position()}">
 						<xsl:value-of select="@text"/>
 					</label>
 				</div>
 			</xsl:for-each>
 		</div>
+	</xsl:template>
+
+	<xsl:template mode="control" match="@*[key('combobox',name())]">
+		<xsl:param name="current" select="."/>
+		<xsl:param name="field" select="dummy"/>
+		<xsl:param name="row" select="$current/.."/>
+		<xsl:param name="catalog" select="$field/px:Entity/data:rows/*"/>
+		<div class="input-group mb-3">
+			<select class="form-select" xo-scope="{$row/@xo:id}">
+				<xsl:for-each select="$field/px:Mappings/px:Mapping">
+					<xsl:attribute name="onchange">
+						<xsl:text/>scope.set('<xsl:value-of select="@Referencer"/>',this.value);<xsl:text/>
+					</xsl:attribute>
+				</xsl:for-each>
+				<xsl:variable name="current_value">
+					<xsl:for-each select="$field/px:Mappings/px:Mapping">
+						<xsl:if test="position()&gt;1">||</xsl:if>
+						<xsl:value-of select="$row/@*[name()=current()/@Referencer]"/>
+					</xsl:for-each>
+				</xsl:variable>
+				<option>
+					Selecciona una opción...<xsl:value-of select="$current_value"/>
+				</option>
+				<xsl:for-each select="$catalog">
+					<xsl:sort select="@text"/>
+					<xsl:variable name="option" select="."/>
+					<xsl:variable name="selected">
+						<xsl:if test="$current_value = @value">true</xsl:if>
+					</xsl:variable>
+					<option value="{@value}">
+						<xsl:if test="$selected = 'true'">
+							<xsl:attribute name="selected"/>
+						</xsl:if>
+						<xsl:value-of select="@text"/>
+					</option>
+				</xsl:for-each>
+			</select>
+		</div>
+	</xsl:template>
+
+	<xsl:template mode="control" match="@*[key('readonly',name())]" priority="5">
+		<xsl:param name="current" select="."/>
+		<xsl:param name="field" select="dummy"/>
+		<xsl:param name="row" select="dummy"/>
+		<label for="{@xo:id}" class="form-input">
+			<xsl:apply-templates select="."/>
+		</label>
+	</xsl:template>
+
+	<xsl:template mode="control" match="@*[key('formula',name())]" priority="5">
+		<xsl:param name="current" select="."/>
+		<xsl:param name="field" select="dummy"/>
+		<xsl:param name="row" select="dummy"/>
+		<label for="{@xo:id}" class="form-input">
+			<script xo-scope="{../@xo:id}">
+				'<xsl:value-of select="$field/@formula"/>'.replace(/\[([^\]]+)\]/g,'replace($1)')
+			</script>
+		</label>
+	</xsl:template>
+
+	<xsl:template mode="control" match="@MontoTotal[key('formula',name())]" priority="5">
+		<xsl:param name="current" select="."/>
+		<xsl:param name="field" select="dummy"/>
+		<xsl:param name="row" select="dummy"/>
+		<xsl:variable name="monto">
+			<xsl:choose>
+				<xsl:when test="number(../@Monto)=../@Monto">
+					<xsl:value-of select="number(../@Monto)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="descuento">
+			<xsl:choose>
+				<xsl:when test="number(../@Descuento)=../@Descuento">
+					<xsl:value-of select="number(../@Descuento)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+		<label for="{@xo:id}" class="form-input">
+			<xsl:value-of select="format-number($monto - $descuento,'$#,##0.00')"/>
+		</label>
+	</xsl:template>
+
+	<xsl:template mode="control" match="@MontoRestante[key('formula',name())]" priority="5">
+		<xsl:param name="current" select="."/>
+		<xsl:param name="field" select="dummy"/>
+		<xsl:param name="row" select="dummy"/>
+		<xsl:variable name="monto">
+			<xsl:choose>
+				<xsl:when test="number(../@Monto)=../@Monto">
+					<xsl:value-of select="number(../@Monto)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="descuento">
+			<xsl:choose>
+				<xsl:when test="number(../@Descuento)=../@Descuento">
+					<xsl:value-of select="number(../@Descuento)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="cobros">
+			<xsl:choose>
+				<xsl:when test="number(../@Cobros)=../@Cobros">
+					<xsl:value-of select="number(../@Cobros)"/>
+				</xsl:when>
+				<xsl:otherwise>0</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="amount" select="$monto - $descuento - $cobros"/>
+		<xsl:variable name="class">
+			<xsl:if test="$amount&lt;0">text-danger</xsl:if>
+		</xsl:variable>
+		<label for="{@xo:id}" class="form-input {$class}">
+			<xsl:value-of select="format-number($amount,'$#,##0.00')"/>
+		</label>
 	</xsl:template>
 
 </xsl:stylesheet>

@@ -13,7 +13,7 @@ exclude-result-prefixes="#default xsl px xsi xo data state"
 	   indent="yes"/>
 
 	<xsl:template match="/">
-		<div id="page_controls">
+		<div id="page_controls" class="nav col-md-4 justify-content-center list-unstyled d-flex">
 			<xsl:apply-templates/>
 		</div>
 	</xsl:template>
@@ -35,6 +35,9 @@ exclude-result-prefixes="#default xsl px xsi xo data state"
 					</li>
 					<xsl:for-each select="(//*)[position() &lt;= ceiling($totalRows div $pageSize)]">
 						<li class="page-item">
+							<xsl:if test="$pageIndex = position()">
+								<xsl:attribute name="class">page-item active</xsl:attribute>
+							</xsl:if>
 							<a class="page-link" href="#" onclick="scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/#:=\d+\/\d+/g,'#:={position()}/{$pageSize}'))">
 								<xsl:value-of select="position()"/>
 							</a>
