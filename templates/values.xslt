@@ -18,10 +18,24 @@
   xmlns:layout="http://panax.io/layout/view/form"
   exclude-result-prefixes="xo state xsl CardView data height width data story temp px layout"
 >
-	<xsl:key name="money" match="dummy" use="@Name"/>
+	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 
-	<xsl:template match="@*[key('money',name())]">
-		<xsl:value-of select="format-number(.,'$#,##0.00###;-$#,##0.00###')"/>
+	<xsl:template name="format">
+		<xsl:param name="value">0</xsl:param>
+		<xsl:param name="mask">'$#,##0.00###;-$#,##0.00###'</xsl:param>
+		<xsl:param name="value_for_invalid"></xsl:param>
+		<xsl:choose>
+			<xsl:when test="number($value)=$value">
+		<xsl:value-of select="format-number($value,$mask)"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$value_for_invalid"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template match="@*[key('money',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+		<xsl:value-of select="format-number(translate(.,'$,',''),'$#,##0.00###;-$#,##0.00###')"/>
 	</xsl:template>
 
 	<xsl:template match="@*[.='']">

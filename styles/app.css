@@ -43,7 +43,7 @@ the user cannot interact with anything outside it. */
     --bg-wizard-text: rgb(126,128,131);
     --border-right-sidebar: hsla(43, 71%, 61%, 1);
     --color-title-header: hsla(43, 71%, 61%, 1);
-    --margin-top: 65px;
+    --margin-top: 25px;
     --margin-top-sitemap: 65px;
     --margin-bottom: 71px;
     --bg-shell-footer: #fff;

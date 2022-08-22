@@ -5,7 +5,7 @@ xmlns:px="http://panax.io/entity"
 xmlns:xo="http://panax.io/xover"
 xmlns:state="http://panax.io/state"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns:initial="http://panax.io/xover/state/initial"
+xmlns:initial="http://panax.io/state/initial"
 xmlns:data="http://panax.io/source"
 exclude-result-prefixes="#default xsl px xo xsi"
 >
@@ -40,7 +40,7 @@ exclude-result-prefixes="#default xsl px xo xsi"
 	</xsl:template>-->
 
 	<xsl:template match="px:Entity[@xsi:type='form:control']">
-		<xsl:if test="data:rows/*/@*[not(namespace-uri()='http://panax.io/xover/state/initial')][key('changed',concat(../@xo:id,'::',local-name()))]">
+		<xsl:if test="data:rows/*/@*[namespace-uri()=''][key('changed',concat(../@xo:id,'::',local-name()))]">
 			<li class="ms-3" xo-scope="{@xo:id}">
 				<a class="text-muted" href="#" onclick="submit(scope.$$('data:rows/*'))">
 					<button class="btn btn-success">Guardar</button>

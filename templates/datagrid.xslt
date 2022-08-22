@@ -5,6 +5,7 @@
   xmlns:xo="http://panax.io/xover"
   xmlns:state="http://panax.io/state"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:control="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:CardView="http://panax.io/widgets/cardview"
@@ -16,14 +17,16 @@
   xmlns:width = "http://panax.io/state/width"
   xmlns:px="http://panax.io/entity"
   xmlns:layout="http://panax.io/layout"
-  exclude-result-prefixes="xo state xsl CardView data height width data story temp px layout"
+  xmlns:datagrid="http://panax.io/widgets/datagrid"
+  exclude-result-prefixes="xo state xsl datagrid CardView data height width data story temp px layout"
 >
 	<xsl:import href="cardview.xslt"/>
 	<xsl:import href="values.xslt"/>
 
-	<xsl:key name="combobox" match="px:Association[px:Entity/@xsi:type='combobox:control']" use="@Name"/>
-	<xsl:key name="money" match="px:Field[@DataType='money']" use="@Name"/>
+	<xsl:key name="combobox" match="px:Association[px:Entity/@xsi:type='combobox:control']" use="concat(../@xo:id,'::',@Name)"/>
+	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(../@xo:id,'::',@Name)"/>
 	<xsl:key name="data_rows" match="data:rows/xo:r" use="../../@xo:id"/>
+	<xsl:key name="data_row" match="data:rows/xo:r" use="@xo:id"/>
 
 	<xsl:key name="selected" match="*[@state:active]" use="''"/>
 	<xsl:key name="selected" match="/*[not(//@state:active)]" use="''"/>
@@ -47,81 +50,92 @@
 	<xsl:key name="ref_fields" match="item[@type='table'][item[@type='database']]" use="concat(translate(item[@type='database']/@title, '_', ' '),'::',@type)"/>
 	<xsl:key name="ref_data" match="data:rows" use="concat(translate(../@title, '_', ' '),'::',string(../@type))"/>
 	<xsl:key name="distinct" match="data:rows" use="concat(../@title,'::',@title)"/>
-	<xsl:template match="/">
-		<div class="container">
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>
-			<style></style>/style>
-			<xsl:choose>
-				<xsl:when test="key('selected','')">
-					<xsl:apply-templates select="key('selected','')[last()]"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<button onclick="xover.stores.active.$$('//@state:active').removeAll()">Reset</button>
-				</xsl:otherwise>
-			</xsl:choose>
-		</div>
-	</xsl:template>
 
-	<xsl:template match="px:Entity">
-		<xsl:variable name="rows" select="key('data_rows',@xo:id)"/>
-		<div class="row g-5">
+	<xsl:template mode="datagrid:widget" match="*">
+		<xsl:param name="rows" select="../data:rows/*"/>
+		<xsl:param name="fields" select="../px:Record/*"/>
+		<xsl:param name="layout" select="*"/>
+		<div class="row">
 			<table class="table table-striped table-hover">
 				<thead>
-					<tr>
-						<xsl:apply-templates mode="datagrid.header" select="layout:layout">
-							<xsl:with-param name="fields" select="px:Record"/>
-							<xsl:with-param name="rows" select="$rows"/>
-						</xsl:apply-templates>
-					</tr>
+					<xsl:apply-templates mode="datagrid:header" select=".">
+						<xsl:with-param name="fields" select="$fields"/>
+						<xsl:with-param name="rows" select="$rows[key('data_row',@xo:id)]"/>
+					</xsl:apply-templates>
 				</thead>
 				<tbody class="table-group-divider">
-					<xsl:apply-templates mode="datagrid.body" select="$rows">
-						<xsl:with-param name="fields" select="px:Record"/>
-						<xsl:with-param name="layout" select="layout:layout"/>
+					<xsl:apply-templates mode="datagrid:body" select=".">
+						<xsl:with-param name="fields" select="$fields"/>
+						<xsl:with-param name="rows" select="$rows[key('data_row',@xo:id)]"/>
+						<xsl:with-param name="layout" select="$layout"/>
 					</xsl:apply-templates>
 				</tbody>
 			</table>
 		</div>
 	</xsl:template>
 
-	<xsl:template mode="datagrid.body" match="data:rows/*">
+	<xsl:template mode="datagrid:body" match="*">
 		<xsl:param name="layout" select="dummy"/>
-		<xsl:apply-templates mode="datagrid.body" select="$layout">
+		<xsl:apply-templates mode="datagrid:body" select="$layout">
 			<xsl:with-param name="row" select="current()"/>
 		</xsl:apply-templates>
 	</xsl:template>
 
-	<xsl:template mode="datagrid.header" match="layout:layout">
+	<xsl:template mode="datagrid:header" match="*">
 		<xsl:param name="fields" select="dummy"/>
-		<tr>
-			<th scope="row">
-				#
-			</th>
-			<th scope="row">
-				&#160;
-			</th>
-			<xsl:apply-templates mode="datagrid.header">
-				<xsl:with-param name="fields" select="$fields"/>
-			</xsl:apply-templates>
-			<th scope="row">
-				&#160;
-			</th>
-		</tr>
+		<xsl:param name="rows" select="dummy"/>
+		<xsl:if test="$rows">
+			<tr>
+				<th scope="row">
+					#
+				</th>
+				<th scope="row">
+					&#160;
+				</th>
+				<xsl:apply-templates mode="datagrid:header.column">
+					<xsl:with-param name="fields" select="$fields"/>
+				</xsl:apply-templates>
+				<th scope="row">
+					&#160;
+				</th>
+			</tr>
+		</xsl:if>
 	</xsl:template>
 
-	<xsl:template mode="datagrid.header" match="layout:layout//*">
+	<xsl:template mode="datagrid:header.column" match="*">
 		<xsl:param name="fields" select="dummy"/>
-		<th scope="col">
-			<xsl:value-of select="$fields/*[@Id=current()/@id]/@headerText"/>
+		<xsl:variable name="field" select="$fields[@Id=current()/@id]"/>
+		<th scope="col" ondblclick="this.toggle('contenteditable','')" xo-scope="{$field/@xo:id}" xo-attribute="headerText">
+			<xsl:value-of select="$field/@headerText"/>
 		</th>
 	</xsl:template>
 
-	<xsl:template mode="datagrid.body" match="layout:layout">
-		<xsl:param name="row" select="dummy"/>
+	<xsl:template mode="datagrid:body" match="*">
+		<xsl:param name="rows" select="dummy"/>
+		<xsl:param name="layout" select="dummy"/>
+		<xsl:choose>
+			<xsl:when test="not($rows)">
+				<tr>
+					<td colspan="{count($layout)+3}" style="text-align:center">
+						Sin elementos
+					</td>
+				</tr>
+			</xsl:when>
+			<xsl:otherwise>
+					<xsl:apply-templates mode="datagrid:body.row" select="$rows">
+						<xsl:with-param name="layout" select="$layout"/>
+					</xsl:apply-templates>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template mode="datagrid:body.row" match="*">
+		<xsl:param name="row" select="."/>
+		<xsl:param name="layout" select="dummy"/>
 		<xsl:choose>
 			<xsl:when test="$row/@state:delete">
 				<tr xo-scope="{$row/@xo:id}" style="height: 15px !important;background-color: #dc3545 !important;">
-					<td colspan="10" style="text-align: center;">
+					<td colspan="{count($layout)+3}" style="text-align: center;">
 						<div class="" xo-attribute="state:delete">
 							<span class="badge-delete p-1 badge-danger-light" onclick="scope.remove()">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
@@ -139,14 +153,14 @@
 						<xsl:value-of select="$row/@state:position"/>
 					</th>
 					<th>
-						<div class="btn btn-info" onclick="window.location.href='#{$row/ancestor::px:Entity[1]/@Schema}/{$row/ancestor::px:Entity[1]/@Name}~edit:{$row/@value}'">
+						<div class="btn btn-primary" onclick="window.location.href='#{$row/ancestor::px:Entity[1]/@Schema}/{$row/ancestor::px:Entity[1]/@Name}~edit:{$row/@value}'">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
 								<path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
 								<path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
 							</svg>
 						</div>
 					</th>
-					<xsl:apply-templates mode="datagrid.body">
+					<xsl:apply-templates mode="datagrid:body" select="$layout">
 						<xsl:with-param name="row" select="$row"/>
 					</xsl:apply-templates>
 					<th>
@@ -162,7 +176,7 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<xsl:template mode="datagrid.body" match="layout:layout//*">
+	<xsl:template mode="datagrid:body" match="layout:layout//*">
 		<xsl:param name="row" select="dummy"/>
 		<td>
 			<xsl:apply-templates select="$row/@*[name()=current()/@name]"/>
@@ -171,9 +185,9 @@
 
 	<xsl:key name="selected" match="*[@state:selected]" use="@xo:id"/>
 
-	<xsl:template mode="datagrid.list" match="*|text()"/>
+	<xsl:template mode="datagrid:list" match="*|text()"/>
 
-	<xsl:template mode="datagrid.list" match="data:rows/*">
+	<xsl:template mode="datagrid:list" match="data:rows/*">
 		<li class="list-group-item d-flex justify-content-between lh-sm">
 			<div>
 				<h6 class="my-0">

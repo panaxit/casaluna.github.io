@@ -28,10 +28,10 @@ Object.defineProperty(xo.session, 'logout', {
 })
 
 xo.listener.on('change::xo:r/@*', function ({ element, attribute, old }) {
-    if (!(element.getAttributeNodeNS('http://panax.io/xover/state/initial', attribute.localName))) {
+    if (!(element.getAttributeNodeNS('http://panax.io/state/initial', attribute.localName))) {
         element.set(`initial:${attribute.localName}`, old);
     }
-    if (!["http://panax.io/xover/state", "http://panax.io/state"].includes(attribute.namespaceURI.split(/\//g, 5).join('/'))) {
+    if (!["http://panax.io/state"].includes(attribute.namespaceURI.split(/\//g, 4).join('/'))) {
         element.set(`prev:${attribute.localName}`, old);
     }
 })
@@ -156,7 +156,7 @@ px.loadData = function (entities, identity) {
         let text = entity.$$(`@combobox:text|px:Record/px:Field[not(@IsIdentity="1")][1]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift()
 
         let predicate = id && identity && `[${id.value}] IN (${(identity && identity != 'NULL' ? `'${identity}'` : null) || 'null'})` || ''
-        let parent_entity = entity.$('ancestor::px:Entity');
+        let parent_entity = entity.$('ancestor::px:Entity[1]');
         if (parent_entity && parent_entity.$('data:rows/*')) {
             let parent_relationship = entity.$('parent::px:Association[@Type="hasMany"]/px:Mappings')
             let mappings = parent_relationship && parent_relationship.$$('px:Mapping').map(map => `[${entity.get("Name")}].[${map.get("Referencer")}] IN (${parent_entity.$$('data:rows/*').map(row => (row.get(map.get("Referencee")) || 'NULL')).join(',')})`) || [];
@@ -169,10 +169,10 @@ px.loadData = function (entities, identity) {
 
         //fields = fields.map(field => `[@${field}]=RTRIM([${field}])`);
         if (text && !fields['@text']) {
-            fields["text"] = `RTRIM([${text.value}])`;
+            fields["text"] = `RTRIM(#panax.prepareValue([${text.value}]))`;
         }
         if (id && !fields['@value']) {
-            fields["value"] = `RTRIM([${id.value}])`;
+            fields["value"] = `RTRIM(#panax.prepareValue([${id.value}]))`;
         }
         entity.setAttribute("data:rows", `${Object.entries(fields).map(([key, value]) => `[@${key}]=${value}`).join(',')}~>[${entity.get("Schema")}].[${entity.get("Name")}]=>${predicate || ''}#:=1/${!parent_entity ? '10' : '1000'}`)
     }
@@ -221,7 +221,8 @@ px.getData = async function (...args) {
     args.push(parameters);
     args.push(settings);
     let response = await xo.server.request.apply(this, args);
-    let entity = node.$('parent::px:Entity[//px:Entity[@mode="add"]]')
+    let entity = node.parentElement.$('self::px:Entity[@mode="add"][not(parent::px:Association)]')
+    //let entity = node.$('parent::px:Entity[//px:Entity[@mode="add"]]')
     if (entity && !(response.documentElement.firstElementChild)) {
         let fields = [...new Set(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => field.$("@Name|@Referencer").value + '=""'))].join(' ')
         response.documentElement.append(xo.xml.createNode(`<xo:r xmlns:xo="http://panax.io/xover" ${fields}/>`))
@@ -230,27 +231,58 @@ px.getData = async function (...args) {
 }
 
 xo.listener.on('appendChildren::data:rows', function ({ node }) {
-    let empty_node = node.$('xo:empty')
-    if (empty_node) {
-        let entity = node.$('parent::px:Entity[//px:Entity[@mode="add"]]')
-        if (entity) {
-            let fields = [...new Set(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => field.$("@Name|@Referencer").value + '=""'))].join(' ')
-            empty_node.replace(xo.xml.createNode(`<xo:r xmlns:xo="http://panax.io/xover" ${fields}/>`))
-        }
-    }
+    //let empty_node = node.$('xo:empty')
+    //if (empty_node) {
+    //    let entity = node.parentElement.$('self::px:Entity[@mode="add"][not(parent::px:Association)]')
+    //    if (entity) {
+    //        let fields = [...new Set(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => field.$("@Name|@Referencer").value + '=""'))].join(' ')
+    //        empty_node.replace(xo.xml.createNode(`<xo:r xmlns:xo="http://panax.io/xover" ${fields}/>`))
+    //    }
+    //}
     px.loadData(node.parentNode.$$(`px:Record/px:Association/px:Entity`));
 })
+
+xo.listener.on(`change::px:Entity/data:rows/xo:r/@*`, function ({ element, attribute, old, value }) {
+    let entity = attribute.$('ancestor::px:Entity[1]')
+    switch (entity.get("Schema") + '.' + entity.get("Name")) {
+        case "Egresos.Gastos":
+            if (['Total', 'TotalPagado'].includes(attribute.name)) {
+                element.set("Saldo", element.get("Total") - element.get("TotalPagado"))
+            }
+            break;
+        case "Egresos.Compras":
+            let Cantidad = element.get("Cantidad");
+            let TotalCompraPesos = element.get("TotalCompraPesos");
+            let TotalCompraDolares = element.get("TotalCompraDolares");
+            element.set("PrecioUnitarioPesos", TotalCompraPesos / Cantidad)
+            element.set("PrecioUnitarioDolares", TotalCompraDolares / Cantidad)
+            break;
+        default:
+            break;
+    }
+})
+
+xo.listener.on('beforeChange::@headerText', function ({ element, attribute, value, old }) {
+    if (!element.has(`initial:${attribute.localName}`)) {
+        element.set(`initial:${attribute.localName}`, old)
+    }
+    event.detail.value = event.detail.value.replace(/:/g, '').trim()
+})
+
+function saveConfiguration() {
+    xo.stores.active.documentElement.$$('//px:Record/*/@initial:*').map(attr => [`[${attr.parentNode.$('ancestor::px:Entity[1]').get('Schema')}].[${attr.parentNode.$('ancestor::px:Entity[1]').get('Name')}]`, (attr.parentNode.get("AssociationName") || attr.parentNode.get("Name")), `@${attr.localName}`, attr.parentNode.get(attr.localName)]).map(el => el.map(item => `'${item}'`)).forEach(config => xo.server.request({ command: "[#entity].[config]", parameters: config }, {}))
+}
 
 function submit(data_rows) {
     for (let row of data_rows) {
         let post = xo.xml.createNode(`<batch xmlns="http://panax.io/persistence" xmlns:state="http://panax.io/state" xmlns:session="http://panax.io/session"/>`)
-        let entity = row.$('ancestor::px:Entity');
+        let entity = row.$('ancestor::px:Entity[1]');
         let id = entity.$(`px:Record/px:Field[@IsIdentity="1"]`)
         let data;
         if (row.$('self::*[@state:delete]')) {
             post.append(xo.xml.createNode(`<dataTable xmlns="http://panax.io/persistence" name="[${entity.get("Schema")}].[${entity.get("Name")}]"${id ? ` identityKey="${id.get("Name")}"` : ''}><deleteRow${id ? ` identityValue="${row.get(id.get("Name"))}"` : ''}>${entity.$$('px:Record/px:Field').map((field) => {
                 let field_name = field.get("Name");
-                let isPK = field.$(`ancestor::px:Entity/px:PrimaryKeys/px:PrimaryKey[@Field_Name="${field_name}"]`)
+                let isPK = field.$(`ancestor::px:Entity[1]/px:PrimaryKeys/px:PrimaryKey[@Field_Name="${field_name}"]`)
                 if (isPK) {
                     return `<field name="${field.get("Name")}"${isPK ? ` currentValue="'${row.get(`initial:${field.get("Name")}`) || row.get(field.get("Name"))}'" isPK="true"` : ''}></field>`
                 }
@@ -261,7 +293,7 @@ function submit(data_rows) {
             post.append(xo.xml.createNode(`<dataTable xmlns="http://panax.io/persistence" name="[${entity.get("Schema")}].[${entity.get("Name")}]"${id ? ` identityKey="${id.get("Name")}"` : ''}>
     <insertRow>${entity.$$('px:Record/px:Field[not(@IsIdentity="1" or @formula)]').map((field) => {
                 let field_name = field.get("Name");
-                let isPK = field.$(`ancestor::px:Entity/px:PrimaryKeys/px:PrimaryKey[@Field_Name="${field_name}"]`)
+                let isPK = field.$(`ancestor::px:Entity[1]/px:PrimaryKeys/px:PrimaryKey[@Field_Name="${field_name}"]`)
                 return `<field name="${field.get("Name")}"${isPK ? ` isPK="true"` : ''}>${[row.get(field.get("Name"))].map(val => !val && (field.get("defaultValue") || 'null') || `'${val}'`)}</field>`
             }).join('')
                 }</insertRow></dataTable>`))
@@ -270,7 +302,7 @@ function submit(data_rows) {
             post.append(xo.xml.createNode(`<dataTable xmlns="http://panax.io/persistence" name="[${entity.get("Schema")}].[${entity.get("Name")}]"${id ? ` identityKey="${id.get("Name")}"` : ''}><updateRow${id ? ` identityValue="${row.get(id.get("Name"))}"` : ''}>${entity.$$('px:Record/px:Field[not(@IsIdentity="1" or @formula)]').map((field) => {
                 let field_name = field.get("Name");
                 let new_value = row.get(field_name);
-                let isPK = field.$(`ancestor::px:Entity/px:PrimaryKeys/px:PrimaryKey[@Field_Name="${field_name}"]`)
+                let isPK = field.$(`ancestor::px:Entity[1]/px:PrimaryKeys/px:PrimaryKey[@Field_Name="${field_name}"]`)
 
                 return `<field name="${field.get("Name")}"${isPK ? ` currentValue="'${row.get(`initial:${field.get("Name")}`) || row.get(field.get("Name"))}'" isPK="true"` : ''}>${[new_value].map(val => !val && 'null' || `'${val}'`)}</field>`
             }
