@@ -316,7 +316,7 @@
 		<xsl:param name="row" select="$current/.."/>
 		<xsl:param name="data_set" select="$field/px:Entity/data:rows"/>
 		<div class="input-group">
-			<select class="form-select" xo-scope="{$row/@xo:id}" xo-attribute="{name()}">
+			<select class="form-select" xo-scope="{$row/@xo:id}" xo-attribute="{name()}" onchange="scope.parentNode.set('{$data_set/../../@Name}',this[this.selectedIndex].text)">
 				<xsl:for-each select="$field/px:Mappings/px:Mapping">
 					<xsl:attribute name="onchange">
 						<xsl:text/>scope.set('<xsl:value-of select="@Referencer"/>',this.value);<xsl:text/>

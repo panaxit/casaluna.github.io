@@ -59,15 +59,15 @@
 		<div class="row">
 			<style>
 				tr.deleting:after {
-					background: red;
-					content: '';
-					left: 50%;
-					position: absolute;
-					transform: translateX(-50%) translateY(50%);
-					width: 70%;
-					height: 25px;
-					vertical-align: middle;
-					opacity: .5;
+				background: red;
+				content: '';
+				left: 50%;
+				position: absolute;
+				transform: translateX(-50%) translateY(50%);
+				width: 70%;
+				height: 25px;
+				vertical-align: middle;
+				opacity: .5;
 				}
 			</style>
 			<table class="table table-striped table-hover">
@@ -172,12 +172,12 @@
 						<xsl:text>deleting</xsl:text>
 					</xsl:if>
 				</xsl:variable>
+				<xsl:variable name="identity" select="$row/@value"/>
 				<tr xo-scope="{$row/@xo:id}" onclick="scope.set('state:selected',true)" class="{$class}">
 					<th scope="row">
 						<xsl:value-of select="$row/@state:position"/>
 					</th>
 					<th>
-						<xsl:variable name="identity" select="$row/@value"/>
 						<xsl:if test="$identity!=''">
 							<div class="btn btn-primary" onclick="window.location.href='#{$row/ancestor::px:Entity[1]/@Schema}/{$row/ancestor::px:Entity[1]/@Name}~edit:{$identity}'">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
@@ -192,6 +192,9 @@
 					</xsl:apply-templates>
 					<th>
 						<div class="btn btn-danger" onclick="scope.toggle('state:delete',true)">
+							<xsl:if test="not($identity!='')">
+								<xsl:attribute name="onclick">scope.remove()</xsl:attribute>
+							</xsl:if>
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
 								<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
 								<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>

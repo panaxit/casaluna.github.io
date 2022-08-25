@@ -59,10 +59,9 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
     var on_success = function (xml_document) { xover.stores.active = xml_document; };
     let rebuild;
     let prev = (xo.state.prev || [])[0] || {};
-    let parent_store = xo.stores[prev.store];
-    let ref_node = parent_store && parent_store.findById(prev.id) || null;
+    let ref_store = xo.stores[prev.store];
+    let ref_node = ref_store && ref_store.findById(prev.id) || null;
     association_ref = ref_node && ref_node.$("ancestor::px:Entity[1]/parent::px:Association").get("AssociationName")
-    //parent_store.findById((xo.state.prev || [])[0].split('::')[1])
     if (typeof (request_or_entity_name) == 'string') {
         let parts = request_or_entity_name.split('/') || [];
         entity_name = parts.pop();
@@ -287,6 +286,15 @@ function saveConfiguration() {
 }
 
 function submit(data_rows) {
+    let prev = (xo.state.prev || [])[0] || {};
+    let ref_store = xo.stores[prev.store];
+    let ref_node = ref_store && ref_store.findById(prev.id) || null;
+
+    if (ref_node) {
+        ref_node.append(...data_rows)
+        history.go(-1)
+        return
+    } 
     for (let row of data_rows) {
         let post = xo.xml.createNode(`<batch xmlns="http://panax.io/persistence" xmlns:state="http://panax.io/state" xmlns:session="http://panax.io/session"/>`)
         let entity = row.$('ancestor::px:Entity[1]');

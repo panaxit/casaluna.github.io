@@ -23,7 +23,7 @@
 	<xsl:import href="datagrid.xslt"/>
 	<xsl:import href="templates/form.xslt"/>
 	<xsl:template match="/">
-		<div class="container-fluid">
+		<div class="container">
 			<xsl:apply-templates select="px:Entity/layout:layout"/>
 		</div>
 	</xsl:template>
