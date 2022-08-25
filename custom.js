@@ -58,8 +58,10 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
     var page_index, page_size;
     var on_success = function (xml_document) { xover.stores.active = xml_document; };
     let rebuild;
-    let prev = (xo.state.prev || [])[0] || '';
-    let parent_store = xo.stores[prev.split('::')[0]];
+    let prev = (xo.state.prev || [])[0] || {};
+    let parent_store = xo.stores[prev.store];
+    let ref_node = parent_store && parent_store.findById(prev.id) || null;
+    association_ref = ref_node && ref_node.$("ancestor::px:Entity[1]/parent::px:Association").get("AssociationName")
     //parent_store.findById((xo.state.prev || [])[0].split('::')[1])
     if (typeof (request_or_entity_name) == 'string') {
         let parts = request_or_entity_name.split('/') || [];
@@ -116,6 +118,7 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
             Response.addStylesheet({ href: "page_controls.xslt", target: "@#shell #page_controls" });
             Response.addStylesheet({ href: "shell_buttons.xslt", target: "@#shell #shell_buttons", action: "replace" });
             Response.documentElement.setAttributeNS(xover.spaces["xmlns"], "xmlns:data", "http://panax.io/source");
+            association_ref && Response.documentElement.$$(`*[local-name()="layout"]/association:*[@name="${association_ref}"]`).remove()
             px.loadData([Response.$('px:Entity')], mode == 'add' && 'NULL' || identity)
             return Response;
             /*
@@ -345,7 +348,7 @@ function submit(data_rows) {
     //})
 }
 
-xover.dom.navigateTo = function (hashtag, ref) {
+xover.dom.navigateTo = function (hashtag, ref_id) {
     hashtag = (hashtag || "").replace(/^([^#])/, '#$1');
     if ([xover.state.seed, ...(xover.state.activeTags() || [])].includes(hashtag) || xover.stores[hashtag].isRendered) { //TODO: Revisar si isRendered siempre 
         xover.state.active = hashtag;
@@ -354,7 +357,7 @@ xover.dom.navigateTo = function (hashtag, ref) {
 
         let public_hashtag = hashtag//Array.prototype.coalesce(public_hashtag || hashtag)
         var prev = (history.state["prev"] || [])
-        prev.unshift(xo.state.seed + '::' + ref)
+        prev.unshift({ store: xo.state.seed, id: ref_id })
         history.pushState({
             seed: hashtag
             //, active: hashtag
