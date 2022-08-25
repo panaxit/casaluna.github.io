@@ -21,6 +21,7 @@ Object.defineProperty(xo.session, 'logout', {
                 xo.stores[store].remove()
             }
             xover.session.status = 'unauthorized';
+            history.go(-xo.state.position + 1);
         } catch (e) {
             if (e.message) alert(e.message);
         }
@@ -57,6 +58,9 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
     var page_index, page_size;
     var on_success = function (xml_document) { xover.stores.active = xml_document; };
     let rebuild;
+    let prev = (xo.state.prev || [])[0] || '';
+    let parent_store = xo.stores[prev.split('::')[0]];
+    //parent_store.findById((xo.state.prev || [])[0].split('::')[1])
     if (typeof (request_or_entity_name) == 'string') {
         let parts = request_or_entity_name.split('/') || [];
         entity_name = parts.pop();
@@ -156,6 +160,7 @@ px.loadData = function (entities, identity) {
         let text = entity.$$(`@combobox:text|px:Record/px:Field[not(@IsIdentity="1")][1]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift()
 
         let predicate = id && identity && `[${id.value}] IN (${(identity && identity != 'NULL' ? `'${identity}'` : null) || 'null'})` || ''
+        predicate = predicate || identity=='NULL' && "1=0" || ""
         let parent_entity = entity.$('ancestor::px:Entity[1]');
         if (parent_entity && parent_entity.$('data:rows/*')) {
             let parent_relationship = entity.$('parent::px:Association[@Type="hasMany"]/px:Mappings')
@@ -174,7 +179,7 @@ px.loadData = function (entities, identity) {
         if (id && !fields['@value']) {
             fields["value"] = `RTRIM(#panax.prepareValue([${id.value}]))`;
         }
-        entity.setAttribute("data:rows", `${Object.entries(fields).map(([key, value]) => `[@${key}]=${value}`).join(',')}~>[${entity.get("Schema")}].[${entity.get("Name")}]=>${predicate || ''}#:=1/${!parent_entity ? '10' : '1000'}`)
+        entity.setAttribute("data:rows", `${Object.entries(fields).map(([key, value]) => `[@${key}]=${value}`).join(',')}~>[${entity.get("Schema")}].[${entity.get("Name")}]=>${predicate || ''}#:=1/${!parent_entity ? '100' : '1000'}`)
     }
 }
 
@@ -257,6 +262,11 @@ xo.listener.on(`change::px:Entity/data:rows/xo:r/@*`, function ({ element, attri
             element.set("PrecioUnitarioPesos", TotalCompraPesos / Cantidad)
             element.set("PrecioUnitarioDolares", TotalCompraDolares / Cantidad)
             break;
+        case "Ingresos.Venta":
+            let TotalArticulos = element.get("Monto");
+            let Descuento = element.get("Descuento");
+            element.set("MontoTotal", TotalArticulos - Descuento)
+            break;
         default:
             break;
     }
@@ -333,4 +343,23 @@ function submit(data_rows) {
     //xo.server.post({
     //    body: body
     //})
+}
+
+xover.dom.navigateTo = function (hashtag, ref) {
+    hashtag = (hashtag || "").replace(/^([^#])/, '#$1');
+    if ([xover.state.seed, ...(xover.state.activeTags() || [])].includes(hashtag) || xover.stores[hashtag].isRendered) { //TODO: Revisar si isRendered siempre 
+        xover.state.active = hashtag;
+    } else {
+        xover.state.next = hashtag;
+
+        let public_hashtag = hashtag//Array.prototype.coalesce(public_hashtag || hashtag)
+        var prev = (history.state["prev"] || [])
+        prev.unshift(xo.state.seed + '::' + ref)
+        history.pushState({
+            seed: hashtag
+            //, active: hashtag
+            , prev: prev
+        }, ((event || {}).target || {}).textContent, public_hashtag);
+    }
+    xover.stores.active.render();
 }

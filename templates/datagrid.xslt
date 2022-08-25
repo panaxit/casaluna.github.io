@@ -23,6 +23,7 @@
 	<xsl:import href="cardview.xslt"/>
 	<xsl:import href="values.xslt"/>
 
+	<xsl:key name="password" match="px:Field[contains(@xsi:type,'password')]" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 	<xsl:key name="combobox" match="px:Association[px:Entity/@xsi:type='combobox:control']" use="concat(../@xo:id,'::',@Name)"/>
 	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(../@xo:id,'::',@Name)"/>
 	<xsl:key name="data_rows" match="data:rows/xo:r" use="../../@xo:id"/>
@@ -117,14 +118,19 @@
 			<xsl:when test="not($rows)">
 				<tr>
 					<td colspan="{count($layout)+3}" style="text-align:center">
-						Sin elementos
+						Sin elementos <button type="button" class="btn btn-success" onclick="xover.dom.navigateTo('{concat(../@Schema,'/',../@Name)}~add', '{../data:rows/@xo:id}')">Agregar</button>
 					</td>
 				</tr>
 			</xsl:when>
 			<xsl:otherwise>
-					<xsl:apply-templates mode="datagrid:body.row" select="$rows">
-						<xsl:with-param name="layout" select="$layout"/>
-					</xsl:apply-templates>
+				<xsl:apply-templates mode="datagrid:body.row" select="$rows">
+					<xsl:with-param name="layout" select="$layout"/>
+				</xsl:apply-templates>
+				<!--<tr>
+					<td colspan="{count($layout)+3}" style="text-align:center" onclick="xover.dom.navigateTo('{concat(../@Schema,'/',../@Name)}~add', '{../data:rows/@xo:id}')">
+						<button type="button" class="btn btn-success" onclick="xover.dom.navigateTo('{concat(../@Schema,'/',../@Name)}~add', '{../data:rows/@xo:id}')">Agregar</button>
+					</td>
+				</tr>-->
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

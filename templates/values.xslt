@@ -19,6 +19,7 @@
   exclude-result-prefixes="xo state xsl CardView data height width data story temp px layout"
 >
 	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
+	<xsl:key name="password" match="dummy" use="''"/>
 
 	<xsl:template name="format">
 		<xsl:param name="value">0</xsl:param>
@@ -36,6 +37,10 @@
 
 	<xsl:template match="@*[key('money',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
 		<xsl:value-of select="format-number(translate(.,'$,',''),'$#,##0.00###;-$#,##0.00###')"/>
+	</xsl:template>
+
+	<xsl:template match="@*[key('password',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+		<xsl:text>**********</xsl:text>
 	</xsl:template>
 
 	<xsl:template match="@*[.='']">
