@@ -160,7 +160,7 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
 px.loadData = function (entities, identity) {
     for (entity of entities.filter(el => el)) {
         let id = entity.$$(`@combobox:value|px:Record/px:Field[@IsIdentity="1"]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift()
-        let text = entity.$$(`@combobox:text|px:Record/px:Field[not(@IsIdentity="1")][1]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift()
+        let text = entity.$$(`@displayText|self::*[not(@displayText)]/@combobox:text|px:Record/px:Field[not(@IsIdentity="1")][1]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift()
 
         let predicate = id && identity && `[${id.value}] IN (${(identity && identity != 'NULL' ? `'${identity}'` : null) || 'null'})` || ''
         predicate = predicate || identity=='NULL' && "1=0" || ""
@@ -177,7 +177,7 @@ px.loadData = function (entities, identity) {
 
         //fields = fields.map(field => `[@${field}]=RTRIM([${field}])`);
         if (text && !fields['@text']) {
-            fields["text"] = `RTRIM(#panax.prepareValue([${text.value}]))`;
+            fields["text"] = `RTRIM(#panax.prepareString(${text.value}))`; // No se ponen brackets para los nombres de las funciones
         }
         if (id && !fields['@value']) {
             fields["value"] = `RTRIM(#panax.prepareValue([${id.value}]))`;
