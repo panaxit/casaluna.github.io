@@ -19,17 +19,16 @@
   xmlns:px="http://panax.io/entity"
   xmlns:layout="http://panax.io/layout/view/form"
   xmlns:form="http://panax.io/widgets/form"
-  exclude-result-prefixes="xo state xsl form CardView data height width data story temp px layout"
+  xmlns:container="http://panax.io/layout/container"
+  exclude-result-prefixes="xo readonly container state xsl form CardView data height width data story temp px layout"
 >
+	<xsl:import href="keys.xslt"/>
 	<xsl:import href="values.xslt"/>
 	<xsl:import href="cardview.xslt"/>
 	<xsl:import href="datagrid.xslt"/>
 
 	<xsl:key name="readonly" match="px:Record/px:Field[@mode='readonly']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 	<xsl:key name="readonly" match="@readonly:*" use="concat(ancestor::px:Entity[1]/@xo:id,'::',local-name())"/>
-
-	<xsl:key name="entity" match="px:Entity" use="concat(@Schema,'.',@Name)"/>
-	<xsl:key name="data_field" match="px:Entity/data:rows/*/@*" use="concat(ancestor::px:Entity[1]/@Schema,'.',ancestor::px:Entity[1]/@Name,'.',name())"/>
 
 	<xsl:key name="container" match="px:Association" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 
@@ -51,6 +50,7 @@
 	<xsl:key name="datetime" match="px:Field[starts-with(@xsi:type,'datetime:')]" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 	<xsl:key name="date" match="px:Field[starts-with(@xsi:type,'date:')]" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
+	<xsl:key name="year" match="px:Field[@controlType='year']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 
 	<xsl:key name="formula" match="px:Record/px:Field[@formula]" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 
@@ -227,25 +227,82 @@
 	<xsl:template mode="control" match="px:Record/px:Association[not(@Type='belongsTo')]">
 		<xsl:param name="row" select="dummy"/>
 		<xsl:param name="data" select="dummy"/>
+		<!--layout: <xsl:value-of select="namespace-uri(px:Entity/*[local-name()='layout'])"/>!-->
 		<xsl:apply-templates select="px:Entity/*[local-name()='layout']">
 			<xsl:with-param name="field" select="."/>
+			<xsl:with-param name="row" select="$row"/>
 		</xsl:apply-templates>
 	</xsl:template>
 
-	<xsl:template mode="form:body" match="layout:layout//*">
+	<xsl:template mode="headerText" match="*">
+		<xsl:value-of select="@headerText"/>
+	</xsl:template>
+
+	<xsl:template mode="headerText" match="layout:layout//*">
 		<xsl:param name="fields" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
 		<xsl:variable name="field" select="$fields[@Id=current()/@id]"/>
+		<xsl:value-of select="$field/@headerText"/>
+	</xsl:template>
+
+	<xsl:template mode="headerText" match="layout:layout//container:*">
+		<xsl:param name="fields" select="dummy"/>
+		<xsl:variable name="field" select="$fields[@Name=current()/@name]"/>
+		<xsl:apply-templates mode="headerText" select="$field"/>
+	</xsl:template>
+
+	<xsl:template mode="control" match="layout:layout//*">
+		<xsl:param name="row" select="dummy"/>
+		<xsl:param name="fields" select="dummy"/>
+		<xsl:param name="field" select="$fields[@Id=current()/@id]|current()/self::container:*"/>
 		<xsl:variable name="data" select="$row/@*[name()=current()/@name]"/>
+		<xsl:apply-templates mode="control" select="$field">
+			<xsl:with-param name="row" select="$row"/>
+			<xsl:with-param name="data" select="$data"/>
+		</xsl:apply-templates>
+	</xsl:template>
+
+	<xsl:template mode="control" match="layout:layout//container:*">
+		<xsl:param name="fields" select="dummy"/>
+		<xsl:param name="row" select="dummy"/>
+		<xsl:variable name="field" select="$fields[@Id=current()/@id]"/>
+		<div class="input-group">
+			<xsl:for-each select="*">
+				<xsl:choose>
+					<xsl:when test="position()=1">
+						<xsl:apply-templates mode="control" select=".">
+							<xsl:with-param name="fields" select="$fields"/>
+							<xsl:with-param name="row" select="$row"/>
+						</xsl:apply-templates>
+					</xsl:when>
+					<xsl:otherwise>
+						<div class="input-group-append">
+							<xsl:apply-templates mode="control" select=".">
+								<xsl:with-param name="fields" select="$fields"/>
+								<xsl:with-param name="row" select="$row"/>
+							</xsl:apply-templates>
+						</div>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</div>
+	</xsl:template>
+
+	<xsl:template mode="form:body" match="layout:layout/*">
+		<xsl:param name="fields" select="dummy"/>
+		<xsl:param name="row" select="dummy"/>
+		<xsl:variable name="field" select="$fields[@Id=current()/@id]|current()/self::container:*"/>
 		<div class="mb-3 row">
 			<label for="{@xo:id}" class="col-sm-2 col-form-label" ondblclick="this.toggle('contenteditable','')" xo-scope="{$field/@xo:id}" xo-attribute="headerText">
-				<xsl:value-of select="$field/@headerText"/>
+				<xsl:apply-templates mode="headerText" select="$field">
+					<xsl:with-param name="fields" select="$fields"/>
+				</xsl:apply-templates>
 				<xsl:text>: </xsl:text>
 			</label>
 			<div class="col-sm-10">
-				<xsl:apply-templates mode="control" select="$field">
+				<xsl:apply-templates mode="control" select=".">
 					<xsl:with-param name="row" select="$row"/>
-					<xsl:with-param name="data" select="$data"/>
+					<xsl:with-param name="fields" select="$fields"/>
 				</xsl:apply-templates>
 			</div>
 		</div>
@@ -262,11 +319,19 @@
 			<xsl:attribute name="type">
 				<xsl:choose>
 					<xsl:when test="key('number',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))">number</xsl:when>
+					<xsl:when test="key('year',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))">number</xsl:when>
 					<xsl:when test="key('datetime',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))">datetime-local</xsl:when>
 					<xsl:when test="key('date',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))">date</xsl:when>
 					<xsl:otherwise>text</xsl:otherwise>
 				</xsl:choose>
 			</xsl:attribute>
+			<xsl:choose>
+				<xsl:when test="key('year',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))">
+					<xsl:attribute name="minValue">1900</xsl:attribute>
+					<xsl:attribute name="maxValue">2099</xsl:attribute>
+					<xsl:attribute name="step">1</xsl:attribute>
+				</xsl:when>
+			</xsl:choose>
 			<!--<xsl:attribute name="pattern">
 				<xsl:choose>
 					<xsl:when test="key('money',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))">\${\d}{1,3}.00</xsl:when>
@@ -328,7 +393,7 @@
 					</xsl:when>
 					<xsl:otherwise>
 						<option value="">
-							Selecciona una opción...
+							Selecciona...
 						</option>
 						<xsl:for-each select="$data_set/xo:r">
 							<xsl:sort select="@text"/>

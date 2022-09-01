@@ -1,6 +1,6 @@
 ﻿<?xml-stylesheet type="text/xsl" href="menu.xslt" target="@#shell @#menu"?>
 <menu xmlns:state="http://panax.io/state">
-	<edit>
+	<!--<edit>
 		<item>Copiar a excel</item>
 	</edit>
 	<view>
@@ -10,5 +10,5 @@
 	<notifications/>
 	<messages/>
 	<idioms/>
-	<cart/>
+	<cart/>-->
 </menu>

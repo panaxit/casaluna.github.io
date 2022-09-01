@@ -20,10 +20,11 @@
   xmlns:form="http://panax.io/widgets/form"
   exclude-result-prefixes="xo state xsl form CardView data height width data story temp"
 >
+	<xsl:import href="keys.xslt"/>
 	<xsl:import href="datagrid.xslt"/>
 	<xsl:import href="templates/form.xslt"/>
 	<xsl:template match="/">
-		<div class="container">
+		<div class="container-fluid">
 			<xsl:apply-templates select="px:Entity/layout:layout"/>
 		</div>
 	</xsl:template>
@@ -31,24 +32,7 @@
 	<xsl:template match="px:Entity[@control:type='form:control']/layout:layout">
 		<xsl:param name="row" select="../data:rows/*"/>
 		<xsl:param name="fields" select="../px:Record/*"/>
-		<div class="row g-5">
-			<!--<div class="col-md-5 col-lg-4 order-md-last">
-				<h4 class="d-flex justify-content-between align-items-center mb-3">
-					<span class="text-primary">Catálogo</span>
-					<span class="badge bg-primary rounded-pill">
-						<xsl:value-of select="count($rows)"/>
-					</span>
-				</h4>
-				<ul class="list-group mb-3">
-					<xsl:apply-templates mode="form:list" select="$rows"/>
-				</ul>
-				<form class="card p-2">
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Promo code"/>
-						<button type="submit" class="btn btn-secondary">Redeem</button>
-					</div>
-				</form>
-			</div>-->
+		<div class="row g-5" style="margin-top:0px;">
 			<div class="col-md-9 col-lg-11">
 				<xsl:apply-templates mode="form:body" select=".">
 					<xsl:with-param name="fields" select="$fields"/>
@@ -60,6 +44,7 @@
 
 	<xsl:template mode="control" match="key('entity','Egresos.Compras.PrecioUnitario')" priority="5">
 		<xsl:param name="current" select="."/>
+		<xsl:param name="data" select="dummy"/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
 

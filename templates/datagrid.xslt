@@ -16,9 +16,10 @@
   xmlns:height = "http://panax.io/state/height"
   xmlns:width = "http://panax.io/state/width"
   xmlns:px="http://panax.io/entity"
-  xmlns:layout="http://panax.io/layout"
+  xmlns:layout_datagrid="http://panax.io/layout"
   xmlns:datagrid="http://panax.io/widgets/datagrid"
-  exclude-result-prefixes="xo state xsl datagrid CardView data height width data story temp px layout"
+  xmlns:container="http://panax.io/layout/container"
+  exclude-result-prefixes="xo state xsl container datagrid CardView data height width data story temp px layout_datagrid"
 >
 	<xsl:import href="cardview.xslt"/>
 	<xsl:import href="values.xslt"/>
@@ -58,6 +59,13 @@
 		<xsl:param name="layout" select="*"/>
 		<div class="row">
 			<style>
+
+				tr.deleting, tr.deleting:hover {
+					background: red;
+					color:white !important;
+				}
+				
+				/*
 				tr.deleting:after {
 				background: red;
 				content: '';
@@ -68,7 +76,7 @@
 				height: 25px;
 				vertical-align: middle;
 				opacity: .5;
-				}
+				}*/
 			</style>
 			<table class="table table-striped table-hover">
 				<thead>
@@ -118,9 +126,11 @@
 
 	<xsl:template mode="datagrid:header.column" match="*">
 		<xsl:param name="fields" select="dummy"/>
-		<xsl:variable name="field" select="$fields[@Id=current()/@id]"/>
+		<xsl:variable name="field" select="$fields[@Id=current()/@id]|current()/self::container:*"/>
 		<th scope="col" ondblclick="this.toggle('contenteditable','')" xo-scope="{$field/@xo:id}" xo-attribute="headerText">
-			<xsl:value-of select="$field/@headerText"/>
+			<xsl:apply-templates mode="headerText" select="$field">
+				<xsl:with-param name="fields" select="$fields"/>
+			</xsl:apply-templates>			
 		</th>
 	</xsl:template>
 
@@ -206,7 +216,7 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<xsl:template mode="datagrid:body" match="layout:layout//*">
+	<xsl:template mode="datagrid:body" match="layout_datagrid:layout//*">
 		<xsl:param name="row" select="dummy"/>
 		<td>
 			<xsl:apply-templates select="$row/@*[name()=current()/@name]"/>

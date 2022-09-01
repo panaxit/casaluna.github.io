@@ -1,19 +1,40 @@
+* {
+    /*    background: rgb(0 100 0 / 0.1) !important;
+    outline: 1px solid limegreen !important;*/
+}
+
+html {
+    height: 100%
+}
+
+body {
+    min-height: 100%
+}
+
+body {
+    overflow-y: hidden;
+}
+
+main {
+    overflow-y: auto;
+}
+
 dialog {
     border: solid gray 2px;
     border-radius: 10px;
 }
 
-    /* This is the style for outside the dialog
+/* This is the style for outside the dialog
 when the dialog is displayed
 to make it clear that it is a "modal dialog" and
 the user cannot interact with anything outside it. */
-    ::backdrop, /* for native <dialog> */
-    dialog + .backdrop {
-        /* for dialog-polyfill */
-        /* a transparent shade of gray */
-        background: repeating-linear-gradient( 45deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 1px, rgba(0, 0, 0, 0.3) 1px, rgba(0, 0, 0, 0.3) 20px );
-        backdrop-filter: blur(3px);
-    }
+::backdrop, /* for native <dialog> */
+dialog + .backdrop {
+    /* for dialog-polyfill */
+    /* a transparent shade of gray */
+    background: repeating-linear-gradient( 45deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 1px, rgba(0, 0, 0, 0.3) 1px, rgba(0, 0, 0, 0.3) 20px );
+    backdrop-filter: blur(3px);
+}
 
 /*MyColors*/
 :root {
