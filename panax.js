@@ -48,6 +48,10 @@ xo.listener.on(`change::px:Entity/data:rows/xo:r/@*[not(contains(namespace-uri()
     }
 })
 
+function isnull(value, failover) {
+    return value != null && value || failover;
+}
+
 app = {}
 
 app.request = async function (object_name, mode) {
