@@ -23,7 +23,8 @@
 >
 	<xsl:import href="cardview.xslt"/>
 	<xsl:import href="values.xslt"/>
-
+	<xsl:param name="state:delete"/>
+	
 	<xsl:key name="password" match="px:Field[contains(@xsi:type,'password')]" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 	<xsl:key name="combobox" match="px:Association[px:Entity/@xsi:type='combobox:control']" use="concat(../@xo:id,'::',@Name)"/>
 	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(../@xo:id,'::',@Name)"/>
@@ -164,7 +165,7 @@
 		<xsl:choose>
 			<xsl:when test="1=0 and $row/@state:delete">
 				<tr xo-scope="{$row/@xo:id}" style="height: 15px !important;background-color: #dc3545 !important;">
-					<td colspan="{count($layout)+3}" style="text-align: center;">
+					<td colspan="{count($layout)+3}" style="text-align:center;">
 						<div class="" xo-attribute="state:delete">
 							<span class="badge-delete p-1 badge-danger-light" onclick="scope.remove()">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
@@ -182,7 +183,8 @@
 						<xsl:text>deleting</xsl:text>
 					</xsl:if>
 				</xsl:variable>
-				<xsl:variable name="identity" select="$row/@value"/>
+				<xsl:variable name="identity_key" select="IdentityKey"/>
+				<xsl:variable name="identity" select="$row/@*[name()=ancestor::px:Entity[1]/@IdentityKey]"/>
 				<tr xo-scope="{$row/@xo:id}" onclick="scope.set('state:selected',true)" class="{$class}">
 					<th scope="row">
 						<xsl:value-of select="$row/@state:position"/>

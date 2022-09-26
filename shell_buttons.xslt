@@ -12,7 +12,8 @@ exclude-result-prefixes="#default xsl px xo xsi"
 	<xsl:output method="xml"
 	   omit-xml-declaration="yes"
 	   indent="yes"/>
-
+	<xsl:param name="state:touched"/>
+	<xsl:param name="state:delete"/>
 	<xsl:key name="changed" match="@initial:*" use="concat(../@xo:id,'::',local-name())"/>
 
 	<xsl:template match="/">

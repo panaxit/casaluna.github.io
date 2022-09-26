@@ -25,21 +25,29 @@
 	<xsl:import href="templates/form.xslt"/>
 	<xsl:template match="/">
 		<div class="container-fluid">
-			<xsl:apply-templates select="px:Entity/layout:layout"/>
+			<xsl:variable name="entity" select="px:Entity"/>
+			<xsl:for-each select="$entity/data:rows/xo:r">
+				<xsl:apply-templates select="$entity/layout:layout">
+					<xsl:with-param name="row" select="."/>
+				</xsl:apply-templates>
+			</xsl:for-each>
 		</div>
 	</xsl:template>
 
 	<xsl:template match="px:Entity[@control:type='form:control']/layout:layout">
+		<xsl:param name="current" select="."/>
 		<xsl:param name="row" select="../data:rows/*"/>
 		<xsl:param name="fields" select="../px:Record/*"/>
-		<div class="row g-5" style="margin-top:0px;">
-			<div class="col-md-9 col-lg-11">
-				<xsl:apply-templates mode="form:body" select=".">
-					<xsl:with-param name="fields" select="$fields"/>
-					<xsl:with-param name="row" select="$row"/>
-				</xsl:apply-templates>
+		<xsl:for-each select="$row">
+			<div class="row g-5" style="margin-top:0px;">
+				<div class="col-md-9 col-lg-11">
+					<xsl:apply-templates mode="form:body" select="$current">
+						<xsl:with-param name="fields" select="$fields"/>
+						<xsl:with-param name="row" select="$row"/>
+					</xsl:apply-templates>
+				</div>
 			</div>
-		</div>
+		</xsl:for-each>
 	</xsl:template>
 
 	<xsl:template mode="control" match="key('entity','Egresos.Compras.PrecioUnitario')" priority="5">

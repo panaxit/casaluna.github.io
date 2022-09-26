@@ -18,6 +18,7 @@
   xmlns:layout="http://panax.io/layout/view/form"
   exclude-result-prefixes="xo state xsl CardView data height width data story temp px layout"
 >
+	<xsl:key name="value" match="xo:row/@*" use="concat(../@xo:id,'::',name())"/>
 	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 	<xsl:key name="password" match="dummy" use="''"/>
 
