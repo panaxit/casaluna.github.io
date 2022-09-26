@@ -28,23 +28,24 @@ Object.defineProperty(xo.session, 'logout', {
     }, writable: true, configurable: true
 })
 
-xo.listener.on('beforeRender::#shell', ({ target }) => {
-    [...target.childNodes].removeAll()
+xo.listener.on(['beforeRender::#shell', 'beforeAppendToHTMLElement::MAIN'], ({ target }) => {
+    [...target.childNodes].filter(el => el.matches && !el.matches(`script,[role=alertdialog],[role=alert],[role=dialog]`)).removeAll()
 })
 
-xo.listener.on(['beforeAppendToHTMLElement::MAIN'], ({ target,  }) => {
-    [...target.childNodes].removeAll()
-})
-
-xo.listener.on('change::xo:r/@*', function ({ element, attribute, old, value }) {
-    if (["http://panax.io/state"].includes(attribute.namespaceURI.split(/\//g, 4).join('/'))) return;
+xo.listener.on(`change::xo:r/@*[not(contains(namespace-uri(),'http://panax.io/state'))]`, function ({ element, attribute, old, value }) {
     let initial_value = element.getAttributeNodeNS('http://panax.io/state/initial', attribute.localName);
-    if (value!==null && !initial_value) {
+    if (value !== null && !initial_value) {
         element.set(`initial:${attribute.localName}`, old);
     } else if (initial_value.value === value) {
         initial_value.remove();
     }
     element.set(`prev:${attribute.localName}`, old);
+})
+
+xo.listener.on(`change::px:Entity/data:rows/xo:r/@*[not(contains(namespace-uri(),'http://panax.io/'))]`, function ({ element: row, attribute, old, value }) {
+    if (old != value) {
+        row.$$(`ancestor::px:Entity[1]/px:Record/px:Field/@formula`).map(attr => [attr.parentNode.get("Name"), attr.value.replace(/\[([^\]]+)\]/g, (field) => row.get(field.substring(1, field.length - 1)) || 0)]).forEach(([key, formula]) => row.set(key, eval(formula)))
+    }
 })
 
 app = {}
@@ -93,8 +94,9 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
         on_success = (request_or_entity_name["on_success"] || on_success);
         rebuild = request_or_entity_name["rebuild"]
     }
-    let identity;
-    [mode, identity] = mode.split(':')
+    let identity, primary;
+    [mode, identity] = mode.split(':');
+    [mode, ...primary] = mode.split('/');
     page_size = (page_size || xover.manifest.getSettings(`#${schema}/${mode}:${entity_name}`, "pageSize").pop());
     page_index = (page_index || xover.manifest.getSettings(`#${schema}/${mode}:${entity_name}`, "pageIndex").pop());
     let mock_store = xo.Store(xo.xml.createDocument(`<entity ${xover.json.toAttributes({ filters, mode, page_size, page_index, Name: entity_name, Schema: schema })}/>`), { tag: `${schema}/${mode}:${entity_name}`.toLowerCase() });
@@ -128,7 +130,7 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
             Response.addStylesheet({ href: "shell_buttons.xslt", target: "@#shell #shell_buttons", action: "replace" });
             Response.documentElement.setAttributeNS(xover.spaces["xmlns"], "xmlns:data", "http://panax.io/source");
             association_ref && Response.documentElement.$$(`*[local-name()="layout"]/association:*[@name="${association_ref}"]`).remove()
-            px.loadData([Response.$('px:Entity')], mode == 'add' && 'NULL' || identity)
+            px.loadData([Response.$('px:Entity')], mode == 'add' && { identity: null } || { identity, primary })
             return Response;
             /*
             <?xml-stylesheet type="text/xsl" href="form.xslt" target="@#shell main"?><?xml-stylesheet type="text/xsl" href="title.xslt" target="@#shell nav header h1"?><?xml-stylesheet type="text/xsl" href="shell_buttons.xslt" target="@#shell #shell_buttons" action="replace"?>
@@ -158,21 +160,25 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
         }
     } catch (e) {
         current_store.state.busy = undefined;
-        if (e instanceof HTMLDocument) {
-            return Promise.reject(xover.dom.createDialog(e));
+        if (e.document instanceof HTMLDocument) {
+            return Promise.reject(xover.dom.createDialog(e.document));
         } else {
             return Promise.reject(e);
         }
     }
 }
 
-px.loadData = function (entities, identity) {
+px.loadData = function (entities, keys) {
+    keys = Object.assign({ identity: undefined, primary: [] }, keys)
     for (entity of entities.filter(el => el)) {
-        let id = entity.$$(`@combobox:value|px:Record/px:Field[@IsIdentity="1"]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift()
-        let text = entity.$$(`@displayText|self::*[not(@displayText)]/@combobox:text|px:Record/px:Field[not(@IsIdentity="1")][1]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift()
-
-        let predicate = id && identity && `[${id.value}] IN (${(identity && identity != 'NULL' ? `'${identity}'` : null) || 'null'})` || ''
-        predicate = predicate || identity=='NULL' && "1=0" || ""
+        pks = []
+        id = entity.$$(`px:Record/px:Field[@IsIdentity="1"]/@Name`).map(key => [key, keys.identity])
+        pks = entity.$$(`px:PrimaryKeys/px:PrimaryKey/@Field_Name`).map((key, ix) => [key, keys.primary[ix]])
+        let formatValue = (value => (isNumber(value) || value === null) && String(value) || value !== undefined && `'${value}'` || '');
+        constraints = [...id, ...pks]
+        let predicate = constraints.filter(([, value]) => value !== undefined).map(([key, value]) => `[${key}] IN (${(value instanceof Array) ? value.map(item => formatValue(item)) : formatValue(value)})`).join('AND')
+        //let predicate = id && identity && `[${id.value}] IN (${(identity && identity != 'NULL' ? `'${identity}'` : null) || 'null'})` || ''
+        //predicate = predicate || identity == 'NULL' && "1=0" || ""
         let parent_entity = entity.$('ancestor::px:Entity[1]');
         if (parent_entity && parent_entity.$('data:rows/*')) {
             let parent_relationship = entity.$('parent::px:Association[@Type="hasMany"]/px:Mappings')
@@ -181,15 +187,11 @@ px.loadData = function (entities, identity) {
             predicate = mappings.join(' AND ')
         }
 
-        let fields = Object.fromEntries(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => [field.$("@Name|@Referencer").value, `#panax.${field.get("DataType") == 'nvarchar' ? 'prepareString' : 'prepareValue'}(` + ((field.$("self::px:Field/@Name|self::px:Mapping/@Referencer") || {}).value || `(SELECT ${field.$("px:Entity/@combobox:text").value} FROM [${field.$("px:Entity/@Schema").value}].[${field.$("px:Entity/@Name").value}] parent WHERE ${field.$$('px:Mappings/px:Mapping').map(map => '[' + entity.get("Name") + '].[' + map.get("Referencer") + '] = parent.[' + map.get("Referencee") + ']').join(' AND ')})`) + ')'
-        ]))
+        let fields = Object.fromEntries(constraints.map(([key]) => key).concat(entity.$$('px:Record/px:Field/@Name|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping/@Referencer|px:Record/px:Association[@Type="belongsTo"]/@Name')).map(field => [field.value, `#panax.${field.parentNode.$("self::*[@DataType='nvarchar' or @DataType='foreignKey']") ? 'prepareString' : 'prepareValue'}(` + (field.parentNode.$("self::px:Association") && `(SELECT ${field.parentNode.$("px:Entity/@displayText|px:Entity[not(@displayText)]/@combobox:text").value} FROM [${field.parentNode.$("px:Entity/@Schema").value}].[${field.parentNode.$("px:Entity/@Name").value}] #parent WHERE ${field.parentNode.$$('px:Mappings/px:Mapping').map(map => '[' + entity.get("Name") + '].[' + map.get("Referencer") + '] = #parent.[' + map.get("Referencee") + ']').join(' AND ')})` || `[${field.value}]`) + ')']))
 
-        //fields = fields.map(field => `[@${field}]=RTRIM([${field}])`);
+        let text = entity.$$(`@displayText|self::*[not(@displayText)]/@combobox:text|px:Record/px:Field[not(@IsIdentity="1")][1]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift();
         if (text && !fields['@text']) {
             fields["text"] = `RTRIM(#panax.prepareString(${text.value}))`; // No se ponen brackets para los nombres de las funciones
-        }
-        if (id && !fields['@value']) {
-            fields["value"] = `RTRIM(#panax.prepareValue([${id.value}]))`;
         }
         entity.setAttribute("data:rows", `${Object.entries(fields).map(([key, value]) => `[@${key}]=${value}`).join(',')}~>[${entity.get("Schema")}].[${entity.get("Name")}]=>${predicate || ''}#:=1/${!parent_entity ? '100' : '1000'}`)
     }
@@ -237,14 +239,18 @@ px.getData = async function (...args) {
     }
     args.push(parameters);
     args.push(settings);
-    let response = await xo.server.request.apply(this, args);
-    let entity = node.parentElement.$('self::px:Entity[@mode="add"][not(parent::px:Association)]')
-    //let entity = node.$('parent::px:Entity[//px:Entity[@mode="add"]]')
-    if (entity && !(response.documentElement.firstElementChild)) {
-        let fields = [...new Set(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => field.$("@Name|@Referencer").value + '=""'))].join(' ')
-        response.documentElement.append(xo.xml.createNode(`<xo:r xmlns:xo="http://panax.io/xover" ${fields}/>`))
+    try {
+        let response = await xo.server.request.apply(this, args);
+        let entity = node.parentElement.$('self::px:Entity[@mode="add"][not(parent::px:Association)]')
+        //let entity = node.$('parent::px:Entity[//px:Entity[@mode="add"]]')
+        if (entity && !(response.documentElement.firstElementChild)) {
+            let fields = [...new Set(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => field.$("@Name|@Referencer").value + '=""'))].join(' ')
+            response.documentElement.append(xo.xml.createNode(`<xo:r xmlns:xo="http://panax.io/xover" ${fields}/>`))
+        }
+        return response
+    } catch (e) {
+        return Promise.reject(e)
     }
-    return response
 }
 
 xo.listener.on('appendTo::data:rows', function ({ node }) {
@@ -279,7 +285,7 @@ function submit(data_rows) {
         ref_node.append(...data_rows)
         history.go(-1)
         return
-    } 
+    }
     for (let row of data_rows) {
         let post = xo.xml.createNode(`<batch xmlns="http://panax.io/persistence" xmlns:state="http://panax.io/state" xmlns:session="http://panax.io/session"/>`)
         let entity = row.$('ancestor::px:Entity[1]');
