@@ -50,7 +50,7 @@
 		</xsl:for-each>
 	</xsl:template>
 
-	<xsl:template mode="control" match="key('entity','Egresos.Compras.PrecioUnitario')" priority="5">
+	<xsl:template mode="component" match="key('entity','Egresos.Compras.PrecioUnitario')" priority="5">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="data" select="dummy"/>
 		<xsl:param name="field" select="dummy"/>
@@ -83,7 +83,7 @@
 		</label>
 	</xsl:template>
 
-	<!--<xsl:template mode="control" match="key('data_field','Egresos.Gastos.Saldo')" priority="5">
+	<!--<xsl:template mode="component" match="key('data_field','Egresos.Gastos.Saldo')" priority="5">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
@@ -115,7 +115,7 @@
 		</label>
 	</xsl:template>-->
 
-	<xsl:template mode="control" match="key('entity','Inventarios.Articulos')/data:rows/*/@PrecioVenta">
+	<xsl:template mode="component" match="key('entity','Inventarios.Articulos')/data:rows/*/@PrecioVenta">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>

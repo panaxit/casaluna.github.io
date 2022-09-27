@@ -77,6 +77,8 @@
 	<xsl:key name="ref_fields" match="item[@type='table'][item[@type='database']]" use="concat(translate(item[@type='database']/@title, '_', ' '),'::',@type)"/>
 	<xsl:key name="ref_data" match="data:rows" use="concat(translate(../@title, '_', ' '),'::',string(../@type))"/>
 	<xsl:key name="distinct" match="data:rows" use="concat(../@title,'::',@title)"/>
+
+	<xsl:key name="form:component" match="dummy" use="@xo:id"/>
 	<!--<xsl:template match="/">
 		<div class="container">
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>
@@ -205,6 +207,15 @@
 		</xsl:apply-templates>
 	</xsl:template>
 
+	<xsl:template match="*[key('form:component',@xo:id)]">
+		<xsl:param name="fields" select="../px:Record/*"/>
+		<form class="needs-validation" novalidate="">
+			<div class="row g-3">
+				Form!
+			</div>
+		</form>	
+	</xsl:template>
+
 	<xsl:template mode="form:body" match="layout:layout">
 		<xsl:param name="row" select="../data:rows/*"/>
 		<xsl:param name="fields" select="../px:Record/*"/>
@@ -218,18 +229,18 @@
 		</form>
 	</xsl:template>
 
-	<xsl:template mode="control" match="px:Record/*">
+	<xsl:template mode="component" match="px:Record/*">
 		<xsl:param name="row" select="dummy"/>
 		<xsl:param name="data" select="dummy"/>
 		<span>
-			<xsl:apply-templates mode="control" select="$data">
+			<xsl:apply-templates mode="component" select="$data">
 				<xsl:with-param name="field" select="."/>
 				<xsl:with-param name="row" select="$row"/>
 			</xsl:apply-templates>
 		</span>
 	</xsl:template>
 
-	<xsl:template mode="control" match="px:Record/px:Association[not(@Type='belongsTo')]">
+	<xsl:template mode="component" match="px:Record/px:Association[not(@Type='belongsTo')]">
 		<xsl:param name="row" select="dummy"/>
 		<xsl:param name="data" select="dummy"/>
 		<!--layout: <xsl:value-of select="namespace-uri(px:Entity/*[local-name()='layout'])"/>!-->
@@ -258,20 +269,20 @@
 		<xsl:apply-templates mode="headerText" select="$field"/>
 	</xsl:template>
 
-	<xsl:template mode="control" match="layout:layout//*">
+	<xsl:template mode="component" match="layout:layout//*">
 		<xsl:param name="row" select="dummy"/>
 		<xsl:param name="fields" select="dummy"/>
 		<xsl:param name="field" select="$fields[@Id=current()/@id]|current()/self::container:*"/>
 		<xsl:variable name="data" select="$row/@*[name()=current()/@name]"/>
 		<span>
-			<xsl:apply-templates mode="control" select="$field">
+			<xsl:apply-templates mode="component" select="$field">
 				<xsl:with-param name="row" select="$row"/>
 				<xsl:with-param name="data" select="$data"/>
 			</xsl:apply-templates>
 		</span>
 	</xsl:template>
 
-	<xsl:template mode="control" match="layout:layout//container:*">
+	<xsl:template mode="component" match="layout:layout//container:*">
 		<xsl:param name="fields" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
 		<xsl:variable name="field" select="$fields[@Id=current()/@id]"/>
@@ -279,14 +290,14 @@
 			<xsl:for-each select="*">
 				<xsl:choose>
 					<xsl:when test="position()=1">
-						<xsl:apply-templates mode="control" select=".">
+						<xsl:apply-templates mode="component" select=".">
 							<xsl:with-param name="fields" select="$fields"/>
 							<xsl:with-param name="row" select="$row"/>
 						</xsl:apply-templates>
 					</xsl:when>
 					<xsl:otherwise>
 						<div class="input-group-append">
-							<xsl:apply-templates mode="control" select=".">
+							<xsl:apply-templates mode="component" select=".">
 								<xsl:with-param name="fields" select="$fields"/>
 								<xsl:with-param name="row" select="$row"/>
 							</xsl:apply-templates>
@@ -309,7 +320,7 @@
 				<xsl:text>: </xsl:text>
 			</label>
 			<div class="col-sm-10">
-				<xsl:apply-templates mode="control" select=".">
+				<xsl:apply-templates mode="component" select=".">
 					<xsl:with-param name="row" select="$row"/>
 					<xsl:with-param name="fields" select="$fields"/>
 				</xsl:apply-templates>
@@ -317,7 +328,7 @@
 		</div>
 	</xsl:template>
 
-	<xsl:template mode="control" match="@*">
+	<xsl:template mode="component" match="@*">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
@@ -356,7 +367,7 @@
 		</div>-->
 	</xsl:template>
 
-	<xsl:template mode="control" match="@*[key('textarea',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+	<xsl:template mode="component" match="@*[key('textarea',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
@@ -367,7 +378,7 @@
 		</textarea>
 	</xsl:template>
 
-	<xsl:template mode="control" match="@*[key('yesNo',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+	<xsl:template mode="component" match="@*[key('yesNo',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
 		<div class="btn-group" role="group" style="position:relative;">
 			<button type="button" class="btn btn-outline-success" xo-scope="{../@xo:id}" xo-attribute="{name()}" onclick="scope.toggle('1')">
 				<xsl:if test=".='1'">
@@ -384,7 +395,7 @@
 		</div>
 	</xsl:template>
 
-	<xsl:template mode="control" match="@*[key('combobox',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+	<xsl:template mode="component" match="@*[key('combobox',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="fields" select="dummy"/>
 		<xsl:param name="field" select="$fields[@Id=current()/@id]|current()/self::container:*"/>
@@ -477,7 +488,7 @@
 		</div>
 	</xsl:template>
 
-	<xsl:template mode="control" match="@*[key('radiogroup',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+	<xsl:template mode="component" match="@*[key('radiogroup',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
@@ -506,7 +517,7 @@
 		</xsl:for-each>
 	</xsl:template>
 
-	<xsl:template mode="control" match="@*[key('association',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+	<xsl:template mode="component" match="@*[key('association',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
@@ -514,7 +525,7 @@
 			<xsl:for-each select="$field/px:Mappings/px:Mapping">
 				<xsl:choose>
 					<xsl:when test="position()=1">
-						<xsl:apply-templates mode="control" select="$row/@*[name()=current()/@Referencer]">
+						<xsl:apply-templates mode="component" select="$row/@*[name()=current()/@Referencer]">
 							<xsl:with-param name="data_set" select="$field/px:Entity/data:rows"/>
 							<xsl:with-param name="field" select="current()"/>
 							<xsl:with-param name="row" select="$row"/>
@@ -522,7 +533,7 @@
 					</xsl:when>
 					<xsl:otherwise>
 						<div class="input-group-append">
-							<xsl:apply-templates mode="control" select="$row/@*[name()=current()/@Referencer]">
+							<xsl:apply-templates mode="component" select="$row/@*[name()=current()/@Referencer]">
 								<xsl:with-param name="data_set" select="$field/px:Entity/data:rows"/>
 								<xsl:with-param name="field" select="current()"/>
 								<xsl:with-param name="row" select="$row"/>
@@ -534,7 +545,7 @@
 		</div>
 	</xsl:template>
 
-	<xsl:template mode="control" match="@*[key('readonly',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+	<xsl:template mode="component" match="@*[key('readonly',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
