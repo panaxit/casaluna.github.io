@@ -18,9 +18,12 @@
   xmlns:layout="http://panax.io/layout/view/form"
   exclude-result-prefixes="xo state xsl CardView data height width data story temp px layout"
 >
-	<xsl:key name="value" match="xo:row/@*" use="concat(../@xo:id,'::',name())"/>
+	<xsl:key name="value" match="xo:r/@*" use="concat(../@xo:id,'::',name())"/>
 	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 	<xsl:key name="password" match="dummy" use="''"/>
+	<xsl:key name="combobox" match="dummy" use="''"/>
+
+	<xsl:key name="combobox_text" match="px:Association/px:Entity/data:rows/xo:r/@text" use="concat(ancestor::px:Entity[2]/@xo:id,'::',ancestor::px:Association/px:Mappings/px:Mapping/@Referencer,'::',../@Id)"/>
 
 	<xsl:template name="format">
 		<xsl:param name="value">0</xsl:param>
@@ -44,8 +47,11 @@
 		<xsl:text>**********</xsl:text>
 	</xsl:template>
 
+	<xsl:template match="@*[key('combobox',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+		<xsl:value-of select="key('combobox_text',concat(ancestor::px:Entity[1]/@xo:id,'::',name(),'::',.))[1]"/>
+	</xsl:template>
+
 	<xsl:template match="@*[.='']">
 		<xsl:value-of select="."/>
 	</xsl:template>
-
 </xsl:stylesheet>
