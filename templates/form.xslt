@@ -28,9 +28,10 @@
 	<xsl:import href="datagrid.xslt"/>
 
 	<xsl:key name="readonly" match="px:Record/px:Field[@mode='readonly']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
+	<xsl:key name="readonly" match="px:Record/px:Association[@mode='readonly']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 	<xsl:key name="readonly" match="@readonly:*" use="concat(ancestor::px:Entity[1]/@xo:id,'::',local-name())"/>
 
-	<xsl:key name="container" match="px:Association" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
+	<xsl:key name="association" match="px:Association" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 
 	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 
@@ -220,20 +221,24 @@
 	<xsl:template mode="control" match="px:Record/*">
 		<xsl:param name="row" select="dummy"/>
 		<xsl:param name="data" select="dummy"/>
-		<xsl:apply-templates mode="control" select="$data">
-			<xsl:with-param name="field" select="."/>
-			<xsl:with-param name="row" select="$row"/>
-		</xsl:apply-templates>
+		<span>
+			<xsl:apply-templates mode="control" select="$data">
+				<xsl:with-param name="field" select="."/>
+				<xsl:with-param name="row" select="$row"/>
+			</xsl:apply-templates>
+		</span>
 	</xsl:template>
 
 	<xsl:template mode="control" match="px:Record/px:Association[not(@Type='belongsTo')]">
 		<xsl:param name="row" select="dummy"/>
 		<xsl:param name="data" select="dummy"/>
 		<!--layout: <xsl:value-of select="namespace-uri(px:Entity/*[local-name()='layout'])"/>!-->
-		<xsl:apply-templates select="px:Entity/*[local-name()='layout']">
-			<xsl:with-param name="field" select="."/>
-			<xsl:with-param name="row" select="$row"/>
-		</xsl:apply-templates>
+		<span>
+			<xsl:apply-templates select="px:Entity/*[local-name()='layout']">
+				<xsl:with-param name="field" select="."/>
+				<xsl:with-param name="row" select="$row"/>
+			</xsl:apply-templates>
+		</span>
 	</xsl:template>
 
 	<xsl:template mode="headerText" match="*">
@@ -258,10 +263,12 @@
 		<xsl:param name="fields" select="dummy"/>
 		<xsl:param name="field" select="$fields[@Id=current()/@id]|current()/self::container:*"/>
 		<xsl:variable name="data" select="$row/@*[name()=current()/@name]"/>
-		<xsl:apply-templates mode="control" select="$field">
-			<xsl:with-param name="row" select="$row"/>
-			<xsl:with-param name="data" select="$data"/>
-		</xsl:apply-templates>
+		<span>
+			<xsl:apply-templates mode="control" select="$field">
+				<xsl:with-param name="row" select="$row"/>
+				<xsl:with-param name="data" select="$data"/>
+			</xsl:apply-templates>
+		</span>
 	</xsl:template>
 
 	<xsl:template mode="control" match="layout:layout//container:*">
@@ -397,12 +404,12 @@
 						</option>
 						<xsl:for-each select="$data_set/xo:r">
 							<xsl:sort select="@text"/>
-							<!--<xsl:variable select="value" select=""/>-->
 							<xsl:variable name="option" select="."/>
-							<xsl:variable name="selected">
-								<xsl:if test="$current = @*[$field/@Referencee]">true</xsl:if>
-							</xsl:variable>
-							<option value="{@*[name()=$field/@Referencee]}">
+							<xsl:variable name="value" select="@*[name()=$field/@Referencee]"/>
+							<option value="{$value}">
+								<xsl:variable name="selected">
+									<xsl:if test="$current = $value">true</xsl:if>
+								</xsl:variable>
 								<xsl:if test="$selected = 'true'">
 									<xsl:attribute name="selected"/>
 								</xsl:if>
@@ -413,7 +420,7 @@
 				</xsl:choose>
 			</select>
 			<div class="input-group-append">
-				<div class="input-group-append" style="color:black;">
+				<div class="input-group-append" style="color:black;" xo-scope="{$row/@xo:id}">
 					<button type="button" class="btn btn-secondary btn-lg dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" tabindex="-1">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
 							<path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
@@ -425,15 +432,30 @@
 							<a class="dropdown-item" href="#">Actualizar</a>
 						</li>
 						<xsl:for-each select="$data_set/ancestor::px:Entity[1]">
+							<xsl:variable name="identity" select="$row/@*[name()=ancestor::px:Entity[1]/@IdentityKey]"/>
+							<xsl:variable name="reference">
+								<xsl:choose>
+									<xsl:when test="$identity">
+										<xsl:value-of select="concat(':',$identity)"/>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:for-each select="ancestor::px:Entity[1]/px:PrimaryKeys/px:PrimaryKey/@Field_Name">
+											<xsl:value-of select="concat('/',$row/@*[name()=current()])"/>
+											<!--<xsl:value-of select="concat('/',current(),'/',$row/@*[name()=current()])"/>-->
+										</xsl:for-each>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:variable>
+
 							<li>
 								<a class="dropdown-item" href="#{@Schema}/{@Name}~add">Crear Nuevo</a>
 							</li>
-							<xsl:if test="string($current)!=''">
+							<xsl:if test="string($reference)!=''">
 								<li>
-									<a class="dropdown-item" href="#{@Schema}/{@Name}~edit:{$current}">Editar registro</a>
+									<a class="dropdown-item" href="#{@Schema}/{@Name}~edit{$reference}">Editar registro</a>
 								</li>
 								<li>
-									<a class="dropdown-item" href="#{@Schema}/{@Name}~remove:{$current}">Eliminar registro</a>
+									<a class="dropdown-item" href="#{@Schema}/{@Name}~remove{$reference}">Eliminar registro</a>
 								</li>
 							</xsl:if>
 						</xsl:for-each>
@@ -453,7 +475,6 @@
 				</div>
 			</div>
 		</div>
-
 	</xsl:template>
 
 	<xsl:template mode="control" match="@*[key('radiogroup',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
@@ -485,43 +506,41 @@
 		</xsl:for-each>
 	</xsl:template>
 
-	<xsl:template mode="control" match="@*[key('container',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+	<xsl:template mode="control" match="@*[key('association',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
-		<xsl:for-each select="$field/px:Mappings/px:Mapping">
-			<!--<xsl:apply-templates mode="control" select="key('data_field',concat($current/ancestor::px:Entity[1]/@xo:id,'::',@Referencer))"/>-->
-			<span>
-				<xsl:apply-templates mode="control" select="$row/@*[name()=current()/@Referencer]">
-					<xsl:with-param name="data_set" select="$field/px:Entity/data:rows"/>
-					<xsl:with-param name="field" select="current()"/>
-					<xsl:with-param name="row" select="$row"/>
-				</xsl:apply-templates>
-			</span>
-		</xsl:for-each>
-		<!--<xsl:apply-templates mode="control" select="$field/px:Entity"/>-->
+		<div class="input-group" xo-scope="{$field/@xo:id}">
+			<xsl:for-each select="$field/px:Mappings/px:Mapping">
+				<xsl:choose>
+					<xsl:when test="position()=1">
+						<xsl:apply-templates mode="control" select="$row/@*[name()=current()/@Referencer]">
+							<xsl:with-param name="data_set" select="$field/px:Entity/data:rows"/>
+							<xsl:with-param name="field" select="current()"/>
+							<xsl:with-param name="row" select="$row"/>
+						</xsl:apply-templates>
+					</xsl:when>
+					<xsl:otherwise>
+						<div class="input-group-append">
+							<xsl:apply-templates mode="control" select="$row/@*[name()=current()/@Referencer]">
+								<xsl:with-param name="data_set" select="$field/px:Entity/data:rows"/>
+								<xsl:with-param name="field" select="current()"/>
+								<xsl:with-param name="row" select="$row"/>
+							</xsl:apply-templates>
+						</div>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</div>
 	</xsl:template>
 
 	<xsl:template mode="control" match="@*[key('readonly',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
 		<xsl:param name="current" select="."/>
 		<xsl:param name="field" select="dummy"/>
 		<xsl:param name="row" select="dummy"/>
-		<label for="{@xo:id}" class="form-input">
+		<label for="{../@xo:id}" class="form-input">
 			<xsl:apply-templates select="."/>
 		</label>
 	</xsl:template>
-
-	<!--<xsl:template mode="control" match="@*[key('formula',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
-		<xsl:param name="current" select="."/>
-		<xsl:param name="field" select="dummy"/>
-		<xsl:param name="row" select="dummy"/>
-		<label for="{@xo:id}" class="form-input">
-			-->
-	<!--<script xo-scope="{../@xo:id}">
-				'<xsl:value-of select="$field/@formula"/>'.replace(/\[([^\]]+)\]/g,' $1 ').replace(/CONVERT(\()\s*money\s*,/ig,'$1')
-			</script>-->
-	<!--
-		</label>
-	</xsl:template>-->
 
 </xsl:stylesheet>

@@ -24,7 +24,7 @@
 	<xsl:import href="cardview.xslt"/>
 	<xsl:import href="values.xslt"/>
 	<xsl:param name="state:delete"/>
-	
+
 	<xsl:key name="password" match="px:Field[contains(@xsi:type,'password')]" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 	<xsl:key name="combobox" match="px:Association[px:Entity/@xsi:type='combobox:control']" use="concat(../@xo:id,'::',@Name)"/>
 	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(../@xo:id,'::',@Name)"/>
@@ -62,10 +62,10 @@
 			<style>
 
 				tr.deleting, tr.deleting:hover {
-					background: red;
-					color:white !important;
+				background: red;
+				color:white !important;
 				}
-				
+
 				/*
 				tr.deleting:after {
 				background: red;
@@ -99,9 +99,11 @@
 
 	<xsl:template mode="datagrid:body" match="*">
 		<xsl:param name="layout" select="dummy"/>
-		<xsl:apply-templates mode="datagrid:body" select="$layout">
-			<xsl:with-param name="row" select="current()"/>
-		</xsl:apply-templates>
+		<span>
+			<xsl:apply-templates mode="datagrid:body" select="$layout">
+				<xsl:with-param name="row" select="current()"/>
+			</xsl:apply-templates>
+		</span>
 	</xsl:template>
 
 	<xsl:template mode="datagrid:header" match="*">
@@ -131,7 +133,7 @@
 		<th scope="col" ondblclick="this.toggle('contenteditable','')" xo-scope="{$field/@xo:id}" xo-attribute="headerText">
 			<xsl:apply-templates mode="headerText" select="$field">
 				<xsl:with-param name="fields" select="$fields"/>
-			</xsl:apply-templates>			
+			</xsl:apply-templates>
 		</th>
 	</xsl:template>
 
@@ -142,7 +144,7 @@
 			<xsl:when test="not($rows)">
 				<tr>
 					<td colspan="{count($layout)+3}" style="text-align:center">
-						Sin elementos <button type="button" class="btn btn-success" onclick="xover.dom.navigateTo('{concat(../@Schema,'/',../@Name)}~add', '{../data:rows/@xo:id}')">Agregar</button>
+						Sin elementos
 					</td>
 				</tr>
 			</xsl:when>
@@ -150,13 +152,19 @@
 				<xsl:apply-templates mode="datagrid:body.row" select="$rows">
 					<xsl:with-param name="layout" select="$layout"/>
 				</xsl:apply-templates>
-				<!--<tr>
-					<td colspan="{count($layout)+3}" style="text-align:center" onclick="xover.dom.navigateTo('{concat(../@Schema,'/',../@Name)}~add', '{../data:rows/@xo:id}')">
-						<button type="button" class="btn btn-success" onclick="xover.dom.navigateTo('{concat(../@Schema,'/',../@Name)}~add', '{../data:rows/@xo:id}')">Agregar</button>
-					</td>
-				</tr>-->
 			</xsl:otherwise>
 		</xsl:choose>
+		<xsl:if test="ancestor::px:Entity[2]">
+			<tr xo-scope="{ancestor::px:Entity[1]/@xo:id}">
+				<td colspan="{count($layout)+3}" style="text-align:center">
+					<xsl:apply-templates mode="datagrid:body.buttons.new" select="."/>
+				</td>
+			</tr>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template mode="datagrid:body.buttons.new" match="*">
+		<button type="button" class="btn btn-success" onclick="px.navigateTo('{concat(../@Schema,'/',../@Name)}~add','{ancestor::px:Entity[1]/data:rows/@xo:id}')">Agregar registro</button>
 	</xsl:template>
 
 	<xsl:template mode="datagrid:body.row" match="*">
@@ -183,15 +191,27 @@
 						<xsl:text>deleting</xsl:text>
 					</xsl:if>
 				</xsl:variable>
-				<xsl:variable name="identity_key" select="IdentityKey"/>
 				<xsl:variable name="identity" select="$row/@*[name()=ancestor::px:Entity[1]/@IdentityKey]"/>
+				<xsl:variable name="reference">
+					<xsl:choose>
+						<xsl:when test="$identity">
+							<xsl:value-of select="concat(':',$identity)"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:for-each select="ancestor::px:Entity[1]/px:PrimaryKeys/px:PrimaryKey/@Field_Name">
+								<xsl:value-of select="concat('/',$row/@*[name()=current()])"/>
+								<!--<xsl:value-of select="concat('/',current(),'/',$row/@*[name()=current()])"/>-->
+							</xsl:for-each>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
 				<tr xo-scope="{$row/@xo:id}" onclick="scope.set('state:selected',true)" class="{$class}">
 					<th scope="row">
 						<xsl:value-of select="$row/@state:position"/>
 					</th>
 					<th>
-						<xsl:if test="$identity!=''">
-							<div class="btn btn-primary" onclick="window.location.href='#{$row/ancestor::px:Entity[1]/@Schema}/{$row/ancestor::px:Entity[1]/@Name}~edit:{$identity}'">
+						<xsl:if test="$reference!=''">
+							<div class="btn btn-primary" onclick="px.navigateTo('{$row/ancestor::px:Entity[1]/@Schema}/{$row/ancestor::px:Entity[1]/@Name}~edit{$reference}','{ancestor::px:Entity[1]/data:rows/@xo:id}')">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
 									<path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
 									<path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
@@ -220,7 +240,7 @@
 
 	<xsl:template mode="datagrid:body" match="layout_datagrid:layout//*">
 		<xsl:param name="row" select="dummy"/>
-		<td>
+		<td xo-scope="{@xo:id}">
 			<xsl:apply-templates select="$row/@*[name()=current()/@name]"/>
 		</td>
 	</xsl:template>
