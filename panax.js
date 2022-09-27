@@ -8,7 +8,7 @@ Object.defineProperty(xo.session, 'login', {
             xover.stores.active.render();
         } catch (e) {
             xover.session.status = 'unauthorized';
-            if (e.message) alert(e.message);
+            if (e.json && e.json.message) xo.dom.alert(e.json.message);
         }
     }, writable: true, configurable: true
 })
@@ -21,14 +21,14 @@ Object.defineProperty(xo.session, 'logout', {
                 xo.stores[store].remove()
             }
             xover.session.status = 'unauthorized';
-            history.go(-xo.state.position + 1);
+            history.go(-xo.site.position + 1);
         } catch (e) {
-            if (e.message) alert(e.message);
+            if (e.json && e.json.message) xo.dom.alert(e.json.message);
         }
     }, writable: true, configurable: true
 })
 
-xo.listener.on(['beforeRender::#shell', 'beforeAppendToHTMLElement::MAIN'], ({ target }) => {
+xo.listener.on(['beforeRender::#shell', 'beforeAppendToHTMLElement::MAIN', 'beforeAppendToHTMLElement::BODY'], ({ target }) => {
     [...target.childNodes].filter(el => el.matches && !el.matches(`script,[role=alertdialog],[role=alert],[role=dialog]`)).removeAll()
 })
 
@@ -46,6 +46,30 @@ xo.listener.on(`change::px:Entity/data:rows/xo:r/@*[not(contains(namespace-uri()
     if (old != value) {
         row.$$(`ancestor::px:Entity[1]/px:Record/px:Field/@formula`).map(attr => [attr.parentNode.get("Name"), attr.value.replace(/\[([^\]]+)\]/g, (field) => row.get(field.substring(1, field.length - 1)) || 0)]).forEach(([key, formula]) => row.set(key, eval(formula)))
     }
+})
+
+xo.listener.on('appendTo::data:rows', function ({ node }) {
+    //let empty_node = node.$('xo:empty')
+    //if (empty_node) {
+    //    let entity = node.parentElement.$('self::px:Entity[@mode="add"][not(parent::px:Association)]')
+    //    if (entity) {
+    //        let fields = [...new Set(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => field.$("@Name|@Referencer").value + '=""'))].join(' ')
+    //        empty_node.replace(xo.xml.createNode(`<xo:r xmlns:xo="http://panax.io/xover" ${fields}/>`))
+    //    }
+    //}
+    node.parentNode.$$(`px:Record/px:Association`).forEach(association => {
+        //let identity, primary
+        //association.$$('px:Mappings/px:Mapping').map(mapping => association.get("DataType") == 'belongsTo' && [mapping.get("Referencer"), node.get(mapping.get("Referencer"))] || mapping.get())
+        entity = association.$(`px:Entity`);
+        px.loadData(entity);
+    })
+})
+
+xo.listener.on('beforeChange::@headerText', function ({ element, attribute, value, old }) {
+    if (!element.has(`initial:${attribute.localName}`)) {
+        element.set(`initial:${attribute.localName}`, old)
+    }
+    event.detail.value = event.detail.value.replace(/:/g, '').trim()
 })
 
 function isnull(value, failover) {
@@ -73,10 +97,13 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
     var page_index, page_size;
     var on_success = function (xml_document) { xover.stores.active = xml_document; };
     let rebuild;
-    let prev = (xo.state.prev || [])[0] || {};
-    let ref_store = xo.stores[prev.store];
-    let ref_node = ref_store && ref_store.findById(prev.id) || null;
-    association_ref = ref_node && ref_node.$("ancestor::px:Entity[1]/parent::px:Association").get("AssociationName")
+    let reference = xo.site.reference || {};
+    let ref_store = xo.stores[reference.store];
+    let ref_node = ref_store && ref_store.findById(reference.id) || null;
+    if (reference.id && !ref_node) {
+        return Promise.reject("Se perdió la referencia.")
+    }
+    association_ref = ref_node && ref_node.$("ancestor::px:Entity[1]/parent::px:Association")
     if (typeof (request_or_entity_name) == 'string') {
         let parts = request_or_entity_name.split('/') || [];
         entity_name = parts.pop();
@@ -101,6 +128,7 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
     let identity, primary;
     [mode, identity] = mode.split(':');
     [mode, ...primary] = mode.split('/');
+    //primary = primary.filter((item, ix) => ix % 2 != 0) 
     page_size = (page_size || xover.manifest.getSettings(`#${schema}/${mode}:${entity_name}`, "pageSize").pop());
     page_index = (page_index || xover.manifest.getSettings(`#${schema}/${mode}:${entity_name}`, "pageIndex").pop());
     let mock_store = xo.Store(xo.xml.createDocument(`<entity ${xover.json.toAttributes({ filters, mode, page_size, page_index, Name: entity_name, Schema: schema })}/>`), { tag: `${schema}/${mode}:${entity_name}`.toLowerCase() });
@@ -116,7 +144,7 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
     let current_store = xover.stores.active;
     current_store.state.busy = true;
     try {
-        let Response = await xover.server.request(`command=[#entity].request @@user_id='-1', @full_path='', @full_entity_name='[${schema}].[${entity_name}]', @mode=${(!mode ? 'DEFAULT' : `'${mode}'`)}, @page_index=${(page_index || 'DEFAULT')}, @page_size=${(page_size || 'DEFAULT')}, @max_records=DEFAULT, @control_type=DEFAULT, @Filters=${(!filters ? 'DEFAULT' : `'${encodeURIComponent(filters)}'`)}, @sorters=DEFAULT, @parameters=DEFAULT, @lang=es, @get_data=1, @get_structure=1, @rebuild=${rebuild}, @column_list=DEFAULT, @output=HTML`, {
+        let Response = await xover.server.request(`command=[#entity].request @@user_id=NULL, @full_entity_name='[${schema}].[${entity_name}]', @mode=${(!mode ? 'DEFAULT' : `'${mode}'`)}, @page_index=${(page_index || 'DEFAULT')}, @page_size=${(page_size || 'DEFAULT')}, @max_records=DEFAULT, @control_type=DEFAULT, @Filters=${(!filters ? 'DEFAULT' : `'${encodeURIComponent(filters)}'`)}, @lang=es, @rebuild=${rebuild}, @column_list=DEFAULT, @output=HTML`, {
             headers: {
                 "Content-Type": 'text/xml'
                 , "Accept": 'text/xml'
@@ -133,8 +161,8 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
             Response.addStylesheet({ href: "page_controls.xslt", target: "@#shell #page_controls" });
             Response.addStylesheet({ href: "shell_buttons.xslt", target: "@#shell #shell_buttons", action: "replace" });
             Response.documentElement.setAttributeNS(xover.spaces["xmlns"], "xmlns:data", "http://panax.io/source");
-            association_ref && Response.documentElement.$$(`*[local-name()="layout"]/association:*[@name="${association_ref}"]`).remove()
-            px.loadData([Response.$('px:Entity')], mode == 'add' && { identity: null } || { identity, primary })
+            association_ref && Response.documentElement.$$(`*[local-name()="layout"]/association:*[@name="${association_ref.get("AssociationName")}"]`).remove()
+            px.loadData(Response.$('px:Entity'), mode == 'add' && { identity: null } || { identity, primary })
             return Response;
             /*
             <?xml-stylesheet type="text/xsl" href="form.xslt" target="@#shell main"?><?xml-stylesheet type="text/xsl" href="title.xslt" target="@#shell nav header h1"?><?xml-stylesheet type="text/xsl" href="shell_buttons.xslt" target="@#shell #shell_buttons" action="replace"?>
@@ -172,33 +200,31 @@ px.request = async function (request_or_entity_name, mode, filters, ref) {
     }
 }
 
-px.loadData = function (entities, keys) {
+px.loadData = function (entity, keys) {
     keys = Object.assign({ identity: undefined, primary: [] }, keys)
-    for (entity of entities.filter(el => el)) {
-        pks = []
-        id = entity.$$(`px:Record/px:Field[@IsIdentity="1"]/@Name`).map(key => [key, keys.identity])
-        pks = entity.$$(`px:PrimaryKeys/px:PrimaryKey/@Field_Name`).map((key, ix) => [key, keys.primary[ix]])
-        let formatValue = (value => (isNumber(value) || value === null) && String(value) || value !== undefined && `'${value}'` || '');
-        constraints = [...id, ...pks]
-        let predicate = constraints.filter(([, value]) => value !== undefined).map(([key, value]) => `[${key}] IN (${(value instanceof Array) ? value.map(item => formatValue(item)) : formatValue(value)})`).join('AND')
-        //let predicate = id && identity && `[${id.value}] IN (${(identity && identity != 'NULL' ? `'${identity}'` : null) || 'null'})` || ''
-        //predicate = predicate || identity == 'NULL' && "1=0" || ""
-        let parent_entity = entity.$('ancestor::px:Entity[1]');
-        if (parent_entity && parent_entity.$('data:rows/*')) {
-            let parent_relationship = entity.$('parent::px:Association[@Type="hasMany"]/px:Mappings')
-            let mappings = parent_relationship && parent_relationship.$$('px:Mapping').map(map => `[${entity.get("Name")}].[${map.get("Referencer")}] IN (${parent_entity.$$('data:rows/*').map(row => (row.get(map.get("Referencee")) || 'NULL')).join(',')})`) || [];
-            predicate && mappings.unshift(predicate);
-            predicate = mappings.join(' AND ')
-        }
-
-        let fields = Object.fromEntries(constraints.map(([key]) => key).concat(entity.$$('px:Record/px:Field/@Name|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping/@Referencer|px:Record/px:Association[@Type="belongsTo"]/@Name')).map(field => [field.value, `#panax.${field.parentNode.$("self::*[@DataType='nvarchar' or @DataType='foreignKey']") ? 'prepareString' : 'prepareValue'}(` + (field.parentNode.$("self::px:Association") && `(SELECT ${field.parentNode.$("px:Entity/@displayText|px:Entity[not(@displayText)]/@combobox:text").value} FROM [${field.parentNode.$("px:Entity/@Schema").value}].[${field.parentNode.$("px:Entity/@Name").value}] #parent WHERE ${field.parentNode.$$('px:Mappings/px:Mapping').map(map => '[' + entity.get("Name") + '].[' + map.get("Referencer") + '] = #parent.[' + map.get("Referencee") + ']').join(' AND ')})` || `[${field.value}]`) + ')']))
-
-        let text = entity.$$(`@displayText|self::*[not(@displayText)]/@combobox:text|px:Record/px:Field[not(@IsIdentity="1")][1]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift();
-        if (text && !fields['@text']) {
-            fields["text"] = `RTRIM(#panax.prepareString(${text.value}))`; // No se ponen brackets para los nombres de las funciones
-        }
-        entity.setAttribute("data:rows", `${Object.entries(fields).map(([key, value]) => `[@${key}]=${value}`).join(',')}~>[${entity.get("Schema")}].[${entity.get("Name")}]=>${predicate || ''}#:=1/${!parent_entity ? '100' : '1000'}`)
+    pks = []
+    id = entity.$$(`px:Record/px:Field[@IsIdentity="1"]/@Name`).map(key => [key, keys.identity])
+    pks = entity.$$(`px:PrimaryKeys/px:PrimaryKey/@Field_Name`).map((key, ix) => [key, keys.primary[ix]])
+    let formatValue = (value => (isNumber(value) || value === null) && String(value) || value !== undefined && `'${value}'` || '');
+    constraints = [...id, ...pks]
+    let predicate = constraints.filter(([, value]) => value !== undefined).map(([key, value]) => `[${key}] IN (${(value instanceof Array) ? value.map(item => formatValue(item)) : formatValue(value)})`).join('AND')
+    //let predicate = id && identity && `[${id.value}] IN (${(identity && identity != 'NULL' ? `'${identity}'` : null) || 'null'})` || ''
+    //predicate = predicate || identity == 'NULL' && "1=0" || ""
+    let parent_entity = entity.$('ancestor::px:Entity[1]');
+    if (parent_entity && parent_entity.$('data:rows/*')) {
+        let parent_relationship = entity.$('parent::px:Association[not(@Type="belongsTo")]/px:Mappings')
+        let mappings = parent_relationship && parent_relationship.$$('px:Mapping').map(map => `[${entity.get("Name")}].[${map.get("Referencer")}] IN (${parent_entity.$$('data:rows/*').map(row => (row.get(map.get("Referencee")) || 'NULL')).join(',')})`) || [];
+        predicate && mappings.unshift(predicate);
+        predicate = mappings.join(' AND ')
     }
+
+    let fields = Object.fromEntries(constraints.map(([key]) => key).concat(entity.$$('px:Record/px:Field/@Name|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping/@Referencer|px:Record/px:Association[@Type="belongsTo"]/@Name')).map(field => [field.value, `#panax.${field.parentNode.$("self::*[@DataType='nvarchar' or @DataType='foreignKey']") ? 'prepareString' : 'prepareValue'}(` + (field.parentNode.$("self::px:Association") && `(SELECT ${field.parentNode.$("px:Entity/@displayText|px:Entity[not(@displayText)]/@combobox:text").value} FROM [${field.parentNode.$("px:Entity/@Schema").value}].[${field.parentNode.$("px:Entity/@Name").value}] #parent WHERE ${field.parentNode.$$('px:Mappings/px:Mapping').map(map => '[' + entity.get("Name") + '].[' + map.get("Referencer") + '] = #parent.[' + map.get("Referencee") + ']').join(' AND ')})` || `[${field.value}]`) + ')']))
+
+    let text = entity.$$(`@displayText|self::*[not(@displayText)]/@combobox:text|px:Record/px:Field[not(@IsIdentity="1")][1]/@Name|px:Record[not(*[2])]/px:Field/@Name`).shift();
+    if (text && !fields['@text']) {
+        fields["text"] = `RTRIM(#panax.prepareString(${text.value}))`; // No se ponen brackets para los nombres de las funciones
+    }
+    entity.setAttribute("data:rows", `${Object.entries(fields).map(([key, value]) => `[@${key}]=${value}`).join(',')}~>[${entity.get("Schema")}].[${entity.get("Name")}]=>${predicate || ''}#:=1/${!parent_entity ? '100' : '1000'}`)
 }
 
 px.getData = async function (...args) {
@@ -257,33 +283,14 @@ px.getData = async function (...args) {
     }
 }
 
-xo.listener.on('appendTo::data:rows', function ({ node }) {
-    //let empty_node = node.$('xo:empty')
-    //if (empty_node) {
-    //    let entity = node.parentElement.$('self::px:Entity[@mode="add"][not(parent::px:Association)]')
-    //    if (entity) {
-    //        let fields = [...new Set(entity.$$('px:Record/px:Field|px:Record/px:Association[@Type="belongsTo"]/px:Mappings/px:Mapping|px:Record/px:Association[@Type="belongsTo"]').map(field => field.$("@Name|@Referencer").value + '=""'))].join(' ')
-    //        empty_node.replace(xo.xml.createNode(`<xo:r xmlns:xo="http://panax.io/xover" ${fields}/>`))
-    //    }
-    //}
-    px.loadData(node.parentNode.$$(`px:Record/px:Association/px:Entity`));
-})
-
-xo.listener.on('beforeChange::@headerText', function ({ element, attribute, value, old }) {
-    if (!element.has(`initial:${attribute.localName}`)) {
-        element.set(`initial:${attribute.localName}`, old)
-    }
-    event.detail.value = event.detail.value.replace(/:/g, '').trim()
-})
-
 function saveConfiguration() {
     xo.stores.active.documentElement.$$('//px:Record/*/@initial:*').map(attr => [`[${attr.parentNode.$('ancestor::px:Entity[1]').get('Schema')}].[${attr.parentNode.$('ancestor::px:Entity[1]').get('Name')}]`, (attr.parentNode.get("AssociationName") || attr.parentNode.get("Name")), `@${attr.localName}`, attr.parentNode.get(attr.localName)]).map(el => el.map(item => `'${item}'`)).forEach(config => xo.server.request({ command: "[#entity].[config]", parameters: config }, {}))
 }
 
 function submit(data_rows) {
-    let prev = (xo.state.prev || [])[0] || {};
+    let prev = (xo.site.prev || [])[0] || {};
     let ref_store = xo.stores[prev.store];
-    let ref_node = ref_store && ref_store.findById(prev.id) || null;
+    let ref_node = ref_store && ref_store.findById(prev.ref) || null;
 
     if (ref_node) {
         ref_node.append(...data_rows)
@@ -338,8 +345,7 @@ function submit(data_rows) {
                 }
             }).catch(response => {
                 try {
-                    let [result] = response
-                    let message = result.documentElement.$$(`//results/result[@status='error']`).map(r => r.get("statusMessage")).join('<br/>')
+                    let message = response.documentElement.$$(`//results/result[@status='error']`).map(r => r.get("statusMessage")).join('<br/>')
                     xo.dom.alert(message)
                 } catch (e) {
                     xo.dom.alert(e)
@@ -351,16 +357,17 @@ function submit(data_rows) {
     //})
 }
 
-xover.dom.navigateTo = function (hashtag, ref_id) {
+px.navigateTo = function (hashtag, ref_id) {
+    ref_id = ref_id || (event.srcElement.scope.$("data:rows/@xo:id") || {}).value;
     hashtag = (hashtag || "").replace(/^([^#])/, '#$1');
-    if ([xover.state.seed, ...(xover.state.activeTags() || [])].includes(hashtag) || xover.stores[hashtag].isRendered) { //TODO: Revisar si isRendered siempre 
-        xover.state.active = hashtag;
+    if ([xo.site.seed, ...(xo.site.activeTags() || [])].includes(hashtag) || xover.stores[hashtag].isRendered) { //TODO: Revisar si isRendered siempre 
+        xo.site.active = hashtag;
     } else {
-        xover.state.next = hashtag;
+        xo.site.next = hashtag;
 
         let public_hashtag = hashtag//Array.prototype.coalesce(public_hashtag || hashtag)
         var prev = (history.state["prev"] || [])
-        prev.unshift({ store: xo.state.seed, id: ref_id })
+        prev.unshift({ store: xo.site.seed, ref: ref_id })
         history.pushState({
             seed: hashtag
             //, active: hashtag
