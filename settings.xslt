@@ -241,8 +241,8 @@ exclude-result-prefixes="#default session sitemap shell"
 										<div class="settings-section">
 											<small class="d-block text-uppercase font-weight-bold text-muted mb-2">Edición</small>
 											<div class="list-group">
-												<button type="button" class="list-group-item list-group-item-action" onclick="xover.data.undo();">Deshacer</button>
-												<button type="button" class="list-group-item list-group-item-action" onclick="xover.data.redo()">Rehacer</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.undo()">Deshacer</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.redo()">Rehacer</button>
 												<button type="button" class="list-group-item list-group-item-action" onclick="xover.dom.print()">Imprimir</button>
 											</div>
 										</div>

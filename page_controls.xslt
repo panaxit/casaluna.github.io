@@ -5,6 +5,7 @@ xmlns:xo="http://panax.io/xover"
 xmlns:px="http://panax.io/entity"
 xmlns:data="http://panax.io/source"
 xmlns:state="http://panax.io/state"
+xmlns:meta="http://panax.io/metadata"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 exclude-result-prefixes="#default xsl px xsi xo data state"
 >
@@ -21,9 +22,9 @@ exclude-result-prefixes="#default xsl px xsi xo data state"
 	<xsl:template match="px:Entity[@xsi:type='datagrid:control']/data:rows">
 		<nav aria-label="Page navigation" xo-scope="{@xo:id}">
 			<ul class="pagination justify-content-center">
-				<xsl:variable name="pageIndex" select="@state:pageIndex"/>
-				<xsl:variable name="pageSize" select="@state:pageSize"/>
-				<xsl:variable name="totalRows" select="*/@state:totalCount"/>
+				<xsl:variable name="pageIndex" select="@meta:pageIndex"/>
+				<xsl:variable name="pageSize" select="@meta:pageSize"/>
+				<xsl:variable name="totalRows" select="*/@meta:totalCount"/>
 				<xsl:if test="$totalRows &gt; $pageSize">
 					<li class="page-item">
 						<xsl:if test="$pageIndex = 1">
