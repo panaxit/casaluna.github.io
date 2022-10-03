@@ -1,7 +1,4 @@
-﻿<!DOCTYPE stylesheet [
-	<!ENTITY nbsp "&#160;">
-]>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+﻿<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:control="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xo="http://panax.io/xover"
   xmlns:sitemap="http://panax.io/sitemap"
@@ -13,10 +10,15 @@
   xmlns:form="http://panax.io/widgets/form"
   xmlns:datagrid="http://panax.io/widgets/datagrid"
   xmlns:combobox="http://panax.io/widgets/combobox"
+  xmlns:field="http://panax.io/layout/fieldref"
+  xmlns:association="http://panax.io/datatypes/association"
 
-  exclude-result-prefixes="xo xsl sitemap layout px data form"
+  exclude-result-prefixes="xo xsl sitemap layout px data form control"
 >
-	<xsl:key name="form:widget" match="px:Entity/@xo:id" use="concat(ancestor::px:Entity[1]/@xo:id,'.',name())"/>
+	<xsl:key name="field" match="field:ref" use="@xo:id"/>
+	<xsl:key name="association" match="association:ref" use="@xo:id"/>
+	
+	<xsl:key name="form:widget" match="px:Entity[@control:type='form:control']/@xo:id" use="concat(ancestor::px:Entity[1]/@xo:id,'.',name())"/>	
 	<xsl:key name="datagrid:widget" match="px:Entity/@xo:id" use="concat(ancestor::px:Entity[1]/@xo:id,'.',name())"/>
 	<xsl:key name="combobox:widget" match="px:Entity[@control:type='combobox:control']/@xo:id" use="concat(ancestor::px:Entity[1]/@xo:id,'.',name())"/>
 	<xsl:key name="combobox:widget" match="xo:r/@meta:*" use="concat(ancestor::px:Entity[1]/@xo:id,'.',name())"/>
@@ -26,6 +28,9 @@
 
 	<xsl:key name="reference" match="px:Record/px:Field/@Name" use="concat(ancestor::px:Entity[1]/@xo:id,'::header::field:ref::',.)"/>
 	<xsl:key name="reference" match="px:Record/px:Association/@AssociationName" use="concat(ancestor::px:Entity[1]/@xo:id,'::header::association:ref::',.)"/>
+	
+	<xsl:key name="reference" match="xo:r/@*" use="concat(../@xo:id,'::body::field:ref::',name())"/>
+	<xsl:key name="reference" match="xo:r/@meta:*" use="concat(../@xo:id,'::body::association:ref::',local-name())"/>
 
 	<xsl:key name="datagrid:nodeType" match="px:Entity/px:Record/px:Field" use="concat(@xo:id,'::header')"/>
 	<xsl:key name="datagrid:nodeType" match="px:Entity/px:Record/px:Association" use="concat(@xo:id,'::header')"/>
