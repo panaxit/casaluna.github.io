@@ -17,6 +17,8 @@ exclude-result-prefixes="#default session sitemap shell"
 	<xsl:param name="session:debug">false</xsl:param>
 	<xsl:param name="session:autoRebuild">false</xsl:param>
 	<xsl:param name="session:disableCache">true</xsl:param>
+	<xsl:param name="session:autoRefresh"/>
+	<xsl:param name="js:autorefresh">!!((xo.sections.active.sources.reload || {}).interval || {}).pause</xsl:param>	
 	<xsl:param name="js:cache_name">xover.session.cache_name.split('_').pop()</xsl:param>
 	<xsl:key name="expanded" match="*[@state:expanded='true']" use="true()"/>
 
@@ -84,7 +86,7 @@ exclude-result-prefixes="#default session sitemap shell"
         height: 100%;
         position: fixed;
         width: 240px;
-        z-index: 100;
+        z-index: var(--z-index-side-bar);
         top: 0;
         bottom: 0;
         right: -240px;
@@ -193,7 +195,8 @@ exclude-result-prefixes="#default session sitemap shell"
       font-size: 36px;
       margin-left: 50px;
     }
-			]]></style>
+			]]>
+			</style>
 			<script>
 				<![CDATA[ 
     xover.listener.on('click', function (event) {
@@ -231,35 +234,22 @@ exclude-result-prefixes="#default session sitemap shell"
 										</div>
 
 										<div class="settings-section">
-											<small class="d-block text-uppercase font-weight-bold text-muted mb-2">Sesión</small>
-											<div class="list-group">
-												<button type="button" class="list-group-item list-group-item-action" onclick="xover.session.saveSession();">Guardar sesión</button>
-												<button type="button" class="list-group-item list-group-item-action" onclick="xover.session.loadSession()">Restaurar sesión</button>
-											</div>
-										</div>
-
-										<div class="settings-section">
 											<small class="d-block text-uppercase font-weight-bold text-muted mb-2">Edición</small>
 											<div class="list-group">
-												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.undo()">Deshacer</button>
-												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.redo()">Rehacer</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.sections.active.undo()">Deshacer</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.sections.active.redo()">Rehacer</button>
 												<button type="button" class="list-group-item list-group-item-action" onclick="xover.dom.print()">Imprimir</button>
-											</div>
-										</div>
-										<div class="settings-section">
-											<small class="d-block text-uppercase font-weight-bold text-muted mb-2">Caché</small>
-											<div class="list-group">
-												<button type="button" class="list-group-item list-group-item-action" onclick="xover.dom.refresh({{forced:true}});">Actualizar módulo</button>
-												<button type="button" class="list-group-item list-group-item-action" onclick="xover.library.reload(); /*window.location.reload(true);*/">Actualizar librerías</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xover.session.saveSession();">Guardar sesión</button>
 												<xsl:if test="$js:cache_name!=''">
 													<button type="button" class="list-group-item list-group-item-action" onclick="xover.session.clearCache();">Borrar caché</button>
 												</xsl:if>
 											</div>
 										</div>
+
 										<div class="settings-section">
 											<small class="d-block text-uppercase font-weight-bold text-muted mb-2">Desarrollador</small>
 											<div class="list-group">
-												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.toClipboard();">Copiar fuente</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.sections.active.toClipboard();">Copiar fuente</button>
 												<button type="button" class="list-group-item list-group-item-action">
 													<xsl:choose>
 														<xsl:when test="$session:debug='true'">
@@ -284,6 +274,19 @@ exclude-result-prefixes="#default session sitemap shell"
 														</xsl:otherwise>
 													</xsl:choose>
 												</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.sections.active.render()">Actualizar módulo</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.sections.active.library.reload()">Actualizar librerías</button>
+												<button type="button" class="list-group-item list-group-item-action">
+													<xsl:choose>
+														<xsl:when test="$js:autorefresh='true'">
+															<xsl:attribute name="onclick">xo.sections.active.library.reload.interval.stop(); xo.session.autoRefresh = !xo.session.autoRefresh;</xsl:attribute>
+															Detener autorefresh
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:attribute name="onclick">xo.sections.active.library.reload.interval(3); xo.session.autoRefresh = !xo.session.autoRefresh;</xsl:attribute>
+															Activar/desactivar autorefresh
+														</xsl:otherwise>
+													</xsl:choose></button>
 												<button type="button" class="list-group-item list-group-item-action">
 													<xsl:choose>
 														<xsl:when test="$session:disableCache='true'">

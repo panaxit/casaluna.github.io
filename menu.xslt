@@ -15,6 +15,7 @@ exclude-result-prefixes="#default session sitemap shell"
 	   indent="yes"/>
 
 	<xsl:template match="text()"/>
+	<xsl:param name="session:user_login"/>
 	<xsl:param name="session:debug">false</xsl:param>
 	<xsl:param name="js:cache_name">xover.session.cache_name.split('_').pop()</xsl:param>
 	<xsl:key name="expanded" match="*[@state:expanded='true']" use="true()"/>
@@ -47,7 +48,7 @@ exclude-result-prefixes="#default session sitemap shell"
 					<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
 							<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-						</svg>
+						</svg>&#160;&#160;<xsl:value-of select="$session:user_login"/>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
 						<li>
@@ -93,11 +94,11 @@ exclude-result-prefixes="#default session sitemap shell"
 	</xsl:template>
 
 
-	<xsl:template match="*" mode="store">
+	<xsl:template match="*" mode="section">
 	</xsl:template>
 
-	<xsl:template match="notifications|messages|cart" mode="store">
-		<xsl:attribute name="xo-store">
+	<xsl:template match="notifications|messages|cart" mode="section">
+		<xsl:attribute name="xo-section">
 			<xsl:text/>#<xsl:value-of select="name()"/>
 		</xsl:attribute>
 	</xsl:template>
@@ -107,14 +108,14 @@ exclude-result-prefixes="#default session sitemap shell"
 			<xsl:if test="@state:disabled">disabled</xsl:if>
 		</xsl:variable>
 		<li class="nav-item dropdown no-arrow">
-			<xsl:apply-templates mode="store" select="."/>
+			<xsl:apply-templates mode="section" select="."/>
 			<a class="nav-link dropdown-toggle {$disabled}" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<xsl:apply-templates mode="icon" select="."/>
 				<xsl:apply-templates mode="icon.badge" select="."/>
 			</a>
 
 			<xsl:variable name="items" select="item"/>
-			<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchdropdown">
+			<div class="dropdown-menu dropdown-menu-end p-3 shadow animated--grow-in" aria-labelledby="searchdropdown">
 				<xsl:apply-templates mode="menu" select="."/>
 			</div>
 		</li>

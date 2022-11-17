@@ -4,19 +4,23 @@ xmlns="http://www.w3.org/1999/xhtml"
 xmlns:xo="http://panax.io/xover"
 xmlns:px="http://panax.io/entity"
 xmlns:data="http://panax.io/source"
-xmlns:state="http://panax.io/state"
 xmlns:meta="http://panax.io/metadata"
+xmlns:site="http://panax.io/site"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-exclude-result-prefixes="#default xsl px xsi xo data state"
+exclude-result-prefixes="#default xsl px xsi xo data site"
 >
 	<xsl:output method="xml"
 	   omit-xml-declaration="yes"
 	   indent="yes"/>
+	<xsl:param name="site:seed">''</xsl:param>
 
 	<xsl:template match="/">
 		<div id="page_controls" class="nav col-md-4 justify-content-center list-unstyled d-flex">
 			<xsl:apply-templates/>
 		</div>
+	</xsl:template>
+
+	<xsl:template match="px:Entity//*">
 	</xsl:template>
 
 	<xsl:template match="px:Entity[@xsi:type='datagrid:control']/data:rows">
@@ -34,7 +38,7 @@ exclude-result-prefixes="#default xsl px xsi xo data state"
 							Anterior
 						</a>
 					</li>
-					<xsl:for-each select="(//*)[position() &lt;= ceiling($totalRows div $pageSize)]">
+					<xsl:for-each select="(//*)[position() &lt;= ceiling($totalRows div $pageSize) and position()&lt;10]">
 						<li class="page-item">
 							<xsl:if test="$pageIndex = position()">
 								<xsl:attribute name="class">page-item active</xsl:attribute>
@@ -50,6 +54,13 @@ exclude-result-prefixes="#default xsl px xsi xo data state"
 						</xsl:if>
 						<a class="page-link" href="#" onclick="scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/#:=\d+\/\d+/g,'#:={$pageIndex + 1}/{$pageSize}'))">
 							Siguiente
+						</a>
+					</li>
+				</xsl:if>
+				<xsl:if test="ancestor::px:Entity[@Name='Lotes' or concat(@Schema,'.',@Name)='Reportes.Embarques' or concat(@Schema,'.',@Name)='Logistica.Embarques']">
+					<li class="page-item">
+						<a class="page-link" href="#">
+							<xsl:attribute name="onclick">let busqueda = prompt("Buscar Lote"); if (!busqueda) return; scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/\?.*#:=/,`?1 IN (SELECT 1 FROM <xsl:value-of select="ancestor::px:Entity/@Schema"/>.buscarLotes('${busqueda.replace(/'/,"''")}', Id))#:=`))</xsl:attribute>Buscar
 						</a>
 					</li>
 				</xsl:if>

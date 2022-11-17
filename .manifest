@@ -8,13 +8,11 @@
     "sitemap": "server/sitemap.asp"
   },
   "sources": {
-    "^data:(.*)": { "px.getData": [ ] },
-    "^#([^\\.]+\\..+)": { "app.request": [ "{$1}" ] },
-    "^#([^\\/]+\\/[^~]+)~(.+)?": { "px.request": [ "{$1}", "{$2}" ] },
-    "^#([^\\/]+\\/[^~]+)$": { "px.request": [ "{$1}" ] },
+    "^data:(.*)": { "px.getData": [] },
+    "^#([^\\/]+\\/.+)$": { "px.request": [ "{$1}" ] },
     "#notifications": "notifications.xml",
     "#messages": "messages.xml",
-    "#sitemap": { "sitemap": [ ] },
+    "#sitemap": { "sitemap": [] },
     "#settings": "settings.xml",
     "#menu": "menu.xml",
     "#cart": "cart.xml"

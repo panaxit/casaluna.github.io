@@ -66,6 +66,7 @@
 					<xsl:when test="key('year',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))">number</xsl:when>
 					<xsl:when test="key('datetime',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))">datetime-local</xsl:when>
 					<xsl:when test="key('date',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))">date</xsl:when>
+					<xsl:when test="key('time',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))">time</xsl:when>
 					<xsl:otherwise>text</xsl:otherwise>
 				</xsl:choose>
 			</xsl:attribute>

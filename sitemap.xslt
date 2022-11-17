@@ -8,14 +8,27 @@ xmlns:state="http://panax.io/state"
 xmlns:xo="http://panax.io/xover"
 exclude-result-prefixes="#default session sitemap shell state"
 >
-	<xsl:include href="templates/sitemap.xslt"/>
+	<xsl:key name="item" match="sitemap:menu" use="'#any'"/>
+	<xsl:key name="item" match="sitemap:catalog" use="'#any'"/>
+	<xsl:key name="menu-item" match="sitemap:menu" use="@xo:id"/>
+
+	<xsl:include href="widgets/panax/sitemap.xslt"/>
 	<xsl:output method="xml"
 	   omit-xml-declaration="yes"
 	   indent="yes"/>
-	<xsl:template mode="sitemap.target.href" match="*">
+	
+	<xsl:template mode="sitemap:target-href" match="*[@catalogName]">
 		<xsl:attribute name="href">
 			<xsl:value-of select="concat('#',translate(substring-before(@catalogName,'].['),'[]',''),'/',translate(substring-after(@catalogName,'].['),'[]',''))"/>
 		</xsl:attribute>
+	</xsl:template>
+	
+	<xsl:template mode="sitemap:header" match="@*">
+		<span class="sidebar-brand mt-1 d-flex">
+			<a href="javascript:void(0)" onclick="toggleSidebar()">
+				<img src="assets/logotype-alpha-white.png" width="190px"/>
+			</a>
+		</span>
 	</xsl:template>
 
 </xsl:stylesheet>
