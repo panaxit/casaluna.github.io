@@ -57,9 +57,9 @@
 
 	<xsl:template mode="datagrid:row-footer" match="@*">
 		<xsl:variable name="identity" select="../@meta:id"/>
-		<th>
+		<th style="text-align: right;">
 			<xsl:if test="parent::xo:r">
-				<button class="btn btn-sm btn-danger" onclick="scope.toggle('state:delete',true)">
+				<button class="btn btn-sm btn-danger" onclick="scope.remove()">
 					<!--<xsl:if test="not($identity!='')">
 						<xsl:attribute name="onclick">scope.remove()</xsl:attribute>
 					</xsl:if>-->

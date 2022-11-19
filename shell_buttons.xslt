@@ -48,7 +48,7 @@ exclude-result-prefixes="#default xsl px xo xsi"
 	<xsl:template match="px:Entity[@xsi:type='form:control']">
 		<xsl:if test="data:rows/*/@*[namespace-uri()=''][key('changed',concat(../@xo:id,'::',local-name()))]">
 			<li class="ms-3" xo-scope="{@xo:id}">
-				<a class="text-muted" href="#" onclick="submit(scope.$$('data:rows/*'))">
+				<a class="text-muted" href="#" onclick="px.submit(scope.$$('data:rows/*'))">
 					<button class="btn btn-success">Guardar</button>
 				</a>
 			</li>
@@ -60,7 +60,7 @@ exclude-result-prefixes="#default xsl px xo xsi"
 		<xsl:choose>
 			<xsl:when test="$deleting_rows">
 				<li class="ms-3" xo-scope="{@xo:id}">
-					<a class="text-muted" href="#" onclick="submit(scope.$$('data:rows/*[@state:delete]'))">
+					<a class="text-muted" href="#" onclick="px.submit(scope.$$('data:rows/*[@state:delete]'))">
 						<button class="btn btn-danger">Eliminar </button>
 					</a>
 				</li>
@@ -80,7 +80,7 @@ exclude-result-prefixes="#default xsl px xo xsi"
 		<xsl:choose>
 			<xsl:when test="$deleting_rows">
 				<li class="ms-3" xo-scope="{@xo:id}">
-					<a class="text-muted" href="#" onclick="submit(scope.$$('data:rows/*[@state:delete]'))">
+					<a class="text-muted" href="#" onclick="px.submit(scope.$$('data:rows/*[@state:delete]'))">
 						<button class="btn btn-danger">Eliminar </button>
 					</a>
 				</li>
