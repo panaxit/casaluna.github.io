@@ -26,7 +26,6 @@
   exclude-result-prefixes="widget xo state xsl xsi form cardview data height width data field association container px readonly layout meta"
 >
 	<xsl:import href="keys.xslt"/>
-	<xsl:import href="panax/widgets.xslt"/>
 	<xsl:import href="panax/picture.xslt"/>
 	<xsl:import href="panax/file.xslt"/>
 	<xsl:import href="panax/combobox.xslt"/>
@@ -203,7 +202,9 @@
 
 	<xsl:key name="combobox:widget" match="node-expected" use="see-below"/>
 	<xsl:template mode="widget" match="@*[key('combobox:widget',concat(ancestor-or-self::*[@meta:type='entity'][1]/@xo:id,'.',name()))]">
-		<xsl:apply-templates mode="combobox:widget" select="."/>
+		<xsl:apply-templates mode="combobox:widget" select=".">
+			<xsl:with-param name="dataset" select="key('dataset',concat(ancestor::px:Entity[1]/@xo:id,'.',name()))"/>
+		</xsl:apply-templates>
 	</xsl:template>
 
 	<xsl:template mode="widget" match="@*[key('file:widget',concat(ancestor::*[@meta:type='entity'][1]/@xo:id,'.',name()))]">
@@ -338,7 +339,7 @@
 
 	<xsl:template mode="combobox:following-siblings" match="*[key('form:widget',concat(ancestor-or-self::*[@meta:type='entity'][1]/@xo:id,'.','xo:id'))]/data:rows/*/@*">
 		<xsl:param name="catalog" select="node-expected"/>
-		<xsl:apply-templates mode="comboboxButton:widget" select="$catalog/ancestor-or-self::data:rows[1]/@xo:id">
+		<xsl:apply-templates mode="comboboxButton:widget" select="$catalog/ancestor-or-self::px:Entity[1]/@xo:id">
 			<xsl:with-param name="selection" select="."/>
 		</xsl:apply-templates>
 	</xsl:template>

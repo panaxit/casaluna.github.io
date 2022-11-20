@@ -45,11 +45,12 @@ xo.listener.on('appendTo::px:Entity[@Schema="Ventas" and @Name="Venta"]/px:Recor
 
 xo.listener.on('beforeSubmit::px:Entity[@Schema="Ventas" and @Name="Venta"]/data:rows/xo:r', function ({ post }) {
     let row = this
-    let comprobacion = post.selectFirst(`self::post:batch/post:dataTable/*/post:field[@name="Comprobacion"]`);
-    if (comprobacion) {
-        comprobacion = comprobacion.replaceWith(xo.xml.createNode('<field xmlns="http://panax.io/persistence" name="Comprobacion"><Comprobacion xmlns=""/></field>'));
+    let comprobacion_actual = post.selectFirst(`self::post:batch/post:dataTable/*/post:field[@name="Comprobacion"]`);
+    let comprobacion = xo.xml.createNode('<field xmlns="http://panax.io/persistence" name="Comprobacion"><Comprobacion xmlns=""/></field>');
+    if (comprobacion_actual) {
+        comprobacion_actual.replaceWith(comprobacion);
     } else {
-        comprobacion && post.selectFirst("self::post:batch/post:dataTable/*").insertFirst(comprobacion)
+        post.selectFirst("self::post:batch/post:dataTable/*").insertFirst(comprobacion);
     }
     let rows = row.select(`ancestor::px:Entity[1]/px:Record/px:Association[not(@Type="belongsTo")]/px:Entity/data:rows/xo:r`)
     rows.reduce((entities, row) => {
