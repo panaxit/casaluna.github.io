@@ -17,6 +17,7 @@
 >
 	<xsl:key name="value" match="xo:r/@*" use="concat(../@xo:id,'::',name())"/>
 	<xsl:key name="money" match="px:Field[@DataType='money']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
+	<xsl:key name="time" match="px:Field[@DataType='time']" use="concat(ancestor::px:Entity[1]/@xo:id,'::',@Name)"/>
 	<xsl:key name="password" match="dummy" use="''"/>
 	<xsl:key name="combobox" match="dummy" use="''"/>
 
@@ -42,6 +43,10 @@
 
 	<xsl:template match="@*[key('password',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
 		<xsl:text>**********</xsl:text>
+	</xsl:template>
+
+	<xsl:template match="@*[key('time',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">
+		<xsl:value-of select="substring(.,1,5)"/>
 	</xsl:template>
 
 	<xsl:template match="@*[key('combobox',concat(ancestor::px:Entity[1]/@xo:id,'::',name()))]">

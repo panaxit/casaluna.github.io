@@ -102,7 +102,7 @@ body {
 				<button class="btn btn-lg btn-primary btn-block color-orange" type="submit">
 					<xsl:choose>
 						<xsl:when test="$session:status='authorized'">
-							<xsl:attribute name="onclick">xo.site.hash=xo.site.seed || '#'</xsl:attribute>
+							<xsl:attribute name="onclick">xo.site.active=xo.site.seed || '#'</xsl:attribute>
 							Continuar
 						</xsl:when>
 						<xsl:when test="$session:status='authorizing'">
