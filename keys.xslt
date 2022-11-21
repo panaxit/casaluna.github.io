@@ -52,6 +52,8 @@
 
 	<xsl:key name="dataset" match="px:Entity/data:rows/xo:r" use="concat(ancestor::px:Entity[1]/@xo:id,'.',name())"/>
 	<xsl:key name="dataset" match="px:Association/px:Entity/data:rows/xo:r" use="concat(ancestor::px:Entity[2]/@xo:id,'.meta:',ancestor::px:Association[1]/@AssociationName)"/>
+	
+	<xsl:key name="entity" match="px:Association/px:Entity" use="concat(ancestor::px:Entity[1]/@xo:id,'.meta:',ancestor::px:Association[1]/@AssociationName)"/>
 
 	<xsl:key name="item" match="sitemap:menu" use="'#any'"/>
 	<xsl:key name="item" match="sitemap:catalog" use="'#any'"/>
@@ -60,7 +62,6 @@
 	<xsl:key name="entity" match="px:Entity" use="concat(@Schema,'.',@Name)"/>
 	<xsl:key name="entity" match="px:Entity[@xsi:type='datagrid:control']" use="concat('datagrid:',@Schema,'.',@Name)"/>
 
-	<xsl:key name="record" match="data:rows/xo:r" use="@xo:id"/>
 	<xsl:key name="record" match="data:rows/xo:r" use="@xo:id"/>
 
 	<xsl:key name="data_rows" match="px:Entity/data:rows/xo:r" use="concat(ancestor::px:Entity[1]/@Schema,'/',ancestor::px:Entity[1]/@Name)"/>

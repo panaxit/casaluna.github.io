@@ -338,8 +338,7 @@
 	</xsl:template>
 
 	<xsl:template mode="combobox:following-siblings" match="*[key('form:widget',concat(ancestor-or-self::*[@meta:type='entity'][1]/@xo:id,'.','xo:id'))]/data:rows/*/@*">
-		<xsl:param name="catalog" select="node-expected"/>
-		<xsl:apply-templates mode="comboboxButton:widget" select="$catalog/ancestor-or-self::px:Entity[1]/@xo:id">
+		<xsl:apply-templates mode="comboboxButton:widget" select="key('entity',concat(ancestor-or-self::*[@meta:type='entity'][1]/@xo:id,'.',name()))/@xo:id">
 			<xsl:with-param name="selection" select="."/>
 		</xsl:apply-templates>
 	</xsl:template>

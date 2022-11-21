@@ -3,6 +3,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns="http://www.w3.org/1999/xhtml"
 xmlns:xo="http://panax.io/xover"
 xmlns:px="http://panax.io/entity"
+xmlns:appendTo-data="http://panax.io/listener"
 xmlns:data="http://panax.io/source"
 xmlns:meta="http://panax.io/metadata"
 xmlns:site="http://panax.io/site"
@@ -13,6 +14,7 @@ exclude-result-prefixes="#default xsl px xsi xo data site"
 	   omit-xml-declaration="yes"
 	   indent="yes"/>
 	<xsl:param name="site:seed">''</xsl:param>
+	<xsl:param name="appendTo-data:rows"/>
 
 	<xsl:template match="/">
 		<div id="page_controls" class="nav col-md-4 justify-content-center list-unstyled d-flex">
@@ -29,12 +31,12 @@ exclude-result-prefixes="#default xsl px xsi xo data site"
 				<xsl:variable name="pageIndex" select="@meta:pageIndex"/>
 				<xsl:variable name="pageSize" select="@meta:pageSize"/>
 				<xsl:variable name="totalRows" select="*/@meta:totalCount"/>
-				<xsl:if test="$totalRows &gt; $pageSize">
+				<xsl:if test="$totalRows &gt; $pageSize or $pageIndex &gt; 1">
 					<li class="page-item">
 						<xsl:if test="$pageIndex = 1">
 							<xsl:attribute name="class">page-item disabled</xsl:attribute>
 						</xsl:if>
-						<a class="page-link" href="#" onclick="scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/#:=\d+\/\d+/g,'#:={$pageIndex - 1}/{$pageSize}'))">
+						<a class="page-link" href="#" onclick="scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/pageIndex=\d+/g,'pageIndex={$pageIndex - 1}'))">
 							Anterior
 						</a>
 					</li>
@@ -43,7 +45,7 @@ exclude-result-prefixes="#default xsl px xsi xo data site"
 							<xsl:if test="$pageIndex = position()">
 								<xsl:attribute name="class">page-item active</xsl:attribute>
 							</xsl:if>
-							<a class="page-link" href="#" onclick="scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/#:=\d+\/\d+/g,'#:={position()}/{$pageSize}'))">
+							<a class="page-link" href="#" onclick="scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/pageIndex=\d+/g,'pageIndex={position()}'))">
 								<xsl:value-of select="position()"/>
 							</a>
 						</li>
@@ -52,8 +54,7 @@ exclude-result-prefixes="#default xsl px xsi xo data site"
 						<xsl:if test="$pageIndex + 1 &gt; ceiling($totalRows div $pageSize)">
 							<xsl:attribute name="class">page-item disabled</xsl:attribute>
 						</xsl:if>
-						<a class="page-link" href="#" onclick="scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/#:=\d+\/\d+/g,'#:={$pageIndex + 1}/{$pageSize}'))">
-							Siguiente
+						<a class="page-link" href="#" onclick="scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/pageIndex=\d+/g,'pageIndex={$pageIndex + 1}'))">	Siguiente
 						</a>
 					</li>
 				</xsl:if>
