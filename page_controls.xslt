@@ -54,14 +54,8 @@ exclude-result-prefixes="#default xsl px xsi xo data site"
 						<xsl:if test="$pageIndex + 1 &gt; ceiling($totalRows div $pageSize)">
 							<xsl:attribute name="class">page-item disabled</xsl:attribute>
 						</xsl:if>
-						<a class="page-link" href="#" onclick="scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/pageIndex=\d+/g,'pageIndex={$pageIndex + 1}'))">	Siguiente
-						</a>
-					</li>
-				</xsl:if>
-				<xsl:if test="ancestor::px:Entity[@Name='Lotes' or concat(@Schema,'.',@Name)='Reportes.Embarques' or concat(@Schema,'.',@Name)='Logistica.Embarques']">
-					<li class="page-item">
-						<a class="page-link" href="#">
-							<xsl:attribute name="onclick">let busqueda = prompt("Buscar Lote"); if (!busqueda) return; scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/\?.*#:=/,`?1 IN (SELECT 1 FROM <xsl:value-of select="ancestor::px:Entity/@Schema"/>.buscarLotes('${busqueda.replace(/'/,"''")}', Id))#:=`))</xsl:attribute>Buscar
+						<a class="page-link" href="#" onclick="scope.parentNode.getAttributeNode('data:rows').set(value=> value.replace(/pageIndex=\d+/g,'pageIndex={$pageIndex + 1}'))">
+							Siguiente
 						</a>
 					</li>
 				</xsl:if>
