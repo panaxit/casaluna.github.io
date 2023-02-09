@@ -4,3 +4,9 @@
 [submodule "server"]
 	path = server
 	url = https://github.com/panaxit/server.git
+[submodule "panax"]
+	path = panax
+	url = https://github.com/panaxit/xo.js.git
+[submodule "widgets"]
+	path = widgets
+	url = https://github.com/panaxit/widgets.git
