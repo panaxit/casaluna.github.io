@@ -26,7 +26,9 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 	</xsl:template>
 
 	<xsl:template mode="shell:extra-content" match="*|@*">
-		<aside class="sidebar" xo-section="#sitemap" xo-stylesheet="sitemap.xslt" id="sitemap"/>
+		<aside class="sidebar" xo-section="#sitemap" xo-stylesheet="sitemap.xslt" id="sitemap">
+			<style><![CDATA[aside.sidebar {width:0%}]]></style>
+		</aside>
 		<div class="settings" xo-section="#settings" xo-stylesheet="settings.xslt"/>
 	</xsl:template>
 

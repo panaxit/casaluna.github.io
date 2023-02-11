@@ -14,14 +14,14 @@ exclude-result-prefixes="#default xsl px xo xsi"
 	<xsl:output method="xml"
 	   omit-xml-declaration="yes"
 	   indent="yes"/>
-	<xsl:param name="state:dirty"/>
-	<xsl:param name="state:delete"/>
 	<xsl:param name="site:active"/>
 	<xsl:key name="changed" match="@initial:*" use="concat(../@xo:id,'::',local-name())"/>
 
 	<xsl:template match="/">
 		<ul id="shell_buttons" class="nav col-md-4 justify-content-end list-unstyled d-flex">
-			<xsl:apply-templates/>
+			<xo-listener attribute="initial:*"/>
+			<xo-listener attribute="prev:*"/>
+			<xsl:apply-templates select="px:Entity"/>
 		</ul>
 	</xsl:template>
 
@@ -43,36 +43,24 @@ exclude-result-prefixes="#default xsl px xo xsi"
 		</li>
 	</xsl:template>-->
 
-	<xsl:template match="px:Entity"></xsl:template>
+	<xsl:template match="text()|*[not(*)]"></xsl:template>
 
-	<xsl:template match="px:Entity[@xsi:type='form:control']">
-		<xsl:if test="data:rows/*/@*[namespace-uri()=''][key('changed',concat(../@xo:id,'::',local-name()))]">
+	<xsl:template match="px:Entity[@xsi:type='form:control']/data:rows/xo:r">
+		<xsl:if test="descendant-or-self::xo:r/@*[namespace-uri()=''][.!=key('changed',concat(../@xo:id,'::',local-name()))]">
+			<style>
+				:root { --footer-height: 74px; }
+			</style>
 			<li class="ms-3" xo-scope="{@xo:id}">
-				<a class="text-muted" href="#" onclick="px.submit(scope.$$('data:rows/*'))">
+				<a class="text-muted" href="#" onclick="px.submit(scope)">
 					<button class="btn btn-success">Guardar</button>
 				</a>
 			</li>
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template match="px:Entity[@xsi:type='datagrid:control']">
-		<xsl:variable name="deleting_rows" select="data:rows/*[@state:delete]"/>
-		<xsl:choose>
-			<xsl:when test="$deleting_rows">
-				<li class="ms-3" xo-scope="{@xo:id}">
-					<a class="text-muted" href="#" onclick="px.submit(scope.$$('data:rows/*[@state:delete]'))">
-						<button class="btn btn-danger">Eliminar </button>
-					</a>
-				</li>
-			</xsl:when>
-			<xsl:otherwise>
-				<li class="ms-3">
-					<a class="text-muted" href="#{@Schema}/{@Name}~add">
-						<button class="btn btn-success">Nuevo registro</button>
-					</a>
-				</li>
-			</xsl:otherwise>
-		</xsl:choose>
+	<xsl:template match="px:Entity[@xsi:type='form:control']">
+		<!--<xsl:apply-templates select="data:rows/xo:r"/>-->
+		<xsl:apply-templates select="data:rows/xo:r"/>
 	</xsl:template>
 
 	<xsl:template match="px:Entity[@xsi:type='datagrid:control']">

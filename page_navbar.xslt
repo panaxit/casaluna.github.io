@@ -7,7 +7,9 @@ xmlns:data="http://panax.io/source"
 xmlns:meta="http://panax.io/metadata"
 xmlns:site="http://panax.io/site"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-exclude-result-prefixes="#default xsl px xsi xo data site"
+xmlns:widget="http://panax.io/widget"
+exclude-result-prefixes="#default xsl px xsi xo data site widget"
 >
-	<xsl:import href="widgets/page_controls.xslt"/>
+	<xsl:import href="headers.xslt"/>
+	<xsl:import href="widgets/page_navbar.xslt"/>
 </xsl:stylesheet>
