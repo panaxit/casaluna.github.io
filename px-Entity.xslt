@@ -220,7 +220,7 @@
 		<xsl:apply-templates select="."/>
 	</xsl:template>
 
-	<xsl:template mode="file:preceding-siblings" match="@*" priority="1">
+	<!--<xsl:template mode="file:preceding-siblings" match="@*" priority="1">
 		<xsl:apply-templates mode="picture:widget" select="."/>
-	</xsl:template>
+	</xsl:template>-->
 </xsl:stylesheet>
