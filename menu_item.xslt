@@ -6,7 +6,7 @@ xmlns:session="http://panax.io/session"
 xmlns:sitemap="http://panax.io/sitemap"
 xmlns:shell="http://panax.io/shell"
 xmlns:state="http://panax.io/state"
-xmlns:x="http://panax.io/xover"
+xmlns:xo="http://panax.io/xover"
 exclude-result-prefixes="#default session sitemap shell"
 >
 	<xsl:output method="xml"
@@ -18,6 +18,7 @@ exclude-result-prefixes="#default session sitemap shell"
 
 	<xsl:template match="/">
 		<li class="btn-group">
+			<xo-listener node="cart" />
 			<xsl:apply-templates/>
 		</li>
 	</xsl:template>
@@ -82,14 +83,29 @@ exclude-result-prefixes="#default session sitemap shell"
 	</xsl:template>
 
 	<xsl:template match="cart" mode="menu">
+		<style>
+			<![CDATA[
+		.cart-item .title {
+			font-size: 1rem;
+		}
+		]]>
+		</style>
 		<xsl:apply-templates/>
 		<hr class="dropdown-divider"/>
-		<a class="dropdown-item text-center small text-gray-500" href="#" xo-scope="{@x:id}" onclick="scope.$$('self::*/item').remove()">
+		<a class="dropdown-item text-center small text-gray-500" href="#" xo-scope="{@xo:id}" onclick="scope.$$('self::*/item').remove()" style="min-width: 500px;">
 			<xsl:choose>
 				<xsl:when test="item">Borrar todo</xsl:when>
-				<xsl:otherwise>No hay elementos</xsl:otherwise>
+				<xsl:otherwise>
+					<xsl:attribute name="href">#estudios</xsl:attribute>
+					<xsl:attribute name="onclick"></xsl:attribute>
+					<xsl:text>Ir a listado</xsl:text>
+				</xsl:otherwise>
 			</xsl:choose>
 		</a>
+		<xsl:if test="item">
+			<hr class="dropdown-divider"/>
+			<a class="dropdown-item text-center small text-gray-500" href="#" xo-scope="{@xo:id}" onclick="cart.checkout()" style="min-width: 500px;">Abrir cuenta</a>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template match="messages" mode="menu">
@@ -99,7 +115,7 @@ exclude-result-prefixes="#default session sitemap shell"
 		<hr class="dropdown-divider"/>
 		<xsl:apply-templates/>
 		<hr class="dropdown-divider"/>
-		<a class="dropdown-item text-center small text-gray-500" href="#" xo-scope="{@x:id}" onclick="scope.$$('self::*/item').remove()">
+		<a class="dropdown-item text-center small text-gray-500" href="#" xo-scope="{@xo:id}" onclick="scope.$$('self::*/item').remove()">
 			<xsl:choose>
 				<xsl:when test="item">Borrar todo</xsl:when>
 				<xsl:otherwise>No hay elementos</xsl:otherwise>
@@ -136,9 +152,9 @@ exclude-result-prefixes="#default session sitemap shell"
 	</xsl:template>
 
 	<xsl:template match="search" mode="menu">
-		<form class="form-inline mr-auto w-100 navbar-search">
-			<div class="input-group">
-				<input type="text" class="form-control bg-light border-0 small" placeholder="search for..." aria-label="search" aria-describedby="basic-addon2"/>
+		<form class="form-inline mr-auto w-100 navbar-search" xo-attribute="search:text">
+			<div class="input-group" style="flex-direction: row; flex-wrap: nowrap;">
+				<input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." aria-label="search" aria-describedby="basic-addon2" style="width: 200px"/>
 				<div class="input-group-append">
 					<button class="btn btn-primary" type="button">
 						<i class="fas fa-search fa-sm"></i>
@@ -164,35 +180,34 @@ exclude-result-prefixes="#default session sitemap shell"
 	</xsl:template>
 
 	<xsl:template match="item">
-		<a class="dropdown-item" href="#" xo-scope="{@x:id}" onclick="scope.remove()">
+		<a class="dropdown-item" href="#" xo-scope="{@xo:id}" onclick="scope.remove()">
 			<xsl:value-of select="text()"/>
 		</a>
 	</xsl:template>
 
+	<xsl:template match="cart/item/@o">
+		<xsl:value-of select="format-number(translate(.,'$,',''),'$#,##0.00###;-$#,##0.00###')"/>
+	</xsl:template>
+
 	<xsl:template match="cart/item">
-		<a class="dropdown-item cart d-flex align-items-center" href="#" style="" xo-scope="{@x:id}">
-			<div class="mr-3">
-				<div>
-					<img src="images/product.jpg" width="40" height="40"/>
+		<a class="dropdown-item" href="#" xo-scope="{@xo:id}">
+			<div class="d-flex justify-content-between">
+				<!--<div class="mr-3">
+					<div>
+						<img src="https://via.placeholder.com/50x50" alt="Item 1" class="mr-3"/>
+					</div>
+				</div>-->
+				<div class="p-2">
+					<div>
+						<xsl:apply-templates select="@n"/>
+					</div>
+					<div>
+						<xsl:apply-templates select="@o"/>
+					</div>
 				</div>
-			</div>
-			<div class="cart-popup-item__description">
-				<div>
-					<span class="cart-popup-item__title">
-						<xsl:value-of select="text()"/>
-					</span>
-					<ul class="product_prd_details" aria-label="Detalles del producto" data-cart-popup-product-details="">
-						<li class="product_prd_details__item product-details__item--variant-option">
-							<xsl:text> $</xsl:text>
-							<xsl:value-of select="Precio/text()"/>
-						</li>
-					</ul>
-				</div>
-				<div class="cart-popup-item__quantity">
-					<span onclick="scope.remove()">
-						<i class="fas fa-trash-alt" ></i>
-					</span>
-				</div>
+				<span class="ml-auto p-2" onclick="scope.remove()">
+					<i class="fas fa-trash-alt" ></i>
+				</span>
 			</div>
 		</a>
 	</xsl:template>

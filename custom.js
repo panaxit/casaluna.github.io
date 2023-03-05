@@ -6,13 +6,6 @@ xo.listener.on(`change::px:Entity/data:rows/xo:r/@*`, function ({ element:row, a
                 row.set("Saldo", row.get("Total") - row.get("TotalPagado"))
             }
             break;
-        case "Egresos.Compras":
-            let Cantidad = row.get("Cantidad");
-            let TotalCompraPesos = row.get("TotalCompraPesos");
-            let TotalCompraDolares = row.get("TotalCompraDolares");
-            row.set("PrecioUnitarioPesos", TotalCompraPesos / Cantidad)
-            row.set("PrecioUnitarioDolares", TotalCompraDolares / Cantidad)
-            break;
         case "Ingresos.Venta":
             let TotalArticulos = row.get("Monto");
             let Descuento = row.get("Descuento");
@@ -68,4 +61,8 @@ xo.listener.on('beforeSubmit::px:Entity[@Schema="Ventas" and @Name="Venta"]/data
         post.selectFirst("self::post:batch/post:dataTable/*").insertFirst(comprobacion)
     })
     if (comprobacion) comprobacion.textContent = `'${comprobacion.firstElementChild.toString().replace("'","''")}'`    
+})
+
+xo.listener.on('failure', function () {
+    this.document.$$('//result[@status="error"]/@statusMessage[contains(.,"DELETE") and contains(.,"REFERENCE")]').set(message => "No se puede eliminar el registro porque está en uso.")
 })
