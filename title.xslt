@@ -2,11 +2,13 @@
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns="http://www.w3.org/1999/xhtml"
 xmlns:px="http://panax.io/entity"
-exclude-result-prefixes="#default xsl px"
+xmlns:site="http://panax.io/site"
+exclude-result-prefixes="#default xsl px site"
 >
 	<xsl:output method="xml"
 	   omit-xml-declaration="yes"
 	   indent="yes"/>
+	<xsl:param name="site:seed">''</xsl:param>
 
 	<xsl:template match="/">
 		<h1>
@@ -14,7 +16,11 @@ exclude-result-prefixes="#default xsl px"
 		</h1>
 	</xsl:template>
 
-	<xsl:template match="px:Entity">
+	<xsl:template match="*">
+		<xsl:value-of select="substring-before(translate(concat($site:seed,'?'),'_#',' '),'?')"/>
+	</xsl:template>
+
+	<xsl:template match="*[@headerText]">
 		<xsl:apply-templates select="@headerText"/>
 	</xsl:template>
 
