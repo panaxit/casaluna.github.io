@@ -16,6 +16,13 @@ xo.listener.on(`change::px:Entity/data:rows/xo:r/@*`, function ({ element:row, a
     }
 })
 
+xo.listener.on(`beforeRender::#Inventarios/Articulos`, function ({ dom }) {
+    dom && dom.querySelectorAll("fieldset.container-Costos > div").forEach(el => {
+        el.classList.remove("justify-content-between");
+        el.classList.add("flex-wrap");
+    })
+})
+
 xo.listener.on(`beforeChange::xo:r/@meta:FK_VentaDetalle_Articulos`, function ({ node, element, attribute, old, value }) {
     let src_element = event.srcEvent.srcElement;
     let selected_record = src_element[src_element.selectedIndex].scope.filter("self::xo:r")
@@ -61,8 +68,4 @@ xo.listener.on('beforeSubmit::px:Entity[@Schema="Ventas" and @Name="Venta"]/data
         post.selectFirst("self::post:batch/post:dataTable/*").insertFirst(comprobacion)
     })
     if (comprobacion) comprobacion.textContent = `'${comprobacion.firstElementChild.toString().replace("'","''")}'`    
-})
-
-xo.listener.on('failure', function () {
-    this.document.$$('//result[@status="error"]/@statusMessage[contains(.,"DELETE") and contains(.,"REFERENCE")]').set(message => "No se puede eliminar el registro porque está en uso.")
 })
