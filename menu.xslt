@@ -25,7 +25,7 @@ exclude-result-prefixes="#default session sitemap shell"
 			<script>
 				<![CDATA[xo.listener.on('click', function(){ 
 			    if (!event.srcElement.closest('.menu')) {
-			        for (let dropdown of [...document.querySelectorAll(".dropdown-toggle.show")]) {
+			        for (let dropdown of [...document.querySelectorAll(".menu .dropdown-toggle.show")]) {
 						let scoped_dropdown = dropdown.scope;
 						const dropdownInstance = new bootstrap.Dropdown(dropdown);
 						dropdownInstance.toggle();

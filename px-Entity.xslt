@@ -21,6 +21,7 @@
 	<xsl:param name="data:rows"/>
 	<!--<xsl:param name="state:dirty"/>-->
 	<xsl:key name="readonly" match="@meta:FK_Lotes_StatusLotes" use="concat(ancestor::px:Entity[1]/@xo:id,'::',name())"/>
+	<xsl:key name="widget" match="@Fotos" use="concat('files:',ancestor::px:Entity[1]/@xo:id,'::',name())"/>
 
 	<xsl:template mode="headerText" match="key('field','Compras.Orden.FechaAutorizacion')" priority="5">
 		Autorización
