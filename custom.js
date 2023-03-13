@@ -144,15 +144,10 @@ xo.listener.on([`success::#server:checkout`, `success::#server:request`], functi
     }
 })
 
-xo.listener.on(`fetch::px:Entity[@Name="Citas"]`, function ({ store, node }) {
-    this.documentElement.set('controlType', 'calendar')
-})
-
-/*Mover*/
-
-/*Version 20230306_2316*/
+/*Version 20230313_1436*/
 xo.listener.on(`appendTo::px:Entity[@controlType="calendar"]/data:rows`, function ({ store, node }) {
     let fechas = this.select("x:r/@Fecha").filter(fecha => fecha.value).map(fecha => new Date(fecha.value + 'T00:00:00'));
+    if (!fechas.length) return;
     var maxDate = new Date(Math.max.apply(null, fechas));
     var minDate = new Date(Math.min.apply(null, fechas));
     let month = minDate.getMonth() + 1;
@@ -164,14 +159,6 @@ xo.listener.on(`beforeTransform::px:Entity[@controlType="calendar"][@env:stylesh
     let [year, month] = target_node.getAttribute("state:current_month").split('-');
     let dias = xo.xml.createNode(`<dias state:current_month="${year}-${('0' + month).substr(-2, 2)}">${dateRange(new Date(year, month - 1, 1).toJSON().substring(0, 10)).map(el => xo.xml.createNode(`<dia value="${el.toJSON().substring(0, 10)} 00:00:00" text="${el.getDate()}" week="${el.getWeek()}"/>`)).join('')}</dias>`)
     target_node.append(...dias.childNodes);
-})
-
-xo.listener.on(`appendTo::px:Entity[@controlType="calendar"]/data:rows`, function ({ store, node }) {
-    let fechas = this.select("x:r/@Fecha").filter(fecha => fecha.value).map(fecha => new Date(fecha.value + 'T00:00:00'));
-    var maxDate = new Date(Math.max.apply(null, fechas));
-    var minDate = new Date(Math.min.apply(null, fechas));
-    let month = minDate.getMonth() + 1;
-    this.ownerDocument.selectFirst("//dias").setAttribute("state:current_month", minDate.getFullYear() + '-' + ('0' + month).substr(-2, 2))
 })
 
 xo.listener.on(`fetch::px:Entity`, function ({ store, node }) {
@@ -246,3 +233,8 @@ Date.prototype.getWeek = function () {
     var onejan = new Date(this.getFullYear(), 0, 1);
     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
 };
+
+/**/
+xo.listener.on(`fetch::px:Entity[@Schema="Agenda"]`, function ({ store, node }) {
+    this.documentElement.set('controlType', 'calendar')
+})
