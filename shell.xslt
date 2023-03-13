@@ -21,21 +21,21 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 
 	<xsl:template mode="shell:nav-title" match="*|@*">
 		<header class="section_nav navbar-form hpadding0 hmargecontenidozul">
-			<h1 xo-section="active" xo-stylesheet="title.xslt"></h1>
+			<h1 xo-store="active" xo-stylesheet="title.xslt"></h1>
 		</header>
 	</xsl:template>
 
 	<xsl:template mode="shell:extra-content" match="*|@*">
-		<aside class="sidebar" xo-section="#sitemap" xo-stylesheet="sitemap.xslt" id="sitemap">
+		<aside class="sidebar" xo-store="#sitemap" xo-stylesheet="sitemap.xslt" id="sitemap">
 			<style><![CDATA[aside.sidebar {width:0%}]]></style>
 		</aside>
-		<div class="settings" xo-section="#settings" xo-stylesheet="settings.xslt"/>
+		<div class="settings" xo-store="#settings" xo-stylesheet="settings.xslt"/>
 	</xsl:template>
 
 	<xsl:template mode="shell:footer-content" match="*|@*">
-		<div id="page_controls" xo-section="active" xo-stylesheet="page_controls.xslt" class="col-md-8 d-flex align-items-center">
+		<div id="page_controls" xo-store="active" xo-stylesheet="page_controls.xslt" class="col-md-8 d-flex align-items-center">
 		</div>
-		<div id="shell_buttons" class="col-md-4 d-flex align-items-center" xo-section="active" xo-stylesheet="shell_buttons.xslt">
+		<div id="shell_buttons" class="col-md-4 d-flex align-items-center" xo-store="active" xo-stylesheet="shell_buttons.xslt">
 			<ul class="col-12 nav justify-content-end list-unstyled d-flex">
 			</ul>
 		</div>

@@ -25,9 +25,9 @@ exclude-result-prefixes="#default session sitemap shell"
 
 	<xsl:template match="*" mode="icon.badge"/>
 
-	<xsl:template match="*[item]" mode="icon.badge">
+	<xsl:template match="*[item|xo:r]" mode="icon.badge">
 		<span class="position-absolute top-0 translate-middle badge rounded-pill bg-danger">
-			<xsl:value-of select="count(item)"/>
+			<xsl:value-of select="count(*)"/>
 			<span class="visually-hidden">unread items</span>
 		</span>
 	</xsl:template>
@@ -92,17 +92,17 @@ exclude-result-prefixes="#default session sitemap shell"
 		</style>
 		<xsl:apply-templates/>
 		<hr class="dropdown-divider"/>
-		<a class="dropdown-item text-center small text-gray-500" href="#" xo-scope="{@xo:id}" onclick="scope.$$('self::*/item').remove()" style="min-width: 500px;">
+		<a class="dropdown-item text-center small text-gray-500" href="#" xo-scope="{@xo:id}" onclick="scope.$$('self::*/*').remove()" style="min-width: 500px;">
 			<xsl:choose>
-				<xsl:when test="item">Borrar todo</xsl:when>
+				<xsl:when test="*">Borrar todo</xsl:when>
 				<xsl:otherwise>
-					<xsl:attribute name="href">#estudios</xsl:attribute>
+					<xsl:attribute name="href">#Ventas/Catalogo</xsl:attribute>
 					<xsl:attribute name="onclick"></xsl:attribute>
-					<xsl:text>Ir a listado</xsl:text>
+					<xsl:text>Ir a catálogo</xsl:text>
 				</xsl:otherwise>
 			</xsl:choose>
 		</a>
-		<xsl:if test="item">
+		<xsl:if test="*">
 			<hr class="dropdown-divider"/>
 			<a class="dropdown-item text-center small text-gray-500" href="#" xo-scope="{@xo:id}" onclick="cart.checkout()" style="min-width: 500px;">Abrir cuenta</a>
 		</xsl:if>
@@ -168,13 +168,22 @@ exclude-result-prefixes="#default session sitemap shell"
 		<xsl:variable name="disabled">
 			<xsl:if test="@state:disabled">disabled</xsl:if>
 		</xsl:variable>
-		<a class="nav-link dropdown-toggle {$disabled}" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<xsl:variable name="show">
+			<xsl:if test="@state:expanded='true'">show</xsl:if>
+		</xsl:variable>
+		<a class="nav-link dropdown-toggle {$disabled} {$show}" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" xo-attribute="state:expanded" onclick="scope.toggle(true,false)">
+			<xsl:if test="$show='show'">
+				<xsl:attribute name="aria-expanded">true</xsl:attribute>
+			</xsl:if>
 			<xsl:apply-templates mode="icon" select="."/>
 			<xsl:apply-templates mode="icon.badge" select="."/>
 		</a>
 
 		<xsl:variable name="items" select="item"/>
-		<div class="dropdown-menu dropdown-menu-end p-3 shadow animated--grow-in" aria-labelledby="searchdropdown">
+		<div class="dropdown-menu dropdown-menu-end p-3 shadow animated--grow-in {$show}" aria-labelledby="searchdropdown" data-bs-popper="none">
+			<xsl:if test="$show='show'">
+				<xsl:attribute name="data-bs-popper">none</xsl:attribute>
+			</xsl:if>
 			<xsl:apply-templates mode="menu" select="."/>
 		</div>
 	</xsl:template>
@@ -185,11 +194,11 @@ exclude-result-prefixes="#default session sitemap shell"
 		</a>
 	</xsl:template>
 
-	<xsl:template match="cart/item/@o">
+	<xsl:template match="cart/*/@PrecioVenta">
 		<xsl:value-of select="format-number(translate(.,'$,',''),'$#,##0.00###;-$#,##0.00###')"/>
 	</xsl:template>
 
-	<xsl:template match="cart/item">
+	<xsl:template match="cart/*">
 		<a class="dropdown-item" href="#" xo-scope="{@xo:id}">
 			<div class="d-flex justify-content-between">
 				<!--<div class="mr-3">
@@ -199,10 +208,10 @@ exclude-result-prefixes="#default session sitemap shell"
 				</div>-->
 				<div class="p-2">
 					<div>
-						<xsl:apply-templates select="@n"/>
+						<xsl:apply-templates select="@Modelo"/>
 					</div>
 					<div>
-						<xsl:apply-templates select="@o"/>
+						<xsl:apply-templates select="@PrecioVenta"/>
 					</div>
 				</div>
 				<span class="ml-auto p-2" onclick="scope.remove()">

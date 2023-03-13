@@ -21,7 +21,19 @@ exclude-result-prefixes="#default session sitemap shell"
 	<xsl:key name="expanded" match="*[@state:expanded='true']" use="true()"/>
 
 	<xsl:template match="*">
-		<span>
+		<span class="menu">
+			<script>
+				<![CDATA[xo.listener.on('click', function(){ 
+			    if (!event.srcElement.closest('.menu')) {
+			        for (let dropdown of [...document.querySelectorAll(".dropdown-toggle.show")]) {
+						let scoped_dropdown = dropdown.scope;
+						const dropdownInstance = new bootstrap.Dropdown(dropdown);
+						dropdownInstance.toggle();
+						scoped_dropdown.toggle(false);
+					}
+				}
+			})]]>
+			</script>
 			<style>
 				<![CDATA[
 .avatar {
@@ -42,7 +54,6 @@ exclude-result-prefixes="#default session sitemap shell"
 			</style>
 			<ul class="navbar-nav ml-auto menu">
 				<xsl:apply-templates/>
-
 				<div class="topbar-divider d-none d-sm-block"></div>
 				<div class="dropdown">
 					<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -98,7 +109,7 @@ exclude-result-prefixes="#default session sitemap shell"
 	</xsl:template>
 
 	<xsl:template match="notifications|messages|cart" mode="section">
-		<xsl:attribute name="xo-section">
+		<xsl:attribute name="xo-store">
 			<xsl:text/>#<xsl:value-of select="name()"/>
 		</xsl:attribute>
 	</xsl:template>

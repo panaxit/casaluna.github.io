@@ -7,11 +7,13 @@
     "request": "server/request.asp",
     "sitemap": "server/sitemap.asp",
     "uploadFile": "server/upload_file.asp",
-    "uploadFileManager": "server/upload_file_manager.asp"
+    "uploadFileManager": "server/upload_file_manager.asp",
+    "checkout": "server/request.asp?command=Ventas.generarVenta"
   },
   "sources": {
     "^data:(.*)": { "px.getData": [] },
     "^#([^\\/]+\\/.+)$": { "px.request": [ "{$1}" ] },
+    "#": "#Ventas/Catalogo",
     "#notifications": "notifications.xml",
     "#messages": "messages.xml",
     "#sitemap": { "sitemap": [] },

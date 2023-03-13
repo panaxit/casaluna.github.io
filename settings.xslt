@@ -18,7 +18,7 @@ exclude-result-prefixes="#default session sitemap shell"
 	<xsl:param name="session:autoRebuild">false</xsl:param>
 	<xsl:param name="session:disableCache">true</xsl:param>
 	<xsl:param name="session:autoRefresh"/>
-	<xsl:param name="js:autorefresh">!!((xo.sections.active.sources.reload || {}).interval || {}).pause</xsl:param>	
+	<xsl:param name="js:autorefresh">!!((xo.stores.active.sources.reload || {}).interval || {}).pause</xsl:param>	
 	<xsl:param name="js:cache_name">xover.session.cache_name.split('_').pop()</xsl:param>
 	<xsl:key name="expanded" match="*[@state:expanded='true']" use="true()"/>
 
@@ -236,8 +236,8 @@ exclude-result-prefixes="#default session sitemap shell"
 										<div class="settings-section">
 											<small class="d-block text-uppercase font-weight-bold text-muted mb-2">Edición</small>
 											<div class="list-group">
-												<button type="button" class="list-group-item list-group-item-action" onclick="xo.sections.active.undo()">Deshacer</button>
-												<button type="button" class="list-group-item list-group-item-action" onclick="xo.sections.active.redo()">Rehacer</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.undo()">Deshacer</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.redo()">Rehacer</button>
 												<button type="button" class="list-group-item list-group-item-action" onclick="xover.dom.print()">Imprimir</button>
 												<button type="button" class="list-group-item list-group-item-action" onclick="xover.session.saveSession();">Guardar sesión</button>
 												<xsl:if test="$js:cache_name!=''">
@@ -249,7 +249,7 @@ exclude-result-prefixes="#default session sitemap shell"
 										<div class="settings-section">
 											<small class="d-block text-uppercase font-weight-bold text-muted mb-2">Desarrollador</small>
 											<div class="list-group">
-												<button type="button" class="list-group-item list-group-item-action" onclick="xo.sections.active.toClipboard();">Copiar fuente</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.toClipboard();">Copiar fuente</button>
 												<button type="button" class="list-group-item list-group-item-action">
 													<xsl:choose>
 														<xsl:when test="$session:debug='true'">
@@ -274,16 +274,16 @@ exclude-result-prefixes="#default session sitemap shell"
 														</xsl:otherwise>
 													</xsl:choose>
 												</button>
-												<button type="button" class="list-group-item list-group-item-action" onclick="xo.sections.active.render()">Actualizar módulo</button>
-												<button type="button" class="list-group-item list-group-item-action" onclick="xo.sections.active.library.reload()">Actualizar librerías</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.render()">Actualizar módulo</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.library.reload()">Actualizar librerías</button>
 												<button type="button" class="list-group-item list-group-item-action">
 													<xsl:choose>
 														<xsl:when test="$js:autorefresh='true'">
-															<xsl:attribute name="onclick">xo.sections.active.library.reload.interval.stop(); xo.session.autoRefresh = !xo.session.autoRefresh;</xsl:attribute>
+															<xsl:attribute name="onclick">xo.stores.active.library.reload.interval.stop(); xo.session.autoRefresh = !xo.session.autoRefresh;</xsl:attribute>
 															Detener autorefresh
 														</xsl:when>
 														<xsl:otherwise>
-															<xsl:attribute name="onclick">xo.sections.active.library.reload.interval(3); xo.session.autoRefresh = !xo.session.autoRefresh;</xsl:attribute>
+															<xsl:attribute name="onclick">xo.stores.active.library.reload.interval(3); xo.session.autoRefresh = !xo.session.autoRefresh;</xsl:attribute>
 															Activar/desactivar autorefresh
 														</xsl:otherwise>
 													</xsl:choose></button>
