@@ -17,11 +17,18 @@ exclude-result-prefixes="#default xsl px xo xsi"
 	   omit-xml-declaration="yes"
 	   indent="yes"/>
 
-	<xsl:template match="key('entity', 'form:Ventas/Venta')/data:rows/xo:r/@*" mode="shell:buttons">
+	<xsl:template match="key('entity', 'form:Ventas/Venta')/data:rows/xo:r/@xo:id" mode="shell:buttons">
+		<xsl:if test="../descendant-or-self::xo:r[key('changed',@xo:id)]">
 			<li class="ms-3">
-				<a class="text-muted" href="#" onclick="ventas.toggleRecibo(scope)">
-					<button class="btn btn-info">Ver/ocultar recibo</button>
+				<a class="text-muted" href="#" onclick="px.submit(scope)">
+					<button class="btn btn-success">Guardar</button>
 				</a>
 			</li>
-	</xsl:template>	
+		</xsl:if>
+		<li class="ms-3">
+			<a class="text-muted" href="#" onclick="ventas.toggleRecibo(scope)">
+				<button class="btn btn-info">Ver/ocultar recibo</button>
+			</a>
+		</li>
+	</xsl:template>
 </xsl:stylesheet>
