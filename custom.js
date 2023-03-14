@@ -1,4 +1,4 @@
-xo.listener.on(`change::px:Entity/data:rows/xo:r/@*`, function ({ element:row, attribute, old, value }) {
+xo.listener.on(`change::px:Entity/data:rows/xo:r/@*`, function ({ element: row, attribute, old, value }) {
     let entity = attribute.$('ancestor::px:Entity[1]')
     switch (entity.get("Schema") + '.' + entity.get("Name")) {
         case "Egresos.Gastos":
@@ -21,6 +21,12 @@ xo.listener.on(`beforeRender::#Inventarios/Articulos`, function ({ dom }) {
         el.classList.remove("justify-content-between");
         el.classList.add("flex-wrap");
     })
+})
+
+xo.listener.on(`beforeRender::#Ventas/Venta`, function ({ dom }) {
+    for (let field_name of [...new Set([...dom.querySelectorAll("table tr div.placeholder")].map(el => [...el.classList].join('.')))]) {
+        [...dom.querySelectorAll(`tr td .${field_name}`)].map((mensaje, ix) => [...mensaje.querySelectorAll('span')].filter((span, i) => ix != i)).forEach(el => el.removeAll());
+    }
 })
 
 xo.listener.on(`beforeChange::xo:r/@meta:FK_VentaDetalle_Articulos`, function ({ node, element, attribute, old, value }) {
@@ -67,7 +73,7 @@ xo.listener.on('beforeSubmit::px:Entity[@Schema="Ventas" and @Name="Venta"]/data
         dataTable.append(row.cloneNode());
         post.selectFirst("self::post:batch/post:dataTable/*").insertFirst(comprobacion)
     })
-    if (comprobacion) comprobacion.textContent = `'${comprobacion.firstElementChild.toString().replace("'","''")}'`    
+    if (comprobacion) comprobacion.textContent = `'${comprobacion.firstElementChild.toString().replace("'", "''")}'`
 })
 
 xo.listener.on('load::#Ventas/Catalogo', function ({ store }) {
@@ -135,7 +141,7 @@ xo.listener.on(`removeFrom::cart`, function ({ removedNodes }) {
 })
 
 xo.listener.on([`success::#server:checkout`, `success::#server:request`], function ({ response }) {
-    /*Mejorar este método cuando se pueda especificar que es #server:checkout */
+    /*Mejorar este mÃ©todo cuando se pueda especificar que es #server:checkout */
     let id_venta = response.headers.get("x-idventa");
     if (id_venta) {
         px.navigateTo(`#Ventas/Venta:${id_venta}~edit`);
@@ -143,6 +149,17 @@ xo.listener.on([`success::#server:checkout`, `success::#server:request`], functi
         xo.stores["#Ventas/Catalogo"].select("px:Entity/data:rows/@command").set(command => command.value);
     }
 })
+
+ventas = {};
+ventas.toggleRecibo = function (scope) {
+    let document = scope.ownerDocument;
+    let stylesheet_recibo = document.stylesheets["recibo.xslt"];
+    if (stylesheet_recibo) {
+        stylesheet_recibo.remove();
+    } else {
+        document.addStylesheet({ href: "recibo.xslt", target: 'main' }, document.documentElement)
+    }
+}
 
 /*Version 20230313_1436*/
 xo.listener.on(`appendTo::px:Entity[@controlType="calendar"]/data:rows`, function ({ store, node }) {
