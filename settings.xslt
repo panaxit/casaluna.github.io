@@ -275,15 +275,15 @@ exclude-result-prefixes="#default session sitemap shell"
 													</xsl:choose>
 												</button>
 												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.render()">Actualizar módulo</button>
-												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.library.reload()">Actualizar librerías</button>
+												<button type="button" class="list-group-item list-group-item-action" onclick="xo.stores.active.sources.reload()">Actualizar librerías</button>
 												<button type="button" class="list-group-item list-group-item-action">
 													<xsl:choose>
 														<xsl:when test="$js:autorefresh='true'">
-															<xsl:attribute name="onclick">xo.stores.active.library.reload.interval.stop(); xo.session.autoRefresh = !xo.session.autoRefresh;</xsl:attribute>
+															<xsl:attribute name="onclick">xo.stores.active.sources.reload.interval.stop(); xo.session.autoRefresh = !xo.session.autoRefresh;</xsl:attribute>
 															Detener autorefresh
 														</xsl:when>
 														<xsl:otherwise>
-															<xsl:attribute name="onclick">xo.stores.active.library.reload.interval(3); xo.session.autoRefresh = !xo.session.autoRefresh;</xsl:attribute>
+															<xsl:attribute name="onclick">xo.stores.active.sources.reload.interval(3); xo.session.autoRefresh = !xo.session.autoRefresh;</xsl:attribute>
 															Activar/desactivar autorefresh
 														</xsl:otherwise>
 													</xsl:choose></button>
