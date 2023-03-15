@@ -76,9 +76,8 @@ xo.listener.on('beforeSubmit::px:Entity[@Schema="Ventas" and @Name="Venta"]/data
     if (comprobacion) comprobacion.textContent = `'${comprobacion.firstElementChild.toString().replace("'", "''")}'`
 })
 
-xo.listener.on('load::#Ventas/Catalogo', function ({ store }) {
-    let entity = store;
-    for (let routes of entity.select(`px:Entity/px:Routes[not(px:Route)]`)) {
+xo.listener.on('fetch::px:Entity[@Schema="Ventas"][@Name="Catalogo"]', function ({ document }) {
+    for (let routes of document.select(`px:Entity/px:Routes[not(px:Route)]`)) {
         routes.append(xo.xml.createNode(`<px:Route xmlns:px="${xo.spaces["px"]}" Method="addToCart"/>`))
     }
 })
@@ -252,6 +251,10 @@ Date.prototype.getWeek = function () {
 };
 
 /**/
-xo.listener.on(`fetch::px:Entity[@Schema="Agenda"]`, function ({ store, node }) {
+xo.listener.on(`fetch::px:Entity[@Schema="Agenda" and not(@mode="edit" or @mode="add")]`, function ({ store, node }) {
+    this.documentElement.set('controlType', 'calendar')
+})
+
+xo.listener.on(`fetch::px:Entity[@Schema="Ventas" and @Name="Citas"]`, function ({ store, node }) {
     this.documentElement.set('controlType', 'calendar')
 })

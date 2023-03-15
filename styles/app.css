@@ -70,6 +70,7 @@ dialog + .backdrop {
     --bg-shell-footer: #fff;
     --sidebar-width: 400px;
     --footer-height: 74px;
+    --hover-highlight: hsla(43, 71%, 87%, 0.9) !important;
 }
 
 #shell > header {
