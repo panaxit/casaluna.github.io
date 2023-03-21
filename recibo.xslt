@@ -3,6 +3,7 @@
   xmlns:js="http://panax.io/xover/javascript"
   xmlns:state="http://panax.io/state"
   xmlns:meta="http://panax.io/metadata"
+  xmlns:data="http://panax.io/source"
   xmlns:source="http://panax.io/source"
   xmlns:px="http://panax.io/entity"
   xmlns="http://www.w3.org/1999/xhtml"
@@ -31,7 +32,7 @@
 	<xsl:key name="data" match="@FechaEvento" use="'FechaEvento'"/>
 	<xsl:key name="data" match="@Telefono" use="'Telefono'"/>
 	<xsl:key name="data" match="@meta:FK_VentaDetalle_Articulos" use="'codigo'"/>
-	<xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/>
+	<xsl:key name="data" match="@IdArticuloInventario" use="'descripcion'"/>
 	<xsl:key name="data" match="@PrecioTotal" use="'monto'"/>
 	<xsl:key name="data" match="@xsl:descuento" use="'descuento'"/>
 	<xsl:key name="data" match="@PrecioTotal" use="'subtotal'"/>
@@ -39,7 +40,10 @@
 	<xsl:key name="data" match="@Descuento" use="'descuento_extra'"/>
 	<xsl:key name="data" match="@meta:FK_MensajeReciboVenta_MensajeRecibo" use="'mensaje'"/>
 	<xsl:key name="data" match="@MontoTotal" use="'total'"/>
-	<xsl:key name="data" match="@Anticipos" use="'anticipo'"/>
+	<xsl:key name="data" match="@Anticipos" use="'anticipos'"/>
+	<xsl:key name="data" match="*[@Schema='Ingresos' and @Name='Cobros']/data:rows/xo:r/@Monto" use="'anticipo'"/>
+	<xsl:key name="data" match="*[@Schema='Ingresos' and @Name='Cobros']/data:rows/xo:r/@FechaMovimiento" use="'fecha_anticipo'"/>
+	<xsl:key name="data" match="@Anticipo" use="'fecha_anticipo'"/>
 	<xsl:key name="data" match="@MontoRestante" use="'restante'"/>
 	<xsl:key name="data" match="@meta:FK_Venta_Colaborador" use="'Vendedor'"/>
 
@@ -58,6 +62,9 @@
       span.Servicio, span.Ubicacion {
         white-space: pre-wrap;
       }
+	  
+	  .placeholder.fecha_anticipo { display:inline-block }
+	  .placeholder.anticipo { display:inline-block }
 
       .watermarked::before {
         position: fixed;
@@ -100,12 +107,16 @@
 		<xsl:value-of select="format-number(., '$###,##0.00', 'money')"/>
 	</xsl:template>
 
-	<xsl:template match="@FechaCaptura">
+	<xsl:template match="@FechaCaptura|@FechaMovimiento">
 		<xsl:value-of select="substring(., 1, 10)"/>
 	</xsl:template>
 
 	<xsl:template match="@meta:FK_VentaDetalle_Articulos">
 		<xsl:value-of select="substring-before(., '-')"/>
+	</xsl:template>
+
+	<xsl:template match="@IdArticuloInventario">
+		<xsl:value-of select="substring-before(substring-after(../@meta:FK_VentaDetalle_Articulos, '-'), '(')"/>
 	</xsl:template>
 
 	<xsl:template match="@meta:FK_MensajeReciboVenta_MensajeRecibo">

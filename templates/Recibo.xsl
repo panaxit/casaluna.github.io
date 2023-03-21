@@ -1,14 +1,14 @@
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"><xsl:output method="html" indent="yes" omit-xml-declaration="yes"/><xsl:key name="data" match="@xsl:domicilio" use="'domicilio'"/><xsl:key name="data" match="@xsl:colonia" use="'colonia'"/><xsl:key name="data" match="@xsl:cel" use="'cel'"/><xsl:key name="data" match="@xsl:Folio" use="'Folio'"/><xsl:key name="data" match="@xsl:Cliente" use="'Cliente'"/><xsl:key name="data" match="@xsl:FechaImpresion" use="'FechaImpresion'"/><xsl:key name="data" match="@xsl:FechaPrueba" use="'FechaPrueba'"/><xsl:key name="data" match="@xsl:DomicilioCliente" use="'DomicilioCliente'"/><xsl:key name="data" match="@xsl:FechaFoto" use="'FechaFoto'"/><xsl:key name="data" match="@xsl:FechaEvento" use="'FechaEvento'"/><xsl:key name="data" match="@xsl:Telefono" use="'Telefono'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:descuento" use="'descuento'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:descuento" use="'descuento'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:descuento" use="'descuento'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:descuento" use="'descuento'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:descuento" use="'descuento'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:descuento" use="'descuento'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:suma_subtotal" use="'suma_subtotal'"/><xsl:key name="data" match="@xsl:descuento_extra" use="'descuento_extra'"/><xsl:key name="data" match="@xsl:mensaje" use="'mensaje'"/><xsl:key name="data" match="@xsl:total" use="'total'"/><xsl:key name="data" match="@xsl:anticipo" use="'anticipo'"/><xsl:key name="data" match="@xsl:restante" use="'restante'"/><xsl:key name="data" match="@xsl:mensaje" use="'mensaje'"/><xsl:key name="data" match="@xsl:mensaje" use="'mensaje'"/><xsl:key name="data" match="@xsl:mensaje" use="'mensaje'"/><xsl:key name="data" match="@xsl:Vendedor" use="'Vendedor'"/><xsl:template match="*|@*|text()" mode="container" priority="-1"/><xsl:template match="*|@*|text()" mode="widget" priority="-1"><span xmlns="http://www.w3.org/1999/xhtml"><xsl:apply-templates select="."/></span></xsl:template><xsl:template match="*|@*" mode="resources-path" priority="-1"/><xsl:template match="/"><html xmlns="http://www.w3.org/TR/REC-html40" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><xsl:apply-templates select="." mode="html.head"/><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/><meta name="ProgId" content="Excel.Sheet"/><meta name="Generator" content="Microsoft Excel 15"/><link rel="File-List" href="Recibo_files/filelist.xml"><xsl:attribute name="href"><xsl:apply-templates select="." mode="resources-path"/><xsl:text>Recibo_files/filelist.xml</xsl:text></xsl:attribute></link><xsl:comment><xsl:text/>[if !mso]&gt;
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"><xsl:output method="html" indent="yes" omit-xml-declaration="yes"/><xsl:key name="data" match="@xsl:domicilio" use="'domicilio'"/><xsl:key name="data" match="@xsl:colonia" use="'colonia'"/><xsl:key name="data" match="@xsl:cel" use="'cel'"/><xsl:key name="data" match="@xsl:Folio" use="'Folio'"/><xsl:key name="data" match="@xsl:Cliente" use="'Cliente'"/><xsl:key name="data" match="@xsl:FechaImpresion" use="'FechaImpresion'"/><xsl:key name="data" match="@xsl:Festejada" use="'Festejada'"/><xsl:key name="data" match="@xsl:FechaPrueba" use="'FechaPrueba'"/><xsl:key name="data" match="@xsl:DomicilioCliente" use="'DomicilioCliente'"/><xsl:key name="data" match="@xsl:FechaFoto" use="'FechaFoto'"/><xsl:key name="data" match="@xsl:FechaEvento" use="'FechaEvento'"/><xsl:key name="data" match="@xsl:Telefono" use="'Telefono'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:fecha_anticipo" use="'fecha_anticipo'"/><xsl:key name="data" match="@xsl:anticipo" use="'anticipo'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:fecha_anticipo" use="'fecha_anticipo'"/><xsl:key name="data" match="@xsl:anticipo" use="'anticipo'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:fecha_anticipo" use="'fecha_anticipo'"/><xsl:key name="data" match="@xsl:anticipo" use="'anticipo'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:fecha_anticipo" use="'fecha_anticipo'"/><xsl:key name="data" match="@xsl:anticipo" use="'anticipo'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:fecha_anticipo" use="'fecha_anticipo'"/><xsl:key name="data" match="@xsl:anticipo" use="'anticipo'"/><xsl:key name="data" match="@xsl:codigo" use="'codigo'"/><xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/><xsl:key name="data" match="@xsl:monto" use="'monto'"/><xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/><xsl:key name="data" match="@xsl:fecha_anticipo" use="'fecha_anticipo'"/><xsl:key name="data" match="@xsl:anticipo" use="'anticipo'"/><xsl:key name="data" match="@xsl:mensaje" use="'mensaje'"/><xsl:key name="data" match="@xsl:suma_subtotal" use="'suma_subtotal'"/><xsl:key name="data" match="@xsl:descuento_extra" use="'descuento_extra'"/><xsl:key name="data" match="@xsl:total" use="'total'"/><xsl:key name="data" match="@xsl:mensaje" use="'mensaje'"/><xsl:key name="data" match="@xsl:anticipos" use="'anticipos'"/><xsl:key name="data" match="@xsl:restante" use="'restante'"/><xsl:key name="data" match="@xsl:mensaje" use="'mensaje'"/><xsl:key name="data" match="@xsl:mensaje" use="'mensaje'"/><xsl:key name="data" match="@xsl:Vendedor" use="'Vendedor'"/><xsl:key name="data" match="@xsl:mensaje" use="'mensaje'"/><xsl:template match="*|@*|text()" mode="container" priority="-1"/><xsl:template match="*|@*|text()" mode="widget" priority="-1"><span xmlns="http://www.w3.org/1999/xhtml"><xsl:apply-templates select="."/></span></xsl:template><xsl:template match="*|@*" mode="resources-path" priority="-1"/><xsl:template match="/"><html xmlns="http://www.w3.org/TR/REC-html40" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><xsl:apply-templates select="." mode="html.head"/><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/><meta name="ProgId" content="Excel.Sheet"/><meta name="Generator" content="Microsoft Excel 15"/><link rel="File-List" href="Recibo_files/filelist.xml"><xsl:attribute name="href"><xsl:apply-templates select="." mode="resources-path"/><xsl:text>Recibo_files/filelist.xml</xsl:text></xsl:attribute></link><xsl:comment><xsl:text/>[if !mso]&gt;
 &lt;style&gt;
 v\:* {behavior:url(#default#VML);}
 o\:* {behavior:url(#default#VML);}
 x\:* {behavior:url(#default#VML);}
 .shape {behavior:url(#default#VML);}
 &lt;/style&gt;
-&lt;![endif]<xsl:text/></xsl:comment><style id="Recibo_30799_Styles"><xsl:comment><xsl:text/> table
+&lt;![endif]<xsl:text/></xsl:comment><style id="Recibo_13531_Styles"><xsl:comment><xsl:text/> table
 	{mso-displayed-decimal-separator:"\.";
 	mso-displayed-thousand-separator:"\,";}
-.xl1530799
+.xl1513531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -24,7 +24,7 @@ x\:* {behavior:url(#default#VML);}
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl6530799
+.xl6513531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -44,7 +44,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl6630799
+.xl6613531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -64,7 +64,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl6730799
+.xl6713531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -84,7 +84,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl6830799
+.xl6813531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -104,7 +104,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl6930799
+.xl6913531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -120,7 +120,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7030799
+.xl7013531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -140,7 +140,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7130799
+.xl7113531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -156,7 +156,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7230799
+.xl7213531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -172,7 +172,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7330799
+.xl7313531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -188,7 +188,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7430799
+.xl7413531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -204,7 +204,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7530799
+.xl7513531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -224,7 +224,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7630799
+.xl7613531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -244,7 +244,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7730799
+.xl7713531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -264,7 +264,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7830799
+.xl7813531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -284,7 +284,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl7930799
+.xl7913531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -304,7 +304,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl8030799
+.xl8013531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -320,7 +320,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl8130799
+.xl8113531
 	{padding:0px;
 	mso-ignore:padding;
 	color:red;
@@ -336,7 +336,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl8230799
+.xl8213531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -356,7 +356,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl8330799
+.xl8313531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -376,7 +376,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl8430799
+.xl8413531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -396,7 +396,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl8530799
+.xl8513531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -416,7 +416,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl8630799
+.xl8613531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -436,7 +436,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl8730799
+.xl8713531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -456,7 +456,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl8830799
+.xl8813531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -476,7 +476,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl8930799
+.xl8913531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -496,7 +496,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl9030799
+.xl9013531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -516,7 +516,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl9130799
+.xl9113531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -536,7 +536,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl9230799
+.xl9213531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -552,7 +552,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl9330799
+.xl9313531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -572,7 +572,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl9430799
+.xl9413531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -588,7 +588,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl9530799
+.xl9513531
 	{padding:0px;
 	mso-ignore:padding;
 	color:red;
@@ -604,7 +604,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl9630799
+.xl9613531
 	{padding:0px;
 	mso-ignore:padding;
 	color:red;
@@ -620,7 +620,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl9730799
+.xl9713531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -640,7 +640,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl9830799
+.xl9813531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -660,7 +660,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl9930799
+.xl9913531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -676,7 +676,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl10030799
+.xl10013531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -692,7 +692,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl10130799
+.xl10113531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -708,7 +708,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl10230799
+.xl10213531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -724,7 +724,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:normal;}
-.xl10330799
+.xl10313531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -740,7 +740,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:normal;}
-.xl10430799
+.xl10413531
 	{padding:0px;
 	mso-ignore:padding;
 	color:black;
@@ -756,7 +756,103 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl10530799
+.xl10513531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	background:#FFF4F9;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10613531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid #FFC1DD;
+	border-left:none;
+	background:#FFF4F9;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl10713531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:1.0pt solid #FFC1DD;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl10813531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl10913531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl11013531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -771,12 +867,12 @@ x\:* {behavior:url(#default#VML);}
 	vertical-align:middle;
 	border-top:1.0pt solid #FFC1DD;
 	border-right:none;
-	border-bottom:none;
+	border-bottom:1.0pt solid #FFC1DD;
 	border-left:1.0pt solid #FFC1DD;
-	mso-background-source:auto;
-	mso-pattern:auto;
+	background:#FFF4F9;
+	mso-pattern:black none;
 	white-space:normal;}
-.xl10630799
+.xl11113531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -791,12 +887,12 @@ x\:* {behavior:url(#default#VML);}
 	vertical-align:middle;
 	border-top:1.0pt solid #FFC1DD;
 	border-right:none;
-	border-bottom:none;
+	border-bottom:1.0pt solid #FFC1DD;
 	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
+	background:#FFF4F9;
+	mso-pattern:black none;
 	white-space:normal;}
-.xl10730799
+.xl11213531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -811,17 +907,17 @@ x\:* {behavior:url(#default#VML);}
 	vertical-align:middle;
 	border-top:1.0pt solid #FFC1DD;
 	border-right:1.0pt solid #FFC1DD;
-	border-bottom:none;
+	border-bottom:1.0pt solid #FFC1DD;
 	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
+	background:#FFF4F9;
+	mso-pattern:black none;
 	white-space:normal;}
-.xl10830799
+.xl11313531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
 	font-size:10.0pt;
-	font-weight:400;
+	font-weight:700;
 	font-style:normal;
 	text-decoration:none;
 	font-family:Calibri, sans-serif;
@@ -829,19 +925,19 @@ x\:* {behavior:url(#default#VML);}
 	mso-number-format:General;
 	text-align:center;
 	vertical-align:middle;
-	border-top:none;
+	border-top:1.0pt solid #FFC1DD;
 	border-right:none;
 	border-bottom:none;
 	border-left:1.0pt solid #FFC1DD;
-	mso-background-source:auto;
-	mso-pattern:auto;
+	background:#FFCDE4;
+	mso-pattern:black none;
 	white-space:normal;}
-.xl10930799
+.xl11413531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
 	font-size:10.0pt;
-	font-weight:400;
+	font-weight:700;
 	font-style:normal;
 	text-decoration:none;
 	font-family:Calibri, sans-serif;
@@ -849,15 +945,19 @@ x\:* {behavior:url(#default#VML);}
 	mso-number-format:General;
 	text-align:center;
 	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
 	white-space:normal;}
-.xl11030799
+.xl11513531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
 	font-size:10.0pt;
-	font-weight:400;
+	font-weight:700;
 	font-style:normal;
 	text-decoration:none;
 	font-family:Calibri, sans-serif;
@@ -865,74 +965,14 @@ x\:* {behavior:url(#default#VML);}
 	mso-number-format:General;
 	text-align:center;
 	vertical-align:middle;
-	border-top:none;
+	border-top:1.0pt solid #FFC1DD;
 	border-right:1.0pt solid #FFC1DD;
 	border-bottom:none;
 	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
+	background:#FFCDE4;
+	mso-pattern:black none;
 	white-space:normal;}
-.xl11130799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:1.0pt solid #FFC1DD;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl11230799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl11330799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl11430799
+.xl11613531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -952,7 +992,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:normal;}
-.xl11530799
+.xl11713531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -972,7 +1012,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:normal;}
-.xl11630799
+.xl11813531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -992,7 +1032,451 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:normal;}
-.xl11730799
+.xl11913531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:1.0pt solid #FFC1DD;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl12013531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl12113531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:normal;}
+.xl12213531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	background:#FFF4F9;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl12313531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:top;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:none;
+	border-left:1.0pt solid #FFC1DD;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl12413531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:top;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl12513531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:top;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:none;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl12613531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:1.0pt solid #FFC1DD;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl12713531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:top;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl12813531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:top;
+	border-top:none;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:none;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl12913531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:1.0pt solid #FFC1DD;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl13013531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl13113531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:top;
+	border-top:none;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl13213531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:none;
+	border-left:1.0pt solid #FFC1DD;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl13313531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl13413531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl13513531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:1.0pt solid #FFC1DD;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl13613531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl13713531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl13813531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:1.0pt solid #FFC1DD;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl13913531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl14013531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:normal;}
+.xl14113531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	background:#FFF4F9;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl14213531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -1005,10 +1489,14 @@ x\:* {behavior:url(#default#VML);}
 	mso-number-format:General;
 	text-align:left;
 	vertical-align:middle;
+	border-top:.5pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl11830799
+.xl14313531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -1028,12 +1516,12 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl11930799
+.xl14413531
 	{padding:0px;
 	mso-ignore:padding;
-	color:black;
-	font-size:11.0pt;
-	font-weight:400;
+	color:#3A3838;
+	font-size:12.0pt;
+	font-weight:700;
 	font-style:normal;
 	text-decoration:none;
 	font-family:Calibri, sans-serif;
@@ -1041,10 +1529,174 @@ x\:* {behavior:url(#default#VML);}
 	mso-number-format:General;
 	text-align:center;
 	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:1.0pt solid #FFC1DD;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl14513531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:12.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl14613531
+	{padding:0px;
+	mso-ignore:padding;
+	color:#3A3838;
+	font-size:12.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	background:#FFCDE4;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl14713531
+	{padding:0px;
+	mso-ignore:padding;
+	color:red;
+	font-size:14.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:none;
+	border-left:1.0pt solid #FFC1DD;
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl12030799
+.xl14813531
+	{padding:0px;
+	mso-ignore:padding;
+	color:red;
+	font-size:14.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	background:#FFF4F9;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl14913531
+	{padding:0px;
+	mso-ignore:padding;
+	color:red;
+	font-size:14.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid #FFC1DD;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:none;
+	border-left:none;
+	background:#FFF4F9;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl15013531
+	{padding:0px;
+	mso-ignore:padding;
+	color:red;
+	font-size:14.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:1.0pt solid #FFC1DD;
+	background:#FFF4F9;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl15113531
+	{padding:0px;
+	mso-ignore:padding;
+	color:red;
+	font-size:14.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	background:#FFF4F9;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl15213531
+	{padding:0px;
+	mso-ignore:padding;
+	color:red;
+	font-size:14.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:Calibri, sans-serif;
+	mso-font-charset:0;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:1.0pt solid #FFC1DD;
+	border-bottom:1.0pt solid #FFC1DD;
+	border-left:none;
+	background:#FFF4F9;
+	mso-pattern:black none;
+	white-space:nowrap;}
+.xl15313531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -1064,7 +1716,7 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl12130799
+.xl15413531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
@@ -1080,190 +1732,10 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl12230799
+.xl15513531
 	{padding:0px;
 	mso-ignore:padding;
-	color:#3A3838;
-	font-size:12.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:1.0pt solid #FFC1DD;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl12330799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:12.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl12430799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:12.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl12530799
-	{padding:0px;
-	mso-ignore:padding;
-	color:red;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:none;
-	border-left:1.0pt solid #FFC1DD;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl12630799
-	{padding:0px;
-	mso-ignore:padding;
-	color:red;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:none;
-	border-left:none;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl12730799
-	{padding:0px;
-	mso-ignore:padding;
-	color:red;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:none;
-	border-left:none;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl12830799
-	{padding:0px;
-	mso-ignore:padding;
-	color:red;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:1.0pt solid #FFC1DD;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl12930799
-	{padding:0px;
-	mso-ignore:padding;
-	color:red;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl13030799
-	{padding:0px;
-	mso-ignore:padding;
-	color:red;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl13130799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
+	color:black;
 	font-size:11.0pt;
 	font-weight:400;
 	font-style:normal;
@@ -1276,479 +1748,11 @@ x\:* {behavior:url(#default#VML);}
 	background:#FFF4F9;
 	mso-pattern:black none;
 	white-space:nowrap;}
-.xl13230799
+.xl15613531
 	{padding:0px;
 	mso-ignore:padding;
 	color:#3A3838;
 	font-size:11.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:none;
-	border-left:none;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl13330799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:none;
-	border-left:1.0pt solid #FFC1DD;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl13430799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:none;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl13530799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:none;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl13630799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:1.0pt solid #FFC1DD;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl13730799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl13830799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl13930799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl14030799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:top;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:none;
-	border-left:1.0pt solid #FFC1DD;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl14130799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:top;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:none;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl14230799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:top;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:none;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl14330799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:top;
-	border-top:none;
-	border-right:none;
-	border-bottom:none;
-	border-left:1.0pt solid #FFC1DD;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl14430799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:top;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl14530799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:top;
-	border-top:none;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:none;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl14630799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:top;
-	border-top:none;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:1.0pt solid #FFC1DD;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl14730799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:top;
-	border-top:none;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl14830799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:top;
-	border-top:none;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl14930799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:1.0pt solid #FFC1DD;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl15030799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl15130799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl15230799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:1.0pt solid #FFC1DD;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl15330799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:none;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl15430799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:1.0pt solid #FFC1DD;
-	border-right:1.0pt solid #FFC1DD;
-	border-bottom:1.0pt solid #FFC1DD;
-	border-left:none;
-	background:#FFCDE4;
-	mso-pattern:black none;
-	white-space:normal;}
-.xl15530799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Calibri, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:general;
-	vertical-align:middle;
-	background:#FFF4F9;
-	mso-pattern:black none;
-	white-space:nowrap;}
-.xl15630799
-	{padding:0px;
-	mso-ignore:padding;
-	color:#3A3838;
-	font-size:10.0pt;
 	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
@@ -1766,7 +1770,7 @@ x\:* {behavior:url(#default#VML);}
 	white-space:nowrap;}
  <xsl:text/></xsl:comment></style></head><body><xsl:apply-templates select="." mode="html.body"/><xsl:comment><xsl:text/>[if !excel]&gt;&amp;#160;&amp;#160;&lt;![endif]<xsl:text/></xsl:comment><xsl:comment><xsl:text/> The following information was generated by Microsoft Excel's Publish as Web
 Page wizard. <xsl:text/></xsl:comment><xsl:comment><xsl:text/> If the same item is republished from Excel, all information between the DIV
-tags will be replaced. <xsl:text/></xsl:comment><xsl:comment><xsl:text/><xsl:text/></xsl:comment><xsl:comment><xsl:text/> START OF OUTPUT FROM EXCEL PUBLISH AS WEB PAGE WIZARD  <xsl:text/></xsl:comment><xsl:comment><xsl:text/><xsl:text/></xsl:comment><div id="Recibo_30799" align="center" x:publishsource="Excel"><table border="0" cellpadding="0" cellspacing="0" width="833" style="border-collapse:  collapse;table-layout:fixed;width:629pt"><col width="17" style="mso-width-source:userset;mso-width-alt:621;width:13pt"/><col width="13" style="mso-width-source:userset;mso-width-alt:475;width:10pt"/><col width="8" style="mso-width-source:userset;mso-width-alt:292;width:6pt"/><col width="13" style="mso-width-source:userset;mso-width-alt:475;width:10pt"/><col width="46" span="2" style="mso-width-source:userset;mso-width-alt:1682;  width:35pt"/><col width="65" span="2" style="mso-width-source:userset;mso-width-alt:2377;  width:49pt"/><col width="79" style="mso-width-source:userset;mso-width-alt:2889;width:59pt"/><col width="21" style="mso-width-source:userset;mso-width-alt:768;width:16pt"/><col width="23" style="mso-width-source:userset;mso-width-alt:841;width:17pt"/><col width="65" style="mso-width-source:userset;mso-width-alt:2377;width:49pt"/><col width="45" style="mso-width-source:userset;mso-width-alt:1645;width:34pt"/><col width="22" style="mso-width-source:userset;mso-width-alt:804;width:17pt"/><col width="65" style="mso-width-source:userset;mso-width-alt:2377;width:49pt"/><col width="62" style="mso-width-source:userset;mso-width-alt:2267;width:47pt"/><col width="63" style="mso-width-source:userset;mso-width-alt:2304;width:47pt"/><col width="13" style="mso-width-source:userset;mso-width-alt:475;width:10pt"/><col width="8" style="mso-width-source:userset;mso-width-alt:292;width:6pt"/><col width="14" style="mso-width-source:userset;mso-width-alt:512;width:11pt"/><col width="80" style="width:60pt"/><tr height="21" style="height:15.75pt"><td height="21" class="xl1530799" width="17" style="height:15.75pt;width:13pt"><a name="RANGE!A1:U57"/></td><td class="xl1530799" width="13" style="width:10pt"/><td class="xl1530799" width="8" style="width:6pt"/><td class="xl1530799" width="13" style="width:10pt"/><td class="xl1530799" width="46" style="width:35pt"/><td class="xl1530799" width="46" style="width:35pt"/><td class="xl1530799" width="65" style="width:49pt"/><td class="xl1530799" width="65" style="width:49pt"/><td class="xl1530799" width="79" style="width:59pt"/><td class="xl1530799" width="21" style="width:16pt"/><td class="xl1530799" width="23" style="width:17pt"/><td class="xl1530799" width="65" style="width:49pt"/><td class="xl1530799" width="45" style="width:34pt"/><td class="xl1530799" width="22" style="width:17pt"/><td class="xl1530799" width="65" style="width:49pt"/><td class="xl1530799" width="62" style="width:47pt"/><td class="xl1530799" width="63" style="width:47pt"/><td class="xl1530799" width="13" style="width:10pt"/><td class="xl1530799" width="8" style="width:6pt"/><td class="xl1530799" width="14" style="width:11pt"/><td class="xl1530799" width="80" style="width:60pt"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1530799" style="height:15.0pt"/><td class="xl6530799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td align="left" valign="top"><xsl:comment><xsl:text/>[if gte vml 1]&gt;&lt;v:shapetype id="_x0000_t75"
+tags will be replaced. <xsl:text/></xsl:comment><xsl:comment><xsl:text/><xsl:text/></xsl:comment><xsl:comment><xsl:text/> START OF OUTPUT FROM EXCEL PUBLISH AS WEB PAGE WIZARD  <xsl:text/></xsl:comment><xsl:comment><xsl:text/><xsl:text/></xsl:comment><div id="Recibo_13531" align="center" x:publishsource="Excel"><table border="0" cellpadding="0" cellspacing="0" width="833" style="border-collapse:  collapse;table-layout:fixed;width:629pt"><col width="17" style="mso-width-source:userset;mso-width-alt:621;width:13pt"/><col width="13" style="mso-width-source:userset;mso-width-alt:475;width:10pt"/><col width="8" style="mso-width-source:userset;mso-width-alt:292;width:6pt"/><col width="13" style="mso-width-source:userset;mso-width-alt:475;width:10pt"/><col width="46" span="2" style="mso-width-source:userset;mso-width-alt:1682;  width:35pt"/><col width="65" span="2" style="mso-width-source:userset;mso-width-alt:2377;  width:49pt"/><col width="79" style="mso-width-source:userset;mso-width-alt:2889;width:59pt"/><col width="21" style="mso-width-source:userset;mso-width-alt:768;width:16pt"/><col width="23" style="mso-width-source:userset;mso-width-alt:841;width:17pt"/><col width="65" style="mso-width-source:userset;mso-width-alt:2377;width:49pt"/><col width="45" style="mso-width-source:userset;mso-width-alt:1645;width:34pt"/><col width="22" style="mso-width-source:userset;mso-width-alt:804;width:17pt"/><col width="65" style="mso-width-source:userset;mso-width-alt:2377;width:49pt"/><col width="62" style="mso-width-source:userset;mso-width-alt:2267;width:47pt"/><col width="63" style="mso-width-source:userset;mso-width-alt:2304;width:47pt"/><col width="13" style="mso-width-source:userset;mso-width-alt:475;width:10pt"/><col width="8" style="mso-width-source:userset;mso-width-alt:292;width:6pt"/><col width="14" style="mso-width-source:userset;mso-width-alt:512;width:11pt"/><col width="80" style="width:60pt"/><tr height="21" style="height:15.75pt"><td height="21" class="xl1513531" width="17" style="height:15.75pt;width:13pt"><a name="RANGE!A1:U57"/></td><td class="xl1513531" width="13" style="width:10pt"/><td class="xl1513531" width="8" style="width:6pt"/><td class="xl1513531" width="13" style="width:10pt"/><td class="xl1513531" width="46" style="width:35pt"/><td class="xl1513531" width="46" style="width:35pt"/><td class="xl1513531" width="65" style="width:49pt"/><td class="xl1513531" width="65" style="width:49pt"/><td class="xl1513531" width="79" style="width:59pt"/><td class="xl1513531" width="21" style="width:16pt"/><td class="xl1513531" width="23" style="width:17pt"/><td class="xl1513531" width="65" style="width:49pt"/><td class="xl1513531" width="45" style="width:34pt"/><td class="xl1513531" width="22" style="width:17pt"/><td class="xl1513531" width="65" style="width:49pt"/><td class="xl1513531" width="62" style="width:47pt"/><td class="xl1513531" width="63" style="width:47pt"/><td class="xl1513531" width="13" style="width:10pt"/><td class="xl1513531" width="8" style="width:6pt"/><td class="xl1513531" width="14" style="width:11pt"/><td class="xl1513531" width="80" style="width:60pt"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1513531" style="height:15.0pt"/><td class="xl6513531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td align="left" valign="top"><xsl:comment><xsl:text/>[if gte vml 1]&gt;&lt;v:shapetype id="_x0000_t75"
    coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe"
    filled="f" stroked="f"&gt;
    &lt;v:stroke joinstyle="miter"&gt;&lt;/v:stroke&gt;
@@ -1786,7 +1790,7 @@ tags will be replaced. <xsl:text/></xsl:comment><xsl:comment><xsl:text/><xsl:tex
    &lt;/v:formulas&gt;
    &lt;v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"&gt;&lt;/v:path&gt;
    &lt;o:lock v:ext="edit" aspectratio="t"&gt;&lt;/o:lock&gt;
-  &lt;/v:shapetype&gt;&lt;v:shape id="Imagen_x0020_3" o:spid="_x0000_s1070" type="#_x0000_t75"
+  &lt;/v:shapetype&gt;&lt;v:shape id="Imagen_x0020_3" o:spid="_x0000_s1085" type="#_x0000_t75"
    style='position:absolute;margin-left:45pt;margin-top:.75pt;width:273.75pt;
    height:66.75pt;z-index:1;visibility:visible' o:gfxdata="UEsDBBQABgAIAAAAIQBamK3CDAEAABgCAAATAAAAW0NvbnRlbnRfVHlwZXNdLnhtbJSRwU7DMAyG
 70i8Q5QralM4IITW7kDhCBMaDxAlbhvROFGcle3tSdZNgokh7Rjb3+8vyWK5tSObIJBxWPPbsuIM
@@ -2153,14 +2157,14 @@ AE0AAGRycy9kb3ducmV2LnhtbFBLAQItABQABgAIAAAAIQCqJg6+vAAAACEBAAAdAAAAAAAAAAAA
 AAAAAEROAABkcnMvX3JlbHMvcGljdHVyZXhtbC54bWwucmVsc1BLBQYAAAAABgAGAIQBAAA7TwAA
 AAA=
 "&gt;
-   &lt;v:imagedata src="Recibo_files/Recibo_30799_image001.png" o:title=""""&gt;&lt;/v:imagedata&gt;
+   &lt;v:imagedata src="Recibo_files/Recibo_13531_image001.png" o:title=""""&gt;&lt;/v:imagedata&gt;
    &lt;x:ClientData ObjectType="Pict"&gt;
     &lt;x:SizeWithCells&gt;&lt;/x:SizeWithCells&gt;
     &lt;x:CF&gt;Bitmap&lt;/x:CF&gt;
     &lt;x:AutoPict&gt;&lt;/x:AutoPict&gt;
    &lt;/x:ClientData&gt;
-  &lt;/v:shape&gt;&lt;![endif]<xsl:text/></xsl:comment><xsl:comment><xsl:text/>[if !vml]&gt;<xsl:text/></xsl:comment><span style="mso-ignore:vglayout;   position:absolute;z-index:1;margin-left:60px;margin-top:1px;width:365px;   height:89px"><img width="365" height="89" src="Recibo_files/Recibo_30799_image002.png" v:shapes="Imagen_x0020_3"><xsl:attribute name="src"><xsl:apply-templates select="." mode="resources-path"/><xsl:text>Recibo_files/Recibo_30799_image002.png</xsl:text></xsl:attribute></img></span><xsl:comment><xsl:text/>[endif]&gt;<xsl:text/></xsl:comment><span style="mso-ignore:vglayout2"><table cellpadding="0" cellspacing="0"><tr><td height="20" class="xl6630799" width="65" style="height:15.0pt;width:49pt"> </td></tr></table></span></td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6630799"> </td><td class="xl6730799"> </td><td class="xl1530799"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1530799" style="height:15.0pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1530799" style="height:15.0pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1530799" style="height:15.0pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1530799" style="height:15.0pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td colspan="5" rowspan="3" class="xl13130799"><xsl:apply-templates select="key('data','domicilio')" mode="container"/><div xmlns="" class="placeholder domicilio"><xsl:apply-templates mode="widget" select="key('data','domicilio')"/></div></td><td class="xl7230799"> </td><td colspan="5" rowspan="2" class="xl11930799"><xsl:apply-templates select="key('data','colonia')" mode="container"/><div xmlns="" class="placeholder colonia"><xsl:apply-templates mode="widget" select="key('data','colonia')"/></div></td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1530799" style="height:15.0pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl10430799"> </td><td colspan="4" class="xl12230799" style="border-right:1.0pt solid #FFC1DD">FOLIO</td><td class="xl8130799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1530799" style="height:15.0pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl7230799"> </td><td colspan="5" rowspan="2" class="xl11930799"><xsl:apply-templates select="key('data','cel')" mode="container"/><div xmlns="" class="placeholder cel"><xsl:apply-templates mode="widget" select="key('data','cel')"/></div></td><td colspan="4" rowspan="2" class="xl12530799" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD"><xsl:apply-templates select="key('data','Folio')" mode="container"/><div xmlns="" class="placeholder Folio"><xsl:apply-templates mode="widget" select="key('data','Folio')"/></div></td><td class="xl8130799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="26" style="mso-height-source:userset;height:19.5pt"><td height="26" class="xl1530799" style="height:19.5pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td colspan="2" class="xl7130799"> </td><td class="xl10430799"> </td><td class="xl8130799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="25" style="height:18.75pt"><td height="25" class="xl1530799" style="height:18.75pt"/><td class="xl6830799"> </td><td align="left" valign="top"><xsl:comment><xsl:text/>[if gte vml 1]&gt;&lt;v:shape id="Imagen_x0020_5"
-   o:spid="_x0000_s1071" type="#_x0000_t75" style='position:absolute;
+  &lt;/v:shape&gt;&lt;![endif]<xsl:text/></xsl:comment><xsl:comment><xsl:text/>[if !vml]&gt;<xsl:text/></xsl:comment><span style="mso-ignore:vglayout;   position:absolute;z-index:1;margin-left:60px;margin-top:1px;width:365px;   height:89px"><img width="365" height="89" src="Recibo_files/Recibo_13531_image002.png" v:shapes="Imagen_x0020_3"><xsl:attribute name="src"><xsl:apply-templates select="." mode="resources-path"/><xsl:text>Recibo_files/Recibo_13531_image002.png</xsl:text></xsl:attribute></img></span><xsl:comment><xsl:text/>[endif]&gt;<xsl:text/></xsl:comment><span style="mso-ignore:vglayout2"><table cellpadding="0" cellspacing="0"><tr><td height="20" class="xl6613531" width="65" style="height:15.0pt;width:49pt"> </td></tr></table></span></td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6613531"> </td><td class="xl6713531"> </td><td class="xl1513531"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1513531" style="height:15.0pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1513531" style="height:15.0pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1513531" style="height:15.0pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1513531" style="height:15.0pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td colspan="5" rowspan="3" class="xl14113531"><xsl:apply-templates select="key('data','domicilio')" mode="container"/><div xmlns="" class="placeholder domicilio"><xsl:apply-templates mode="widget" select="key('data','domicilio')"/></div></td><td class="xl7213531"> </td><td colspan="5" rowspan="2" class="xl15513531"><xsl:apply-templates select="key('data','colonia')" mode="container"/><div xmlns="" class="placeholder colonia"><xsl:apply-templates mode="widget" select="key('data','colonia')"/></div></td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1513531" style="height:15.0pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td class="xl10413531"> </td><td colspan="4" class="xl14413531" style="border-right:1.0pt solid #FFC1DD">FOLIO</td><td class="xl8113531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1513531" style="height:15.0pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td class="xl7213531"> </td><td colspan="5" rowspan="2" class="xl15513531"><xsl:apply-templates select="key('data','cel')" mode="container"/><div xmlns="" class="placeholder cel"><xsl:apply-templates mode="widget" select="key('data','cel')"/></div></td><td colspan="4" rowspan="2" class="xl14713531" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD"><xsl:apply-templates select="key('data','Folio')" mode="container"/><div xmlns="" class="placeholder Folio"><xsl:apply-templates mode="widget" select="key('data','Folio')"/></div></td><td class="xl8113531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="26" style="mso-height-source:userset;height:19.5pt"><td height="26" class="xl1513531" style="height:19.5pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td colspan="2" class="xl7113531"> </td><td class="xl10413531"> </td><td class="xl8113531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="25" style="height:18.75pt"><td height="25" class="xl1513531" style="height:18.75pt"/><td class="xl6813531"> </td><td align="left" valign="top"><xsl:comment><xsl:text/>[if gte vml 1]&gt;&lt;v:shape id="Imagen_x0020_5"
+   o:spid="_x0000_s1086" type="#_x0000_t75" style='position:absolute;
    margin-left:.75pt;margin-top:1.5pt;width:15.75pt;height:15.75pt;z-index:2;
    visibility:visible' o:gfxdata="UEsDBBQABgAIAAAAIQBamK3CDAEAABgCAAATAAAAW0NvbnRlbnRfVHlwZXNdLnhtbJSRwU7DMAyG
 70i8Q5QralM4IITW7kDhCBMaDxAlbhvROFGcle3tSdZNgokh7Rjb3+8vyWK5tSObIJBxWPPbsuIM
@@ -2208,13 +2212,13 @@ AAAAAAAABwYAAGRycy9kb3ducmV2LnhtbFBLAQItABQABgAIAAAAIQCqJg6+vAAAACEBAAAdAAAA
 AAAAAAAAAAAAAEMHAABkcnMvX3JlbHMvcGljdHVyZXhtbC54bWwucmVsc1BLBQYAAAAABgAGAIQB
 AAA6CAAAAAA=
 "&gt;
-   &lt;v:imagedata src="Recibo_files/Recibo_30799_image003.png" o:title=""""&gt;&lt;/v:imagedata&gt;
+   &lt;v:imagedata src="Recibo_files/Recibo_13531_image003.png" o:title=""""&gt;&lt;/v:imagedata&gt;
    &lt;x:ClientData ObjectType="Pict"&gt;
     &lt;x:SizeWithCells&gt;&lt;/x:SizeWithCells&gt;
     &lt;x:CF&gt;Bitmap&lt;/x:CF&gt;
     &lt;x:AutoPict&gt;&lt;/x:AutoPict&gt;
    &lt;/x:ClientData&gt;
-  &lt;/v:shape&gt;&lt;v:shape id="Imagen_x0020_7" o:spid="_x0000_s1072" type="#_x0000_t75"
+  &lt;/v:shape&gt;&lt;v:shape id="Imagen_x0020_7" o:spid="_x0000_s1087" type="#_x0000_t75"
    style='position:absolute;margin-left:117pt;margin-top:1.5pt;width:15.75pt;
    height:16.5pt;z-index:3;visibility:visible' o:gfxdata="UEsDBBQABgAIAAAAIQBamK3CDAEAABgCAAATAAAAW0NvbnRlbnRfVHlwZXNdLnhtbJSRwU7DMAyG
 70i8Q5QralM4IITW7kDhCBMaDxAlbhvROFGcle3tSdZNgokh7Rjb3+8vyWK5tSObIJBxWPPbsuIM
@@ -2272,9 +2276,15 @@ OwgAAGRycy9kb3ducmV2LnhtbFBLAQItABQABgAIAAAAIQCqJg6+vAAAACEBAAAdAAAAAAAAAAAA
 AAAAAHcJAABkcnMvX3JlbHMvcGljdHVyZXhtbC54bWwucmVsc1BLBQYAAAAABgAGAIQBAABuCgAA
 AAA=
 "&gt;
-   &lt;v:imagedata src="Recibo_files/Recibo_30799_image004.png" o:title=""""&gt;&lt;/v:imagedata&gt;
+   &lt;v:imagedata src="Recibo_files/Recibo_13531_image004.png" o:title=""""&gt;&lt;/v:imagedata&gt;
    &lt;x:ClientData ObjectType="Pict"&gt;
     &lt;x:SizeWithCells&gt;&lt;/x:SizeWithCells&gt;
     &lt;x:CF&gt;Bitmap&lt;/x:CF&gt;
    &lt;/x:ClientData&gt;
-  &lt;/v:shape&gt;&lt;![endif]<xsl:text/></xsl:comment><xsl:comment><xsl:text/>[if !vml]&gt;<xsl:text/></xsl:comment><span style="mso-ignore:vglayout;   position:absolute;z-index:2;margin-left:1px;margin-top:2px;width:176px;   height:22px"><table cellpadding="0" cellspacing="0"><tr><td width="0" height="0"/><td width="21"/><td width="134"/><td width="21"/></tr><tr><td height="21"/><td align="left" valign="top"><img width="21" height="21" src="Recibo_files/Recibo_30799_image005.png" v:shapes="Imagen_x0020_5"><xsl:attribute name="src"><xsl:apply-templates select="." mode="resources-path"/><xsl:text>Recibo_files/Recibo_30799_image005.png</xsl:text></xsl:attribute></img></td><td/><td rowspan="2" align="left" valign="top"><img width="21" height="22" src="Recibo_files/Recibo_30799_image006.png" v:shapes="Imagen_x0020_7"><xsl:attribute name="src"><xsl:apply-templates select="." mode="resources-path"/><xsl:text>Recibo_files/Recibo_30799_image006.png</xsl:text></xsl:attribute></img></td></tr><tr><td height="1"/></tr></table></span><xsl:comment><xsl:text/>[endif]&gt;<xsl:text/></xsl:comment><span style="mso-ignore:vglayout2"><table cellpadding="0" cellspacing="0"><tr><td height="25" class="xl6930799" width="8" style="height:18.75pt;width:6pt"> </td></tr></table></span></td><td class="xl6930799"> </td><td colspan="3" class="xl12130799">Casa Luna Novias</td><td class="xl10030799" colspan="2">casalunanovias</td><td class="xl10030799"> </td><td class="xl9930799"> </td><td class="xl9430799"> </td><td class="xl9530799"> </td><td class="xl9530799"> </td><td class="xl9630799"> </td><td class="xl9630799"> </td><td class="xl9630799"> </td><td class="xl9630799"> </td><td class="xl8130799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="10" style="mso-height-source:userset;height:7.5pt"><td height="10" class="xl1530799" style="height:7.5pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="8" style="mso-height-source:userset;height:6.0pt"><td height="8" class="xl1530799" style="height:6.0pt"/><td class="xl6830799"> </td><td class="xl7930799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl8430799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="10" style="mso-height-source:userset;height:7.5pt"><td height="10" class="xl1530799" style="height:7.5pt"/><td class="xl6830799"> </td><td class="xl9130799"> </td><td class="xl7930799" style="border-left:none"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl7830799"> </td><td class="xl8430799"> </td><td class="xl8230799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1530799" style="height:15.75pt"/><td class="xl6830799"> </td><td class="xl9130799"> </td><td class="xl6930799"> </td><td class="xl7130799" colspan="2">CLIENTE:</td><td colspan="3" rowspan="2" class="xl11730799" style="border-bottom:.5pt solid #FFC1DD"><xsl:apply-templates select="key('data','Cliente')" mode="container"/><div xmlns="" class="placeholder Cliente"><xsl:apply-templates mode="widget" select="key('data','Cliente')"/></div></td><td class="xl7330799"> </td><td class="xl7230799"> </td><td colspan="3" class="xl7130799">FECHA DE IMPRESIÓN:</td><td colspan="3" class="xl11830799"><xsl:apply-templates select="key('data','FechaImpresion')" mode="container"/><div xmlns="" class="placeholder FechaImpresion"><xsl:apply-templates mode="widget" select="key('data','FechaImpresion')"/></div></td><td class="xl8330799"> </td><td class="xl8330799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1530799" style="height:15.75pt"/><td class="xl6830799"> </td><td class="xl9130799"> </td><td class="xl6930799"> </td><td class="xl7130799"> </td><td class="xl7130799"> </td><td class="xl7330799"> </td><td class="xl7230799"> </td><td colspan="3" class="xl7130799">FECHA DE PRUEBA:</td><td colspan="3" class="xl12030799"><xsl:apply-templates select="key('data','FechaPrueba')" mode="container"/><div xmlns="" class="placeholder FechaPrueba"><xsl:apply-templates mode="widget" select="key('data','FechaPrueba')"/></div></td><td class="xl8330799"> </td><td class="xl8330799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1530799" style="height:15.75pt"/><td class="xl6830799"> </td><td class="xl9130799"> </td><td class="xl6930799"> </td><td class="xl7130799" colspan="2">DIRECCIÓN</td><td colspan="3" rowspan="2" class="xl13230799" style="border-bottom:.5pt solid #FFC1DD"><xsl:apply-templates select="key('data','DomicilioCliente')" mode="container"/><div xmlns="" class="placeholder DomicilioCliente"><xsl:apply-templates mode="widget" select="key('data','DomicilioCliente')"/></div></td><td class="xl7330799"> </td><td class="xl7230799"> </td><td colspan="3" class="xl7130799">FECHA DE FOTO:</td><td colspan="3" class="xl12030799"><xsl:apply-templates select="key('data','FechaFoto')" mode="container"/><div xmlns="" class="placeholder FechaFoto"><xsl:apply-templates mode="widget" select="key('data','FechaFoto')"/></div></td><td class="xl8330799"> </td><td class="xl8330799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1530799" style="height:15.75pt"/><td class="xl6830799"> </td><td class="xl9130799"> </td><td class="xl6930799"> </td><td class="xl7130799"> </td><td class="xl7130799"> </td><td class="xl7330799"> </td><td class="xl7230799"> </td><td colspan="3" class="xl7130799">FECHA DE EVENTO:</td><td colspan="3" class="xl12030799"><xsl:apply-templates select="key('data','FechaEvento')" mode="container"/><div xmlns="" class="placeholder FechaEvento"><xsl:apply-templates mode="widget" select="key('data','FechaEvento')"/></div></td><td class="xl8330799"> </td><td class="xl8330799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1530799" style="height:15.75pt"/><td class="xl6830799"> </td><td class="xl9130799"> </td><td class="xl6930799"> </td><td class="xl7130799" colspan="2">TÉLEFONO:</td><td colspan="3" class="xl12030799"><xsl:apply-templates select="key('data','Telefono')" mode="container"/><div xmlns="" class="placeholder Telefono"><xsl:apply-templates mode="widget" select="key('data','Telefono')"/></div></td><td class="xl7330799"> </td><td class="xl7230799"> </td><td class="xl10130799"> </td><td class="xl8030799"> </td><td class="xl8030799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl8330799"> </td><td class="xl8330799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="7" style="mso-height-source:userset;height:5.25pt"><td height="7" class="xl1530799" style="height:5.25pt"/><td class="xl6830799"> </td><td class="xl9130799"> </td><td class="xl9330799" style="border-left:none"> </td><td class="xl8630799"> </td><td class="xl8730799"> </td><td class="xl8830799"> </td><td class="xl8930799"> </td><td class="xl8930799"> </td><td class="xl8930799"> </td><td class="xl8630799"> </td><td class="xl9030799"> </td><td class="xl9830799"> </td><td class="xl9830799"> </td><td class="xl8830799"> </td><td class="xl8930799"> </td><td class="xl8930799"> </td><td class="xl8530799"> </td><td class="xl8330799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="8" style="mso-height-source:userset;height:6.0pt"><td height="8" class="xl1530799" style="height:6.0pt"/><td class="xl6830799"> </td><td class="xl9330799"> </td><td class="xl9730799"> </td><td class="xl8630799"> </td><td class="xl8730799"> </td><td class="xl8830799"> </td><td class="xl8930799"> </td><td class="xl8930799"> </td><td class="xl8930799"> </td><td class="xl8630799"> </td><td class="xl9030799"> </td><td class="xl9830799"> </td><td class="xl9830799"> </td><td class="xl8830799"> </td><td class="xl8930799"> </td><td class="xl8930799"> </td><td class="xl8930799"> </td><td class="xl8530799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1530799" style="height:12.0pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7130799"> </td><td class="xl9230799"> </td><td class="xl8030799"> </td><td class="xl7330799"> </td><td class="xl7330799"> </td><td class="xl7330799"> </td><td class="xl7130799"> </td><td class="xl7430799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl8030799"> </td><td class="xl7330799"> </td><td class="xl7330799"> </td><td class="xl7330799"> </td><td class="xl7330799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td colspan="4" rowspan="2" class="xl13330799" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt">CÓDIGO</td><td colspan="3" rowspan="2" class="xl13330799" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt">DESCRIPCIÓN</td><td colspan="3" rowspan="2" class="xl13330799" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt">PRECIO</td><td colspan="3" rowspan="2" class="xl13330799" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt">DESCUENTO</td><td colspan="4" rowspan="2" class="xl13330799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt">SUBTOTAL</td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td colspan="4" rowspan="3" class="xl10530799" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','descuento')" mode="container"/><div xmlns="" class="placeholder descuento"><xsl:apply-templates mode="widget" select="key('data','descuento')"/></div></td><td colspan="4" rowspan="3" class="xl10530799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td colspan="4" rowspan="3" class="xl10530799" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','descuento')" mode="container"/><div xmlns="" class="placeholder descuento"><xsl:apply-templates mode="widget" select="key('data','descuento')"/></div></td><td colspan="4" rowspan="3" class="xl10530799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td colspan="4" rowspan="3" class="xl10530799" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','descuento')" mode="container"/><div xmlns="" class="placeholder descuento"><xsl:apply-templates mode="widget" select="key('data','descuento')"/></div></td><td colspan="4" rowspan="3" class="xl10530799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td colspan="4" rowspan="3" class="xl10530799" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','descuento')" mode="container"/><div xmlns="" class="placeholder descuento"><xsl:apply-templates mode="widget" select="key('data','descuento')"/></div></td><td colspan="4" rowspan="3" class="xl10530799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td colspan="4" rowspan="3" class="xl10530799" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','descuento')" mode="container"/><div xmlns="" class="placeholder descuento"><xsl:apply-templates mode="widget" select="key('data','descuento')"/></div></td><td colspan="4" rowspan="3" class="xl10530799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td colspan="4" rowspan="3" class="xl10530799" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl10530799" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','descuento')" mode="container"/><div xmlns="" class="placeholder descuento"><xsl:apply-templates mode="widget" select="key('data','descuento')"/></div></td><td colspan="4" rowspan="3" class="xl10530799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td colspan="3" class="xl13330799" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">SUBTOTAL</td><td colspan="4" class="xl11430799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt"><xsl:apply-templates select="key('data','suma_subtotal')" mode="container"/><div xmlns="" class="placeholder suma_subtotal"><xsl:apply-templates mode="widget" select="key('data','suma_subtotal')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td colspan="3" class="xl15230799" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">DESCUENTO</td><td colspan="4" class="xl14930799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt"><xsl:apply-templates select="key('data','descuento_extra')" mode="container"/><div xmlns="" class="placeholder descuento_extra"><xsl:apply-templates mode="widget" select="key('data','descuento_extra')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7230799"> </td><td colspan="6" rowspan="2" class="xl10230799" width="314" style="width:237pt"><xsl:apply-templates select="key('data','mensaje')" mode="container"/><div xmlns="" class="placeholder mensaje"><xsl:apply-templates mode="widget" select="key('data','mensaje')"/></div></td><td class="xl10330799" width="21" style="width:16pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td colspan="3" class="xl15230799" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">TOTAL</td><td colspan="4" class="xl14930799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt"><xsl:apply-templates select="key('data','total')" mode="container"/><div xmlns="" class="placeholder total"><xsl:apply-templates mode="widget" select="key('data','total')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl7230799"> </td><td class="xl10330799" width="21" style="width:16pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td colspan="3" class="xl15230799" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">ANTICIPO</td><td colspan="4" class="xl14930799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt"><xsl:apply-templates select="key('data','anticipo')" mode="container"/><div xmlns="" class="placeholder anticipo"><xsl:apply-templates mode="widget" select="key('data','anticipo')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1530799" style="height:13.5pt"/><td class="xl6830799"> </td><td class="xl10230799" width="8" style="width:6pt"> </td><td class="xl10230799" width="13" style="width:10pt"> </td><td class="xl10230799" width="46" style="width:35pt"> </td><td class="xl10230799" width="46" style="width:35pt"> </td><td class="xl10230799" width="65" style="width:49pt"> </td><td class="xl10230799" width="65" style="width:49pt"> </td><td class="xl10230799" width="79" style="width:59pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td colspan="3" class="xl15230799" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">RESTANTE</td><td colspan="4" class="xl14930799" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt"><xsl:apply-templates select="key('data','restante')" mode="container"/><div xmlns="" class="placeholder restante"><xsl:apply-templates mode="widget" select="key('data','restante')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1530799" style="height:12.0pt"/><td class="xl6830799"> </td><td class="xl7230799"> </td><td colspan="6" rowspan="2" class="xl10230799" width="314" style="width:237pt"><xsl:apply-templates select="key('data','mensaje')" mode="container"/><div xmlns="" class="placeholder mensaje"><xsl:apply-templates mode="widget" select="key('data','mensaje')"/></div></td><td class="xl10330799" width="21" style="width:16pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1530799" style="height:12.0pt"/><td class="xl6830799"> </td><td class="xl7230799"> </td><td class="xl10330799" width="21" style="width:16pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="10" style="mso-height-source:userset;height:7.5pt"><td height="10" class="xl1530799" style="height:7.5pt"/><td class="xl6830799"> </td><td class="xl10230799" width="8" style="width:6pt"> </td><td class="xl10230799" width="13" style="width:10pt"> </td><td class="xl10230799" width="46" style="width:35pt"> </td><td class="xl10230799" width="46" style="width:35pt"> </td><td class="xl10230799" width="65" style="width:49pt"> </td><td class="xl10230799" width="65" style="width:49pt"> </td><td class="xl10230799" width="79" style="width:59pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl15530799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1530799" style="height:12.0pt"/><td class="xl6830799"> </td><td class="xl7230799"> </td><td colspan="6" rowspan="2" class="xl10230799" width="314" style="width:237pt"><xsl:apply-templates select="key('data','mensaje')" mode="container"/><div xmlns="" class="placeholder mensaje"><xsl:apply-templates mode="widget" select="key('data','mensaje')"/></div></td><td class="xl10330799" width="21" style="width:16pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl15630799"> </td><td class="xl15630799"> </td><td class="xl15630799"> </td><td class="xl15630799"> </td><td class="xl15630799"> </td><td class="xl15630799"> </td><td class="xl15630799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1530799" style="height:12.0pt"/><td class="xl6830799"> </td><td class="xl7230799"> </td><td class="xl10330799" width="21" style="width:16pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td colspan="7" class="xl13930799">Firma del cliente:</td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="11" style="mso-height-source:userset;height:8.25pt"><td height="11" class="xl1530799" style="height:8.25pt"/><td class="xl6830799"> </td><td class="xl10230799" width="8" style="width:6pt"> </td><td class="xl10230799" width="13" style="width:10pt"> </td><td class="xl10230799" width="46" style="width:35pt"> </td><td class="xl10230799" width="46" style="width:35pt"> </td><td class="xl10230799" width="65" style="width:49pt"> </td><td class="xl10230799" width="65" style="width:49pt"> </td><td class="xl10230799" width="79" style="width:59pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl7230799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1530799" style="height:12.0pt"/><td class="xl6830799"> </td><td class="xl7230799"> </td><td colspan="6" rowspan="2" class="xl10230799" width="314" style="width:237pt"><xsl:apply-templates select="key('data','mensaje')" mode="container"/><div xmlns="" class="placeholder mensaje"><xsl:apply-templates mode="widget" select="key('data','mensaje')"/></div></td><td class="xl10330799" width="21" style="width:16pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td colspan="3" rowspan="3" class="xl14030799" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD">TE ATENDIÓ:</td><td colspan="4" rowspan="3" class="xl14030799" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD"><xsl:apply-templates select="key('data','Vendedor')" mode="container"/><div xmlns="" class="placeholder Vendedor"><xsl:apply-templates mode="widget" select="key('data','Vendedor')"/></div></td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="20" style="height:15.0pt"><td height="20" class="xl1530799" style="height:15.0pt"/><td class="xl6830799"> </td><td class="xl7230799"> </td><td class="xl10330799" width="21" style="width:16pt"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1530799" style="height:15.75pt"/><td class="xl6830799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl6930799"> </td><td class="xl7030799"> </td><td class="xl1530799"/></tr><tr height="11" style="mso-height-source:userset;height:8.25pt"><td height="11" class="xl1530799" style="height:8.25pt"/><td class="xl7530799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7630799"> </td><td class="xl7730799"> </td><td class="xl1530799"/></tr><tr height="20" style="height:15.0pt"><td height="20" class="xl1530799" style="height:15.0pt"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/><td class="xl1530799"/></tr><xsl:comment><xsl:text/>[if supportMisalignedColumns]&gt;<xsl:text/></xsl:comment><tr height="0" style="display:none"><td width="17" style="width:13pt"/><td width="13" style="width:10pt"/><td width="8" style="width:6pt"/><td width="13" style="width:10pt"/><td width="46" style="width:35pt"/><td width="46" style="width:35pt"/><td width="65" style="width:49pt"/><td width="65" style="width:49pt"/><td width="79" style="width:59pt"/><td width="21" style="width:16pt"/><td width="23" style="width:17pt"/><td width="65" style="width:49pt"/><td width="45" style="width:34pt"/><td width="22" style="width:17pt"/><td width="65" style="width:49pt"/><td width="62" style="width:47pt"/><td width="63" style="width:47pt"/><td width="13" style="width:10pt"/><td width="8" style="width:6pt"/><td width="14" style="width:11pt"/><td width="80" style="width:60pt"/></tr><xsl:comment><xsl:text/>[endif]&gt;<xsl:text/></xsl:comment></table></div><xsl:comment><xsl:text/><xsl:text/></xsl:comment><xsl:comment><xsl:text/> END OF OUTPUT FROM EXCEL PUBLISH AS WEB PAGE WIZARD <xsl:text/></xsl:comment><xsl:comment><xsl:text/><xsl:text/></xsl:comment></body></html></xsl:template></xsl:stylesheet>
+  &lt;/v:shape&gt;&lt;![endif]<xsl:text/></xsl:comment><xsl:comment><xsl:text/>[if !vml]&gt;<xsl:text/></xsl:comment><span style="mso-ignore:vglayout;   position:absolute;z-index:2;margin-left:1px;margin-top:2px;width:176px;   height:22px"><table cellpadding="0" cellspacing="0"><tr><td width="0" height="0"/><td width="21"/><td width="134"/><td width="21"/></tr><tr><td height="21"/><td align="left" valign="top"><img width="21" height="21" src="Recibo_files/Recibo_13531_image005.png" v:shapes="Imagen_x0020_5"><xsl:attribute name="src"><xsl:apply-templates select="." mode="resources-path"/><xsl:text>Recibo_files/Recibo_13531_image005.png</xsl:text></xsl:attribute></img></td><td/><td rowspan="2" align="left" valign="top"><img width="21" height="22" src="Recibo_files/Recibo_13531_image006.png" v:shapes="Imagen_x0020_7"><xsl:attribute name="src"><xsl:apply-templates select="." mode="resources-path"/><xsl:text>Recibo_files/Recibo_13531_image006.png</xsl:text></xsl:attribute></img></td></tr><tr><td height="1"/></tr></table></span><xsl:comment><xsl:text/>[endif]&gt;<xsl:text/></xsl:comment><span style="mso-ignore:vglayout2"><table cellpadding="0" cellspacing="0"><tr><td height="25" class="xl6913531" width="8" style="height:18.75pt;width:6pt"> </td></tr></table></span></td><td class="xl6913531"> </td><td colspan="3" class="xl15413531">Casa Luna Novias</td><td class="xl10013531" colspan="2">casalunanovias</td><td class="xl10013531"> </td><td class="xl9913531"> </td><td class="xl9413531"> </td><td class="xl9513531"> </td><td class="xl9513531"> </td><td class="xl9613531"> </td><td class="xl9613531"> </td><td class="xl9613531"> </td><td class="xl9613531"> </td><td class="xl8113531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="10" style="mso-height-source:userset;height:7.5pt"><td height="10" class="xl1513531" style="height:7.5pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="8" style="mso-height-source:userset;height:6.0pt"><td height="8" class="xl1513531" style="height:6.0pt"/><td class="xl6813531"> </td><td class="xl7913531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl8413531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="10" style="mso-height-source:userset;height:7.5pt"><td height="10" class="xl1513531" style="height:7.5pt"/><td class="xl6813531"> </td><td class="xl9113531"> </td><td class="xl7913531" style="border-left:none"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl7813531"> </td><td class="xl8413531"> </td><td class="xl8213531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1513531" style="height:15.75pt"/><td class="xl6813531"> </td><td class="xl9113531"> </td><td class="xl6913531"> </td><td class="xl7113531" colspan="2">CLIENTE:</td><td class="xl15613531" colspan="2"><xsl:apply-templates select="key('data','Cliente')" mode="container"/><div xmlns="" class="placeholder Cliente"><xsl:apply-templates mode="widget" select="key('data','Cliente')"/></div></td><td class="xl15613531"> </td><td class="xl7313531"> </td><td class="xl7213531"> </td><td colspan="3" class="xl7113531">FECHA DE IMPRESIÓN:</td><td colspan="3" class="xl14313531"><xsl:apply-templates select="key('data','FechaImpresion')" mode="container"/><div xmlns="" class="placeholder FechaImpresion"><xsl:apply-templates mode="widget" select="key('data','FechaImpresion')"/></div></td><td class="xl8313531"> </td><td class="xl8313531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1513531" style="height:15.75pt"/><td class="xl6813531"> </td><td class="xl9113531"> </td><td class="xl6913531"> </td><td class="xl7113531" colspan="2">XV / NOVIA:</td><td class="xl15613531" colspan="2"><xsl:apply-templates select="key('data','Festejada')" mode="container"/><div xmlns="" class="placeholder Festejada"><xsl:apply-templates mode="widget" select="key('data','Festejada')"/></div></td><td class="xl15613531"> </td><td class="xl7313531"> </td><td class="xl7213531"> </td><td colspan="3" class="xl7113531">FECHA DE PRUEBA:</td><td colspan="3" class="xl15313531"><xsl:apply-templates select="key('data','FechaPrueba')" mode="container"/><div xmlns="" class="placeholder FechaPrueba"><xsl:apply-templates mode="widget" select="key('data','FechaPrueba')"/></div></td><td class="xl8313531"> </td><td class="xl8313531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1513531" style="height:15.75pt"/><td class="xl6813531"> </td><td class="xl9113531"> </td><td class="xl6913531"> </td><td class="xl7113531" colspan="2">DIRECCIÓN</td><td colspan="3" rowspan="2" class="xl14213531" style="border-bottom:.5pt solid #FFC1DD"><xsl:apply-templates select="key('data','DomicilioCliente')" mode="container"/><div xmlns="" class="placeholder DomicilioCliente"><xsl:apply-templates mode="widget" select="key('data','DomicilioCliente')"/></div></td><td class="xl7313531"> </td><td class="xl7213531"> </td><td colspan="3" class="xl7113531">FECHA DE FOTO:</td><td colspan="3" class="xl15313531"><xsl:apply-templates select="key('data','FechaFoto')" mode="container"/><div xmlns="" class="placeholder FechaFoto"><xsl:apply-templates mode="widget" select="key('data','FechaFoto')"/></div></td><td class="xl8313531"> </td><td class="xl8313531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1513531" style="height:15.75pt"/><td class="xl6813531"> </td><td class="xl9113531"> </td><td class="xl6913531"> </td><td class="xl7113531"> </td><td class="xl7113531"> </td><td class="xl7313531"> </td><td class="xl7213531"> </td><td colspan="3" class="xl7113531">FECHA DE EVENTO:</td><td colspan="3" class="xl15313531"><xsl:apply-templates select="key('data','FechaEvento')" mode="container"/><div xmlns="" class="placeholder FechaEvento"><xsl:apply-templates mode="widget" select="key('data','FechaEvento')"/></div></td><td class="xl8313531"> </td><td class="xl8313531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1513531" style="height:15.75pt"/><td class="xl6813531"> </td><td class="xl9113531"> </td><td class="xl6913531"> </td><td class="xl7113531" colspan="2">TÉLEFONO:</td><td colspan="3" class="xl15313531"><xsl:apply-templates select="key('data','Telefono')" mode="container"/><div xmlns="" class="placeholder Telefono"><xsl:apply-templates mode="widget" select="key('data','Telefono')"/></div></td><td class="xl7313531"> </td><td class="xl7213531"> </td><td class="xl10113531"> </td><td class="xl8013531"> </td><td class="xl8013531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl8313531"> </td><td class="xl8313531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="7" style="mso-height-source:userset;height:5.25pt"><td height="7" class="xl1513531" style="height:5.25pt"/><td class="xl6813531"> </td><td class="xl9113531"> </td><td class="xl9313531" style="border-left:none"> </td><td class="xl8613531"> </td><td class="xl8713531"> </td><td class="xl8813531"> </td><td class="xl8913531"> </td><td class="xl8913531"> </td><td class="xl8913531"> </td><td class="xl8613531"> </td><td class="xl9013531"> </td><td class="xl9813531"> </td><td class="xl9813531"> </td><td class="xl8813531"> </td><td class="xl8913531"> </td><td class="xl8913531"> </td><td class="xl8513531"> </td><td class="xl8313531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="8" style="mso-height-source:userset;height:6.0pt"><td height="8" class="xl1513531" style="height:6.0pt"/><td class="xl6813531"> </td><td class="xl9313531"> </td><td class="xl9713531"> </td><td class="xl8613531"> </td><td class="xl8713531"> </td><td class="xl8813531"> </td><td class="xl8913531"> </td><td class="xl8913531"> </td><td class="xl8913531"> </td><td class="xl8613531"> </td><td class="xl9013531"> </td><td class="xl9813531"> </td><td class="xl9813531"> </td><td class="xl8813531"> </td><td class="xl8913531"> </td><td class="xl8913531"> </td><td class="xl8913531"> </td><td class="xl8513531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1513531" style="height:12.0pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7113531"> </td><td class="xl9213531"> </td><td class="xl8013531"> </td><td class="xl7313531"> </td><td class="xl7313531"> </td><td class="xl7313531"> </td><td class="xl7113531"> </td><td class="xl7413531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl8013531"> </td><td class="xl7313531"> </td><td class="xl7313531"> </td><td class="xl7313531"> </td><td class="xl7313531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td colspan="4" rowspan="2" class="xl11313531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt">CÓDIGO</td><td colspan="3" rowspan="2" class="xl11313531" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt">DESCRIPCIÓN</td><td colspan="3" rowspan="2" class="xl11313531" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt">PRECIO</td><td colspan="3" rowspan="2" class="xl11313531" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt">SUBTOTAL</td><td colspan="4" rowspan="2" class="xl11413531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt">ANTICIPOS</td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td colspan="4" rowspan="3" class="xl13213531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td colspan="4" rowspan="3" class="xl13313531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','fecha_anticipo')" mode="container"/><div xmlns="" class="placeholder fecha_anticipo"><xsl:apply-templates mode="widget" select="key('data','fecha_anticipo')"/></div> -
+  <xsl:apply-templates select="key('data','anticipo')" mode="container"/><div xmlns="" class="placeholder anticipo"><xsl:apply-templates mode="widget" select="key('data','anticipo')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td colspan="4" rowspan="3" class="xl13213531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td colspan="4" rowspan="3" class="xl13313531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','fecha_anticipo')" mode="container"/><div xmlns="" class="placeholder fecha_anticipo"><xsl:apply-templates mode="widget" select="key('data','fecha_anticipo')"/></div> -
+  <xsl:apply-templates select="key('data','anticipo')" mode="container"/><div xmlns="" class="placeholder anticipo"><xsl:apply-templates mode="widget" select="key('data','anticipo')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td colspan="4" rowspan="3" class="xl13213531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td colspan="4" rowspan="3" class="xl13313531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','fecha_anticipo')" mode="container"/><div xmlns="" class="placeholder fecha_anticipo"><xsl:apply-templates mode="widget" select="key('data','fecha_anticipo')"/></div> -
+  <xsl:apply-templates select="key('data','anticipo')" mode="container"/><div xmlns="" class="placeholder anticipo"><xsl:apply-templates mode="widget" select="key('data','anticipo')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td colspan="4" rowspan="3" class="xl13213531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td colspan="4" rowspan="3" class="xl13313531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','fecha_anticipo')" mode="container"/><div xmlns="" class="placeholder fecha_anticipo"><xsl:apply-templates mode="widget" select="key('data','fecha_anticipo')"/></div> -
+  <xsl:apply-templates select="key('data','anticipo')" mode="container"/><div xmlns="" class="placeholder anticipo"><xsl:apply-templates mode="widget" select="key('data','anticipo')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td colspan="4" rowspan="3" class="xl13213531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td colspan="4" rowspan="3" class="xl13313531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','fecha_anticipo')" mode="container"/><div xmlns="" class="placeholder fecha_anticipo"><xsl:apply-templates mode="widget" select="key('data','fecha_anticipo')"/></div> -
+  <xsl:apply-templates select="key('data','anticipo')" mode="container"/><div xmlns="" class="placeholder anticipo"><xsl:apply-templates mode="widget" select="key('data','anticipo')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td colspan="4" rowspan="3" class="xl13213531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt"><xsl:apply-templates select="key('data','codigo')" mode="container"/><div xmlns="" class="placeholder codigo"><xsl:apply-templates mode="widget" select="key('data','codigo')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt"><xsl:apply-templates select="key('data','descripcion')" mode="container"/><div xmlns="" class="placeholder descripcion"><xsl:apply-templates mode="widget" select="key('data','descripcion')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt"><xsl:apply-templates select="key('data','monto')" mode="container"/><div xmlns="" class="placeholder monto"><xsl:apply-templates mode="widget" select="key('data','monto')"/></div></td><td colspan="3" rowspan="3" class="xl13213531" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt"><xsl:apply-templates select="key('data','subtotal')" mode="container"/><div xmlns="" class="placeholder subtotal"><xsl:apply-templates mode="widget" select="key('data','subtotal')"/></div></td><td colspan="4" rowspan="3" class="xl13313531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt"><xsl:apply-templates select="key('data','fecha_anticipo')" mode="container"/><div xmlns="" class="placeholder fecha_anticipo"><xsl:apply-templates mode="widget" select="key('data','fecha_anticipo')"/></div> -
+  <xsl:apply-templates select="key('data','anticipo')" mode="container"/><div xmlns="" class="placeholder anticipo"><xsl:apply-templates mode="widget" select="key('data','anticipo')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td colspan="6" rowspan="2" class="xl10213531" width="314" style="width:237pt"><xsl:apply-templates select="key('data','mensaje')" mode="container"/><div xmlns="" class="placeholder mensaje"><xsl:apply-templates mode="widget" select="key('data','mensaje')"/></div></td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td colspan="3" class="xl11313531" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">SUBTOTAL</td><td colspan="4" class="xl11613531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt"><xsl:apply-templates select="key('data','suma_subtotal')" mode="container"/><div xmlns="" class="placeholder suma_subtotal"><xsl:apply-templates mode="widget" select="key('data','suma_subtotal')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td colspan="3" class="xl10713531" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">DESCUENTO</td><td colspan="4" class="xl11013531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt"><xsl:apply-templates select="key('data','descuento_extra')" mode="container"/><div xmlns="" class="placeholder descuento_extra"><xsl:apply-templates mode="widget" select="key('data','descuento_extra')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7213531"> </td><td class="xl10213531" width="13" style="width:10pt"> </td><td class="xl10213531" width="46" style="width:35pt"> </td><td class="xl10213531" width="46" style="width:35pt"> </td><td class="xl10213531" width="65" style="width:49pt"> </td><td class="xl10213531" width="65" style="width:49pt"> </td><td class="xl10213531" width="79" style="width:59pt"> </td><td class="xl10313531" width="21" style="width:16pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td colspan="3" class="xl10713531" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">TOTAL</td><td colspan="4" class="xl11013531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt"><xsl:apply-templates select="key('data','total')" mode="container"/><div xmlns="" class="placeholder total"><xsl:apply-templates mode="widget" select="key('data','total')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl7213531"> </td><td colspan="6" rowspan="2" class="xl10213531" width="314" style="width:237pt"><xsl:apply-templates select="key('data','mensaje')" mode="container"/><div xmlns="" class="placeholder mensaje"><xsl:apply-templates mode="widget" select="key('data','mensaje')"/></div></td><td class="xl10313531" width="21" style="width:16pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td colspan="3" class="xl10713531" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">ANTICIPO</td><td colspan="4" class="xl11013531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt"><xsl:apply-templates select="key('data','anticipos')" mode="container"/><div xmlns="" class="placeholder anticipos"><xsl:apply-templates mode="widget" select="key('data','anticipos')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="18" style="mso-height-source:userset;height:13.5pt"><td height="18" class="xl1513531" style="height:13.5pt"/><td class="xl6813531"> </td><td class="xl10213531" width="8" style="width:6pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td colspan="3" class="xl10713531" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">RESTANTE</td><td colspan="4" class="xl11013531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt"><xsl:apply-templates select="key('data','restante')" mode="container"/><div xmlns="" class="placeholder restante"><xsl:apply-templates mode="widget" select="key('data','restante')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1513531" style="height:12.0pt"/><td class="xl6813531"> </td><td class="xl7213531"> </td><td class="xl10213531" width="13" style="width:10pt"> </td><td class="xl10213531" width="46" style="width:35pt"> </td><td class="xl10213531" width="46" style="width:35pt"> </td><td class="xl10213531" width="65" style="width:49pt"> </td><td class="xl10213531" width="65" style="width:49pt"> </td><td class="xl10213531" width="79" style="width:59pt"> </td><td class="xl10313531" width="21" style="width:16pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1513531" style="height:12.0pt"/><td class="xl6813531"> </td><td class="xl7213531"> </td><td colspan="6" rowspan="2" class="xl10213531" width="314" style="width:237pt"><xsl:apply-templates select="key('data','mensaje')" mode="container"/><div xmlns="" class="placeholder mensaje"><xsl:apply-templates mode="widget" select="key('data','mensaje')"/></div></td><td class="xl10313531" width="21" style="width:16pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="10" style="mso-height-source:userset;height:7.5pt"><td height="10" class="xl1513531" style="height:7.5pt"/><td class="xl6813531"> </td><td class="xl10213531" width="8" style="width:6pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl10513531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1513531" style="height:12.0pt"/><td class="xl6813531"> </td><td class="xl7213531"> </td><td class="xl10213531" width="13" style="width:10pt"> </td><td class="xl10213531" width="46" style="width:35pt"> </td><td class="xl10213531" width="46" style="width:35pt"> </td><td class="xl10213531" width="65" style="width:49pt"> </td><td class="xl10213531" width="65" style="width:49pt"> </td><td class="xl10213531" width="79" style="width:59pt"> </td><td class="xl10313531" width="21" style="width:16pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl10613531"> </td><td class="xl10613531"> </td><td class="xl10613531"> </td><td class="xl10613531"> </td><td class="xl10613531"> </td><td class="xl10613531"> </td><td class="xl10613531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1513531" style="height:12.0pt"/><td class="xl6813531"> </td><td class="xl7213531"> </td><td colspan="6" rowspan="2" class="xl10213531" width="314" style="width:237pt"><xsl:apply-templates select="key('data','mensaje')" mode="container"/><div xmlns="" class="placeholder mensaje"><xsl:apply-templates mode="widget" select="key('data','mensaje')"/></div></td><td class="xl10313531" width="21" style="width:16pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td colspan="7" class="xl12213531">Firma del cliente:</td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="11" style="mso-height-source:userset;height:8.25pt"><td height="11" class="xl1513531" style="height:8.25pt"/><td class="xl6813531"> </td><td class="xl10213531" width="8" style="width:6pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl7213531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="16" style="mso-height-source:userset;height:12.0pt"><td height="16" class="xl1513531" style="height:12.0pt"/><td class="xl6813531"> </td><td class="xl7213531"> </td><td class="xl10313531" width="13" style="width:10pt"> </td><td class="xl10313531" width="46" style="width:35pt"> </td><td class="xl10313531" width="46" style="width:35pt"> </td><td class="xl10313531" width="65" style="width:49pt"> </td><td class="xl10313531" width="65" style="width:49pt"> </td><td class="xl10313531" width="79" style="width:59pt"> </td><td class="xl10313531" width="21" style="width:16pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td colspan="3" rowspan="3" class="xl12313531" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD">TE ATENDIÓ:</td><td colspan="4" rowspan="3" class="xl12313531" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD"><xsl:apply-templates select="key('data','Vendedor')" mode="container"/><div xmlns="" class="placeholder Vendedor"><xsl:apply-templates mode="widget" select="key('data','Vendedor')"/></div></td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="20" style="mso-height-source:userset;height:15.0pt"><td height="20" class="xl1513531" style="height:15.0pt"/><td class="xl6813531"> </td><td class="xl7213531"> </td><td colspan="6" rowspan="2" class="xl10213531" width="314" style="width:237pt"><xsl:apply-templates select="key('data','mensaje')" mode="container"/><div xmlns="" class="placeholder mensaje"><xsl:apply-templates mode="widget" select="key('data','mensaje')"/></div></td><td class="xl10313531" width="21" style="width:16pt"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="21" style="height:15.75pt"><td height="21" class="xl1513531" style="height:15.75pt"/><td class="xl6813531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl6913531"> </td><td class="xl7013531"> </td><td class="xl1513531"/></tr><tr height="11" style="mso-height-source:userset;height:8.25pt"><td height="11" class="xl1513531" style="height:8.25pt"/><td class="xl7513531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7613531"> </td><td class="xl7713531"> </td><td class="xl1513531"/></tr><tr height="20" style="height:15.0pt"><td height="20" class="xl1513531" style="height:15.0pt"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/><td class="xl1513531"/></tr><xsl:comment><xsl:text/>[if supportMisalignedColumns]&gt;<xsl:text/></xsl:comment><tr height="0" style="display:none"><td width="17" style="width:13pt"/><td width="13" style="width:10pt"/><td width="8" style="width:6pt"/><td width="13" style="width:10pt"/><td width="46" style="width:35pt"/><td width="46" style="width:35pt"/><td width="65" style="width:49pt"/><td width="65" style="width:49pt"/><td width="79" style="width:59pt"/><td width="21" style="width:16pt"/><td width="23" style="width:17pt"/><td width="65" style="width:49pt"/><td width="45" style="width:34pt"/><td width="22" style="width:17pt"/><td width="65" style="width:49pt"/><td width="62" style="width:47pt"/><td width="63" style="width:47pt"/><td width="13" style="width:10pt"/><td width="8" style="width:6pt"/><td width="14" style="width:11pt"/><td width="80" style="width:60pt"/></tr><xsl:comment><xsl:text/>[endif]&gt;<xsl:text/></xsl:comment></table></div><xsl:comment><xsl:text/><xsl:text/></xsl:comment><xsl:comment><xsl:text/> END OF OUTPUT FROM EXCEL PUBLISH AS WEB PAGE WIZARD <xsl:text/></xsl:comment><xsl:comment><xsl:text/><xsl:text/></xsl:comment></body></html></xsl:template></xsl:stylesheet>
