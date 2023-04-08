@@ -36,7 +36,7 @@
 	<xsl:key name="data" match="@PrecioTotal" use="'monto'"/>
 	<xsl:key name="data" match="@xsl:descuento" use="'descuento'"/>
 	<xsl:key name="data" match="@PrecioTotal" use="'subtotal'"/>
-	<xsl:key name="data" match="@Monto" use="'suma_subtotal'"/>
+	<xsl:key name="data" match="*[@Schema='Ventas' and @Name='Venta']/data:rows/xo:r/@Monto" use="'suma_subtotal'"/>
 	<xsl:key name="data" match="@Descuento" use="'descuento_extra'"/>
 	<xsl:key name="data" match="@meta:FK_MensajeReciboVenta_MensajeRecibo" use="'mensaje'"/>
 	<xsl:key name="data" match="@MontoTotal" use="'total'"/>
