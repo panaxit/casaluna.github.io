@@ -17,7 +17,7 @@ exclude-result-prefixes="#default session sitemap shell"
 	<xsl:key name="menu" match="/*[not(self::menu)]" use="'#any'"/>
 
 	<xsl:template match="/">
-		<li class="btn-group">
+		<li class="btn-group" id="{name(*)}">
 			<xo-listener node="cart" />
 			<xsl:apply-templates/>
 		</li>
