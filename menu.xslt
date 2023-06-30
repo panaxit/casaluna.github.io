@@ -23,7 +23,7 @@ exclude-result-prefixes="#default session sitemap shell"
 	<xsl:template match="*">
 		<span class="menu">
 			<script>
-				<![CDATA[xo.listener.on('click', function(){ 
+				<![CDATA[xo.listener.on('click', function(event){ 
 				if (!event.srcElement.closest('.menu')) {
 			        for (let dropdown of [...document.querySelectorAll(".menu .dropdown-toggle.show")]) {
 						let scoped_dropdown = dropdown.scope;

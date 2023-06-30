@@ -1,5 +1,5 @@
 xo.listener.on(`change::px:Entity/data:rows/xo:r/@*`, function ({ element: row, attribute, old, value }) {
-    let entity = attribute.$('ancestor::px:Entity[1]')
+    let entity = row.$('ancestor::px:Entity[1]');
     switch (entity.get("Schema") + '.' + entity.get("Name")) {
         case "Egresos.Gastos":
             if (['Total', 'TotalPagado'].includes(attribute.name)) {
@@ -29,7 +29,7 @@ xo.listener.on(`beforeRender::#Ventas/Venta`, function ({ dom }) {
     }
 })
 
-xo.listener.on(`beforeChange::xo:r/@meta:FK_VentaDetalle_Articulos`, function ({ node, element, attribute, old, value }) {
+xo.listener.on(`beforeChange::xo:r/@meta:FK_VentaDetalle_Articulos`, function ({ node, element, attribute, old, value, event }) {
     let src_element = event.srcEvent.srcElement;
     let selected_record = src_element[src_element.selectedIndex].scope.filter("self::xo:r")
     element.set("PrecioTotal", selected_record.get("PrecioVenta"));
@@ -86,7 +86,7 @@ xo.listener.on('fetch::px:Entity[@Schema="Ventas"][@Name="Venta"]', function ({ 
     document.select(`px:Entity/px:Routes/px:Route[@Method="add"]`).remove()
 })
 
-xo.listener.on(['load::x:prompt[Routine//parameter]', 'response::x:prompt[Routine//parameter]'], function () {
+xo.listener.on(['fetch::x:prompt[Routine//parameter]'], function () {
     let document = this;
     let schema = {
         "@TipoEvento": {
