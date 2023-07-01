@@ -16,14 +16,14 @@ xo.listener.on(`change::px:Entity/data:rows/xo:r/@*`, function ({ element: row, 
     }
 })
 
-xo.listener.on(`beforeRender::#Inventarios/Articulos`, function ({ dom }) {
+xo.listener.on(`render::#Inventarios/Articulos`, function ({ dom }) {
     dom && dom.querySelectorAll("fieldset.container-Costos > div").forEach(el => {
         el.classList.remove("justify-content-between");
         el.classList.add("flex-wrap");
     })
 })
 
-xo.listener.on(`beforeRender::#Ventas/Venta`, function ({ dom }) {
+xo.listener.on(`render::#recibo.xslt`, function ({ dom }) {
     for (let field_name of [...new Set([...dom.querySelectorAll("table tr div.placeholder")].map(el => [...el.classList].join('.')))]) {
         [...dom.querySelectorAll(`tr td .${field_name}`)].map((mensaje, ix) => [...mensaje.querySelectorAll('span')].filter((span, i) => ix != i)).forEach(el => el.removeAll());
     }
