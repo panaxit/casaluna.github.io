@@ -1,22 +1,12 @@
 {
   "server": {
-    "login": "server/login.asp",
-    "logout": "server/logout.asp",
-    "submit": "POST server/post.asp",
-    "session": "server/session.asp",
-    "request": "server/request.asp",
-    "sitemap": "server/sitemap.asp",
-    "uploadFile": "server/upload_file.asp",
-    "uploadFileManager": "server/upload_file_manager.asp",
     "checkout": "server/request.asp?command=Ventas.generarVenta"
   },
+  "start": ["#cart"],
   "sources": {
-    "^data:(.*)": { "px.getData": [] },
-    "^#([^\\/]+\\/.+)$": { "px.request": [ "{$1}" ] },
     "#": "#Ventas/Catalogo",
     "#notifications": "notifications.xml",
     "#messages": "messages.xml",
-    "#sitemap": { "sitemap": [] },
     "#settings": "settings.xml",
     "#menu": "menu.xml",
     "#cart": "cart.xml"

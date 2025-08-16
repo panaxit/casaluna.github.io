@@ -15,9 +15,8 @@
   exclude-result-prefixes="xo state xsl form combobox data px meta container"
   extension-element-prefixes="state"
 >
-	<xsl:import href="keys.xslt"/>
 	<xsl:import href="headers.xslt"/>
-	<xsl:import href="widgets/manifest.xslt"/>
+	<xsl:import href="panax/manifest.xslt"/>
 	<xsl:param name="data:rows"/>
 	
 	<xsl:key name="widget" match="@Fotos" use="concat('files:',ancestor::px:Entity[1]/@xo:id,'::',name())"/>

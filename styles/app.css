@@ -22,6 +22,15 @@ main {
 dialog {
     border: solid gray 2px;
     border-radius: 10px;
+    margin: auto;
+}
+
+dialog menu {
+    padding: 1rem;
+}
+
+dialog menu button {
+    padding-inline: .5rem;
 }
 
 /* This is the style for outside the dialog
@@ -71,6 +80,8 @@ dialog + .backdrop {
     --sidebar-width: 400px;
     --footer-height: 74px;
     --hover-highlight: hsla(43, 71%, 87%, 0.9) !important;
+    --bs-modal-bg: white;
+    --bs-modal-width: 80vw;
 }
 
 #shell > header {

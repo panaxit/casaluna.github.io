@@ -1,40 +1,52 @@
 ﻿<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml"
-xmlns:x="http://panax.io/xover"
-xmlns:session="http://panax.io/session"
-xmlns:sitemap="http://panax.io/sitemap"
-xmlns:attributes="http://panax.io/attributes"
+xmlns:xo="http://panax.io/xover"
 xmlns:shell="http://panax.io/shell"
 xmlns:state="http://panax.io/state"
-xmlns:source="http://panax.io/xover/binding/source"
-xmlns:xlink="http://www.w3.org/1999/xlink"
-exclude-result-prefixes="#default x session sitemap shell state source"
 >
-	<xsl:include href="widgets/panax/shell.xslt"/>
+	<xsl:import href="panax/widgets/shell.xslt"/>
 
-	<xsl:output method="xml"
-	   omit-xml-declaration="yes"
-	   indent="yes"/>
-
-	<xsl:template mode="shell:attributes-nav-img" match="*">
+	<xsl:template mode="shell:nav-img-attributes" match="@*">
 		<xsl:attribute name="src">assets/logo.png</xsl:attribute>
 	</xsl:template>
 
-	<xsl:template mode="shell:nav-title" match="*|@*">
-		<header class="section_nav navbar-form hpadding0 hmargecontenidozul">
-			<h1 xo-store="active" xo-stylesheet="title.xslt"></h1>
-		</header>
+	<xsl:template mode="shell:nav-attributes" match="@*|*">
+		<xsl:attribute name="data-bs-theme">dark</xsl:attribute>
 	</xsl:template>
 
-	<xsl:template mode="shell:extra-content" match="*|@*">
-		<aside class="sidebar" xo-store="#sitemap" xo-stylesheet="sitemap.xslt" id="sitemap">
-			<style><![CDATA[aside.sidebar {width:0%}]]></style>
-		</aside>
-		<div class="settings" xo-store="#settings" xo-stylesheet="settings.xslt"/>
+	<xsl:template mode="shell:nav-title" match="*|@*">
+		<h1 xo-source="active" xo-stylesheet="title.xslt"></h1>
+	</xsl:template>
+
+	<xsl:template mode="shell:extra" match="*|@*">
+		<menu class="settings" xo-source="#settings"/>
 	</xsl:template>
 
 	<xsl:template mode="shell:footer-content" match="*|@*">
-		<div id="page_controls" xo-store="active" xo-stylesheet="page_controls.xslt" class="col-md-8 d-flex align-items-center">
+		<nav id="page_controls" xo-source="active" xo-stylesheet="page_controls.xslt" class="col-md-8 d-flex align-items-center">
+		</nav>
+		<menu id="shell_buttons" xo-source="active" xo-stylesheet="shell_buttons.xslt">
+			<ul class="col-12 nav justify-content-end list-unstyled d-flex">
+			</ul>
+		</menu>
+	</xsl:template>
+
+	<xsl:template mode="shell:nav-brand" match="@xo:id">
+		<xsl:apply-templates mode="shell:nav-brand" select="../@*[name()!=name(current())][1]"/>
+	</xsl:template>
+
+	<xsl:template mode="shell:body-content" match="*|@*">
+		<div class="welcome" style="flex-direction: column;">
 		</div>
-		<ul id="shell_buttons" class="nav col-md-4 justify-content-end list-unstyled d-flex" xo-store="active" xo-stylesheet="shell_buttons.xslt"></ul>
+	</xsl:template>
+
+	<xsl:template mode="shell:nav-brand" match="*|@*">
+		<picture class="logo" id="logo" style="min-width: 60px">
+			<source media="(min-width: 64em)" src="high-res.jpg"/>
+			<source media="(min-width: 37.5em)" src="med-res.jpg"/>
+			<source src="assets/logo.png"/>
+			<img src="assets/logo.png" width="40.61px">
+				<xsl:apply-templates mode="shell:nav-img-attributes" select="."/>
+			</img>
+		</picture>
 	</xsl:template>
 </xsl:stylesheet>
