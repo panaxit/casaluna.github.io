@@ -73,6 +73,11 @@ dialog + .backdrop {
     --hover-highlight: hsla(43, 71%, 87%, 0.9) !important;
 }
 
+iframe {
+    width: 100%;
+    height: inherit;
+}
+
 #shell > header {
     background-color: #fff;
 }

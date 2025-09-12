@@ -27,11 +27,22 @@ xo.listener.on(`render::#recibo.xslt`, function ({ dom }) {
     for (let field_name of [...new Set([...dom.querySelectorAll("table tr div.placeholder")].map(el => [...el.classList].join('.')))]) {
         [...dom.querySelectorAll(`tr td .${field_name}`)].map((mensaje, ix) => [...mensaje.querySelectorAll('span')].filter((span, i) => ix != i)).forEach(el => el.removeAll());
     }
+    for (descuento of dom.querySelectorAll("table tr div.placeholder.descuento_extra")) {
+        if (+descuento.textContent.replace(/[\$,]/g, '') == 0) {
+            descuento.closest('tr').classList.add("sin_descuento")
+        }
+    }
+})
+
+xo.listener.on(`change::xo:r/@FormaPago`, function ({ node, element, attribute, old, value, event }) {
+    if ([2].includes(+value)) {
+        element.setAttribute("meta:FK_Cobros_EstatusCobro", "Recibido")
+    }
 })
 
 xo.listener.on(`beforeChange::xo:r/@meta:FK_VentaDetalle_Articulos`, function ({ node, element, attribute, old, value, event }) {
     let src_element = event.srcEvent.srcElement;
-    let selected_record = src_element[src_element.selectedIndex].scope.filter("self::xo:r")
+    let selected_record = src_element[src_element.selectedIndex].scope.filter("self::xo:r")[0];
     element.set("PrecioTotal", selected_record.get("PrecioVenta"));
 })
 
@@ -82,9 +93,34 @@ xo.listener.on('fetch::px:Entity[@Schema="Ventas"][@Name="Catalogo"]', function 
     }
 })
 
-xo.listener.on('fetch::px:Entity[@Schema="Ventas"][@Name="Venta"]', function ({ document }) {
-    document.select(`px:Entity/px:Routes/px:Route[@Method="add"]`).remove()
+function agregarFoto ( node, method = '[Catalogos].[obtenerFotoArticulo](Id)' ) {
+    let parentNode = node.parentNode;
+    node.setAttributeNS(xover.spaces["xmlns"], "xmlns:custom", "http://panax.io/custom")
+    if (!parentNode.selectSingleNode(`px:Entity`).getAttribute("custom:foto")) {
+        parentNode.selectSingleNode(`px:Entity`).setAttributeNS("http://panax.io/custom", "custom:foto", method)
+        let foto = parentNode.selectSingleNode(`px:Entity/*[name()="layout"]/*[name()="field:ref"]`).duplicate()
+        foto.getAttributeNode("Name").set("custom:foto");
+        return foto;
+    }
+}
+
+xo.listener.on(['fetch::px:Entity[@Schema="Catalogos"][@Name="Articulo"][@mode="view"]', 'success::px:Entity[@Schema="Catalogos"][@Name="Articulo"][@mode="view"]'], function ({ document }) {
+    agregarFoto(document.documentElement)
 })
+
+xo.listener.on(['fetch::px:Entity[.//px:Entity[@Schema="Ventas"][@Name="VentaDetalle"][@mode="edit"]]', 'success::px:Entity[.//px:Entity[@Schema="Catalogos"][@Name="VentaDetalle"][@mode="edit"]]'], function ({ document }) {
+    let foto = agregarFoto(document.selectSingleNode(`.//px:Entity[@Schema="Ventas"][@Name="VentaDetalle"][@mode="edit"]`), `[Catalogos].[obtenerFotoInventario](IdArticuloInventario)`)
+})
+
+xo.listener.on(['fetch::px:Entity[@Schema="Ventas"][@Name="Catalogo"]', 'success::px:Entity[@Schema="Ventas"][@Name="Catalogo"]'], function ({ document }) {
+    let fotos = document.selectSingleNode(`px:Entity/*[name()="layout"]/field:ref[@Name="Fotos"]`);
+    let modelo = document.selectSingleNode(`px:Entity/*[name()="layout"]/field:ref[@Name="Modelo"]`);
+    modelo.after(fotos);
+})
+
+//xo.listener.on('fetch::px:Entity[@Schema="Ventas"][@Name="Venta"]', function ({ document }) {
+//    document.select(`px:Entity/px:Routes/px:Route[@Method="add"]`).remove()
+//})
 
 xo.listener.on(['fetch::x:prompt[Routine//parameter]'], function () {
     let document = this;
@@ -257,4 +293,24 @@ xo.listener.on(`fetch::px:Entity[@Schema="Agenda" and not(@mode="edit" or @mode=
 
 xo.listener.on(`fetch::px:Entity[@Schema="Ventas" and @Name="Citas"]`, function ({ store, node }) {
     this.documentElement.set('controlType', 'calendar')
+})
+xo.listener.on([`change::@CostoDolares`, `change::@TipoCambio`], function ({ element }) {
+    if (element.hasAttribute('CostoPesos') && element.hasAttribute("CostoDolares") && element.hasAttribute("TipoCambio")) {
+        element.setAttribute('CostoPesos', element.getAttribute("CostoDolares") * element.getAttribute("TipoCambio"))
+    }
+})
+
+xover.listener.on('error', function ({ event }) {
+    if (!(event && !(event.defaultPrevented))) return;
+    let srcElement = event.target;
+    srcElement.setAttribute("src", `images/no_photo.gif`)
+    event.stopPropagation()
+})
+
+xo.listener.on(['beforeTransform::#recibo.xslt'], function ({ document }) {
+    let fks = this.select(`/px:Entity/data:rows/xo:r/@meta:*`);
+    for (let fk of fks) {
+        let rows = this.select(`/px:Entity/px:Record/px:Association[@AssociationName="${fk.localName}"]/px:Entity/data:rows/xo:r[not(@meta:text="${fk.value}")]`);
+        rows.remove()
+    }
 })
