@@ -13,6 +13,12 @@
   "sources": {
     "^data:(.*)": { "px.getData": [] },
     "^#([^\\/]+\\/.+)$": { "px.request": [ "{$1}" ] },
+    "#alertarCita": {
+      "server:request": {
+        "command": "[Agenda].[ejecutarAlertaCitas]",
+        "@minutes": 620
+      }
+    },
     "#": "#Ventas/Catalogo",
     "#notifications": "notifications.xml",
     "#messages": "messages.xml",

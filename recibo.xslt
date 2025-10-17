@@ -24,6 +24,7 @@
 	<xsl:key name="data" match="*[@Schema='Catalogos' and @Name='Sucursal']/data:rows/xo:r/@Domicilio" use="'domicilio'"/>
 	<xsl:key name="data" match="*[@Schema='Catalogos' and @Name='Sucursal']/data:rows/xo:r/@Colonia" use="'colonia'"/>
 	<xsl:key name="data" match="*[@Schema='Catalogos' and @Name='Sucursal']/data:rows/xo:r/@Celular" use="'cel'"/>
+	<xsl:key name="data" match="*[@Schema='Catalogos' and @Name='Sucursal']/data:rows/xo:r/@Telefono" use="'telefono_sucursal'"/>
 	<xsl:key name="data" match="@Folio" use="'Folio'"/>
 	<xsl:key name="data" match="@Cliente" use="'Cliente'"/>
 	<xsl:key name="data" match="/px:Entity/@xo:id" use="'FechaImpresion'"/>
@@ -32,7 +33,7 @@
 	<xsl:key name="data" match="*[@Schema='Ventas' and @Name='Venta']/data:rows/xo:r/@Domicilio" use="'DomicilioCliente'"/>
 	<xsl:key name="data" match="@FechaFoto" use="'FechaFoto'"/>
 	<xsl:key name="data" match="@FechaEvento" use="'FechaEvento'"/>
-	<xsl:key name="data" match="@Telefono" use="'Telefono'"/>
+	<xsl:key name="data" match="*[@Schema='Ventas' and @Name='Venta']/data:rows/xo:r/@Telefono" use="'Telefono'"/>
 	<xsl:key name="data" match="@meta:FK_VentaDetalle_Articulos" use="'codigo'"/>
 	<xsl:key name="data" match="*[@Schema='Ventas' and @Name='VentaDetalle']/data:rows/xo:r/@Notas" use="'descripcion'"/>
 	<xsl:key name="data" match="@PrecioUnitario" use="'monto'"/>
@@ -110,6 +111,11 @@
 		padding-left: 1rem;
 		padding-top: .5rem;
 	}
+	
+	
+	img[xo-attribute="custom:foto"] {
+		max-width: 95%;
+	}
 	  ]]>
 		</style>
 		<span class="watermarked" data-watermark="  CASA LUNA  "></span>
@@ -127,6 +133,27 @@
 
 	<xsl:template match="*" mode="resources-path">
 		<xsl:value-of select="$js:resources-path"/>
+	</xsl:template>
+
+	<xsl:template mode="headerText" match="@*">
+		<xsl:value-of select="name()"/>	
+	</xsl:template>
+
+	<xsl:template mode="headerText" match="@Celular|@Telefono">
+		<xsl:value-of select="substring(name(),1,3)"/>	
+	</xsl:template>
+
+	<xsl:template match="@Celular|@Telefono">
+		<xsl:apply-templates mode="headerText" select="."/>:
+		<xsl:value-of select="concat('(', substring(., 1, 3), ') ',
+            substring(., 4, 3), '-',
+            substring(., 7, 4))"/>
+	</xsl:template>
+
+	<xsl:template match="*[@Schema='Ventas' and @Name='Venta']/data:rows/xo:r/@Telefono">
+		<xsl:value-of select="concat('(', substring(., 1, 3), ') ',
+            substring(., 4, 3), '-',
+            substring(., 7, 4))"/>
 	</xsl:template>
 
 	<xsl:template match="@PrecioUnitario|@Descuento|@Monto">
@@ -176,7 +203,7 @@
 		<xsl:value-of select="substring(name(),1,1)"/>: <xsl:value-of select="."/>.
 	</xsl:template>
 
-	<xsl:template match="*[@Schema='Ventas' and @Name='Venta']/data:rows/xo:r/@Notas">
+	<xsl:template match="*[@Schema='Ventas' and @Name='VentaDetalle']/data:rows/xo:r/@Notas">
 		<xsl:apply-templates select="../@Color"/>
 		<xsl:apply-templates select="key('data','medidas')"/>
 		<xsl:value-of select="."/>

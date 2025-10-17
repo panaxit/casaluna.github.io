@@ -66,4 +66,27 @@
 	<xsl:template match="@custom:foto" mode="datagrid:field">
 		<xsl:apply-templates mode="picture:widget" select="."/>
 	</xsl:template>
+
+	<xsl:template mode="calendar:text" match="@Cliente[.!='']">
+		<xsl:value-of select="."/>	<br/>
+	</xsl:template>
+
+	<xsl:template mode="calendar:text" match="@HoraCita[.!='']">
+		<xsl:text> </xsl:text>
+		<xsl:value-of select="substring(.,1,5)"/>
+	</xsl:template>
+
+	<xsl:template mode="calendar:text" match="@TipoCita[.!='']">
+		<br/>
+		<xsl:text> (</xsl:text>
+		<xsl:value-of select="."/>
+		<xsl:text>)</xsl:text>
+	</xsl:template>
+
+	<xsl:template mode="calendar:body-reservation-description" match="@*">
+		<xsl:apply-templates mode="calendar:text" select="../@Cliente"/>
+		<xsl:apply-templates select="."/>
+		<xsl:apply-templates mode="calendar:text" select="../@HoraCita"/>
+		<xsl:apply-templates mode="calendar:text" select="../@TipoCita"/>
+	</xsl:template>
 </xsl:stylesheet>

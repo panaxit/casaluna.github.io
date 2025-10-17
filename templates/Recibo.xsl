@@ -2487,6 +2487,10 @@
 								<div xmlns="" class="placeholder cel">
 									<xsl:apply-templates mode="widget" select="key('data','cel')"/>
 								</div>
+								<xsl:apply-templates select="key('data','telefono_sucursal')" mode="container"/>
+								<div xmlns="" class="placeholder telefono_sucursal">
+									<xsl:apply-templates mode="widget" select="key('data','telefono_sucursal')"/>
+								</div>
 							</td>
 							<td colspan="4" rowspan="2" class="xl14713531" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD">
 								<xsl:apply-templates select="key('data','Folio')" mode="container"/>
