@@ -35,9 +35,6 @@ exclude-result-prefixes="#default x session sitemap shell state source"
 	<xsl:template mode="shell:footer-content" match="*|@*">
 		<div id="page_controls" xo-store="active" xo-stylesheet="page_controls.xslt" class="col-md-8 d-flex align-items-center">
 		</div>
-		<div id="shell_buttons" class="col-md-4 d-flex align-items-center" xo-store="active" xo-stylesheet="shell_buttons.xslt">
-			<ul class="col-12 nav justify-content-end list-unstyled d-flex">
-			</ul>
-		</div>
+		<ul id="shell_buttons" class="nav col-md-4 justify-content-end list-unstyled d-flex" xo-store="active" xo-stylesheet="shell_buttons.xslt"></ul>
 	</xsl:template>
 </xsl:stylesheet>

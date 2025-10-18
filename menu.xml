@@ -1,5 +1,6 @@
 ﻿<?xml-stylesheet type="text/xsl" href="menu.xslt" target="@#shell @#menu"?>
 <menu xmlns:state="http://panax.io/state">
+	<print/>
 	<cart/>
 	<!--<edit>
 		<item>Copiar a excel</item>
@@ -8,7 +9,7 @@
 		<item>Sin elementos</item>
 	</view>-->
 	<!--<search/>
-	<notifications/>
 	<messages/>
 	<idioms/>-->
+	<notifications/>
 </menu>

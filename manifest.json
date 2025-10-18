@@ -1,0 +1,38 @@
+{
+  "server": {
+    "login": "https://6c8b91d87173.ngrok-free.app/login.asp",
+    "logout": "https://6c8b91d87173.ngrok-free.app/logout.asp",
+    "submit": "POST https://6c8b91d87173.ngrok-free.app/post.asp",
+    "session": "https://6c8b91d87173.ngrok-free.app/session.asp",
+    "request": "https://6c8b91d87173.ngrok-free.app/request.asp",
+    "sitemap": "https://6c8b91d87173.ngrok-free.app/sitemap.asp",
+    "uploadFile": "https://6c8b91d87173.ngrok-free.app/upload_file.asp",
+    "uploadFileManager": "https://6c8b91d87173.ngrok-free.app/upload_file_manager.asp",
+    "checkout": "https://6c8b91d87173.ngrok-free.app/request.asp?command=Ventas.generarVenta"
+  },
+  "sources": {
+    "^data:(.*)": { "px.getData": [] },
+    "^#([^\\/]+\\/.+)$": { "px.request": [ "{$1}" ] },
+    "#alertarCita": {
+      "server:request": {
+        "command": "[Agenda].[ejecutarAlertaCitas]",
+        "@minutes": 620
+      }
+    },
+    "#": "#Ventas/Catalogo",
+    "#notifications": "notifications.xml",
+    "#messages": "messages.xml",
+    "#sitemap": { "sitemap": [] },
+    "#settings": "settings.xml",
+    "#menu": "menu.xml",
+    "#cart": "cart.xml"
+  },
+  "settings": {
+    "#shell": {
+      "hash": ""
+    }
+    ,"*ngrok-free.app*": {
+      "headers": { "ngrok-skip-browser-warning": true }
+    }    
+  }
+}

@@ -73,6 +73,11 @@ dialog + .backdrop {
     --hover-highlight: hsla(43, 71%, 87%, 0.9) !important;
 }
 
+iframe {
+    width: 100%;
+    height: inherit;
+}
+
 #shell > header {
     background-color: #fff;
 }
@@ -1332,4 +1337,9 @@ div.aiia-wizard-steps-wrapper {
 #wizard li.completed > a:hover > h1 {
     color: var(--bg-wizard-text) !important;
     background-color: var(--bg-primary-sbg) !important;
+}
+
+[xo-attribute="custom:foto"] {
+    width: 200px;
+    display: block;
 }

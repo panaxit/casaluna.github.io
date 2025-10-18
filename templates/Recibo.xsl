@@ -44,6 +44,7 @@
 	<xsl:key name="data" match="@xsl:anticipo" use="'anticipo'"/>
 	<xsl:key name="data" match="@xsl:codigo" use="'codigo'"/>
 	<xsl:key name="data" match="@xsl:descripcion" use="'descripcion'"/>
+	<xsl:key name="data" match="@xsl:notas" use="'notas'"/>
 	<xsl:key name="data" match="@xsl:monto" use="'monto'"/>
 	<xsl:key name="data" match="@xsl:subtotal" use="'subtotal'"/>
 	<xsl:key name="data" match="@xsl:fecha_anticipo" use="'fecha_anticipo'"/>
@@ -90,6 +91,9 @@
 					&lt;![endif]<xsl:text/>
 				</xsl:comment>
 				<style id="Recibo_13531_Styles">
+					.mensaje {
+						font-size: xx-small;
+					}
 					<xsl:comment>
 						<xsl:text/> table
 						{mso-displayed-decimal-separator:"\.";
@@ -2483,6 +2487,10 @@
 								<div xmlns="" class="placeholder cel">
 									<xsl:apply-templates mode="widget" select="key('data','cel')"/>
 								</div>
+								<xsl:apply-templates select="key('data','telefono_sucursal')" mode="container"/>
+								<div xmlns="" class="placeholder telefono_sucursal">
+									<xsl:apply-templates mode="widget" select="key('data','telefono_sucursal')"/>
+								</div>
 							</td>
 							<td colspan="4" rowspan="2" class="xl14713531" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD">
 								<xsl:apply-templates select="key('data','Folio')" mode="container"/>
@@ -2507,7 +2515,7 @@
 							<td class="xl7013531"> </td>
 							<td class="xl1513531"/>
 						</tr>
-						<tr height="25" style="height:18.75pt">
+						<!--<tr height="25" style="height:18.75pt">
 							<td height="25" class="xl1513531" style="height:18.75pt"/>
 							<td class="xl6813531"> </td>
 							<td align="left" valign="top">
@@ -2694,7 +2702,7 @@
 							<td class="xl8113531"> </td>
 							<td class="xl7013531"> </td>
 							<td class="xl1513531"/>
-						</tr>
+						</tr>-->
 						<tr height="10" style="mso-height-source:userset;height:7.5pt">
 							<td height="10" class="xl1513531" style="height:7.5pt"/>
 							<td class="xl6813531"> </td>
@@ -2962,7 +2970,7 @@
 						<tr height="18" style="mso-height-source:userset;height:13.5pt">
 							<td height="18" class="xl1513531" style="height:13.5pt"/>
 							<td class="xl6813531"> </td>
-							<td colspan="4" rowspan="2" class="xl11313531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt">CÓDIGO</td>
+							<td colspan="4" rowspan="2" class="xl11313531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt">ARTÍCULO</td>
 							<td colspan="3" rowspan="2" class="xl11313531" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt">DESCRIPCIÓN</td>
 							<td colspan="3" rowspan="2" class="xl11313531" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt">PRECIO</td>
 							<td colspan="3" rowspan="2" class="xl11313531" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt">SUBTOTAL</td>
@@ -3179,86 +3187,10 @@
 						<tr height="18" style="mso-height-source:userset;height:13.5pt">
 							<td height="18" class="xl1513531" style="height:13.5pt"/>
 							<td class="xl6813531"> </td>
-							<td colspan="4" rowspan="3" class="xl13213531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt">
-								<xsl:apply-templates select="key('data','codigo')" mode="container"/>
-								<div xmlns="" class="placeholder codigo">
-									<xsl:apply-templates mode="widget" select="key('data','codigo')"/>
-								</div>
-							</td>
-							<td colspan="3" rowspan="3" class="xl13213531" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt">
-								<xsl:apply-templates select="key('data','descripcion')" mode="container"/>
-								<div xmlns="" class="placeholder descripcion">
-									<xsl:apply-templates mode="widget" select="key('data','descripcion')"/>
-								</div>
-							</td>
-							<td colspan="3" rowspan="3" class="xl13213531" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt">
-								<xsl:apply-templates select="key('data','monto')" mode="container"/>
-								<div xmlns="" class="placeholder monto">
-									<xsl:apply-templates mode="widget" select="key('data','monto')"/>
-								</div>
-							</td>
-							<td colspan="3" rowspan="3" class="xl13213531" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt">
-								<xsl:apply-templates select="key('data','subtotal')" mode="container"/>
-								<div xmlns="" class="placeholder subtotal">
-									<xsl:apply-templates mode="widget" select="key('data','subtotal')"/>
-								</div>
-							</td>
-							<td colspan="4" rowspan="3" class="xl13313531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt">
-								<xsl:apply-templates select="key('data','fecha_anticipo')" mode="container"/><div xmlns="" class="placeholder fecha_anticipo">
-									<xsl:apply-templates mode="widget" select="key('data','fecha_anticipo')"/>
-								</div> -
-								<xsl:apply-templates select="key('data','anticipo')" mode="container"/><div xmlns="" class="placeholder anticipo">
-									<xsl:apply-templates mode="widget" select="key('data','anticipo')"/>
-								</div>
-							</td>
-							<td class="xl7013531"> </td>
-							<td class="xl1513531"/>
-						</tr>
-						<tr height="18" style="mso-height-source:userset;height:13.5pt">
-							<td height="18" class="xl1513531" style="height:13.5pt"/>
-							<td class="xl6813531"> </td>
-							<td class="xl7013531"> </td>
-							<td class="xl1513531"/>
-						</tr>
-						<tr height="18" style="mso-height-source:userset;height:13.5pt">
-							<td height="18" class="xl1513531" style="height:13.5pt"/>
-							<td class="xl6813531"> </td>
-							<td class="xl7013531"> </td>
-							<td class="xl1513531"/>
-						</tr>
-						<tr height="18" style="mso-height-source:userset;height:13.5pt">
-							<td height="18" class="xl1513531" style="height:13.5pt"/>
-							<td class="xl6813531"> </td>
-							<td colspan="4" rowspan="3" class="xl13213531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt">
-								<xsl:apply-templates select="key('data','codigo')" mode="container"/>
-								<div xmlns="" class="placeholder codigo">
-									<xsl:apply-templates mode="widget" select="key('data','codigo')"/>
-								</div>
-							</td>
-							<td colspan="3" rowspan="3" class="xl13213531" width="209" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:157pt">
-								<xsl:apply-templates select="key('data','descripcion')" mode="container"/>
-								<div xmlns="" class="placeholder descripcion">
-									<xsl:apply-templates mode="widget" select="key('data','descripcion')"/>
-								</div>
-							</td>
-							<td colspan="3" rowspan="3" class="xl13213531" width="109" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:82pt">
-								<xsl:apply-templates select="key('data','monto')" mode="container"/>
-								<div xmlns="" class="placeholder monto">
-									<xsl:apply-templates mode="widget" select="key('data','monto')"/>
-								</div>
-							</td>
-							<td colspan="3" rowspan="3" class="xl13213531" width="132" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:100pt">
-								<xsl:apply-templates select="key('data','subtotal')" mode="container"/>
-								<div xmlns="" class="placeholder subtotal">
-									<xsl:apply-templates mode="widget" select="key('data','subtotal')"/>
-								</div>
-							</td>
-							<td colspan="4" rowspan="3" class="xl13313531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:110pt">
-								<xsl:apply-templates select="key('data','fecha_anticipo')" mode="container"/><div xmlns="" class="placeholder fecha_anticipo">
-									<xsl:apply-templates mode="widget" select="key('data','fecha_anticipo')"/>
-								</div> -
-								<xsl:apply-templates select="key('data','anticipo')" mode="container"/><div xmlns="" class="placeholder anticipo">
-									<xsl:apply-templates mode="widget" select="key('data','anticipo')"/>
+							<td colspan="17" rowspan="3" class="xl13213531" width="113" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD;width:86pt">
+								<xsl:apply-templates select="key('data','notas')" mode="container"/>
+								<div xmlns="" class="placeholder notas">
+									<xsl:apply-templates mode="widget" select="key('data','notas')"/>
 								</div>
 							</td>
 							<td class="xl7013531"> </td>
@@ -3280,14 +3212,12 @@
 							<td height="18" class="xl1513531" style="height:13.5pt"/>
 							<td class="xl6813531"> </td>
 							<td class="xl6913531"> </td>
-							<td colspan="6" rowspan="2" class="xl10213531" width="314" style="width:237pt">
+							<td colspan="8" rowspan="2" class="xl10213531" width="314" style="width:237pt">
 								<xsl:apply-templates select="key('data','mensaje')" mode="container"/>
 								<div xmlns="" class="placeholder mensaje">
 									<xsl:apply-templates mode="widget" select="key('data','mensaje')"/>
 								</div>
 							</td>
-							<td class="xl7213531"> </td>
-							<td class="xl7213531"> </td>
 							<td class="xl7213531"> </td>
 							<td colspan="3" class="xl11313531" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">SUBTOTAL</td>
 							<td colspan="4" class="xl11613531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt">
@@ -3303,8 +3233,6 @@
 							<td height="18" class="xl1513531" style="height:13.5pt"/>
 							<td class="xl6813531"> </td>
 							<td class="xl6913531"> </td>
-							<td class="xl7213531"> </td>
-							<td class="xl7213531"> </td>
 							<td class="xl7213531"> </td>
 							<td colspan="3" class="xl10713531" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">DESCUENTO</td>
 							<td colspan="4" class="xl11013531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt">
@@ -3343,14 +3271,12 @@
 							<td height="18" class="xl1513531" style="height:13.5pt"/>
 							<td class="xl6813531"> </td>
 							<td class="xl7213531"> </td>
-							<td colspan="6" rowspan="2" class="xl10213531" width="314" style="width:237pt">
+							<td colspan="8" rowspan="2" class="xl10213531" width="314" style="width:237pt">
 								<xsl:apply-templates select="key('data','mensaje')" mode="container"/>
 								<div xmlns="" class="placeholder mensaje">
 									<xsl:apply-templates mode="widget" select="key('data','mensaje')"/>
 								</div>
 							</td>
-							<td class="xl10313531" width="21" style="width:16pt"> </td>
-							<td class="xl6913531"> </td>
 							<td class="xl6913531"> </td>
 							<td colspan="3" class="xl10713531" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">ANTICIPO</td>
 							<td colspan="4" class="xl11013531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt">
@@ -3366,8 +3292,6 @@
 							<td height="18" class="xl1513531" style="height:13.5pt"/>
 							<td class="xl6813531"> </td>
 							<td class="xl10213531" width="8" style="width:6pt"> </td>
-							<td class="xl6913531"> </td>
-							<td class="xl6913531"> </td>
 							<td class="xl6913531"> </td>
 							<td colspan="3" class="xl10713531" width="132" style="border-right:1.0pt solid #FFC1DD;   width:100pt">RESTANTE</td>
 							<td colspan="4" class="xl11013531" width="146" style="border-right:1.0pt solid #FFC1DD;   border-left:none;width:110pt">
@@ -3406,14 +3330,12 @@
 							<td height="16" class="xl1513531" style="height:12.0pt"/>
 							<td class="xl6813531"> </td>
 							<td class="xl7213531"> </td>
-							<td colspan="6" rowspan="2" class="xl10213531" width="314" style="width:237pt">
+							<td colspan="8" rowspan="2" class="xl10213531" width="314" style="width:237pt">
 								<xsl:apply-templates select="key('data','mensaje')" mode="container"/>
 								<div xmlns="" class="placeholder mensaje">
 									<xsl:apply-templates mode="widget" select="key('data','mensaje')"/>
 								</div>
 							</td>
-							<td class="xl10313531" width="21" style="width:16pt"> </td>
-							<td class="xl6913531"> </td>
 							<td class="xl6913531"> </td>
 							<td class="xl10513531"> </td>
 							<td class="xl10513531"> </td>
@@ -3429,8 +3351,6 @@
 							<td height="10" class="xl1513531" style="height:7.5pt"/>
 							<td class="xl6813531"> </td>
 							<td class="xl10213531" width="8" style="width:6pt"> </td>
-							<td class="xl6913531"> </td>
-							<td class="xl6913531"> </td>
 							<td class="xl6913531"> </td>
 							<td class="xl10513531"> </td>
 							<td class="xl10513531"> </td>
@@ -3469,14 +3389,12 @@
 							<td height="16" class="xl1513531" style="height:12.0pt"/>
 							<td class="xl6813531"> </td>
 							<td class="xl7213531"> </td>
-							<td colspan="6" rowspan="2" class="xl10213531" width="314" style="width:237pt">
+							<td colspan="8" rowspan="2" class="xl10213531" width="314" style="width:237pt">
 								<xsl:apply-templates select="key('data','mensaje')" mode="container"/>
 								<div xmlns="" class="placeholder mensaje">
 									<xsl:apply-templates mode="widget" select="key('data','mensaje')"/>
 								</div>
 							</td>
-							<td class="xl10313531" width="21" style="width:16pt"> </td>
-							<td class="xl6913531"> </td>
 							<td class="xl6913531"> </td>
 							<td colspan="7" class="xl12213531">Firma del cliente:</td>
 							<td class="xl7013531"> </td>
@@ -3486,8 +3404,6 @@
 							<td height="11" class="xl1513531" style="height:8.25pt"/>
 							<td class="xl6813531"> </td>
 							<td class="xl10213531" width="8" style="width:6pt"> </td>
-							<td class="xl6913531"> </td>
-							<td class="xl6913531"> </td>
 							<td class="xl6913531"> </td>
 							<td class="xl7213531"> </td>
 							<td class="xl7213531"> </td>
@@ -3526,14 +3442,12 @@
 							<td height="20" class="xl1513531" style="height:15.0pt"/>
 							<td class="xl6813531"> </td>
 							<td class="xl7213531"> </td>
-							<td colspan="6" rowspan="2" class="xl10213531" width="314" style="width:237pt">
+							<td colspan="8" rowspan="2" class="xl10213531" width="314" style="width:237pt">
 								<xsl:apply-templates select="key('data','mensaje')" mode="container"/>
 								<div xmlns="" class="placeholder mensaje">
 									<xsl:apply-templates mode="widget" select="key('data','mensaje')"/>
 								</div>
 							</td>
-							<td class="xl10313531" width="21" style="width:16pt"> </td>
-							<td class="xl6913531"> </td>
 							<td class="xl6913531"> </td>
 							<td class="xl7013531"> </td>
 							<td class="xl1513531"/>
@@ -3541,8 +3455,6 @@
 						<tr height="21" style="height:15.75pt">
 							<td height="21" class="xl1513531" style="height:15.75pt"/>
 							<td class="xl6813531"> </td>
-							<td class="xl6913531"> </td>
-							<td class="xl6913531"> </td>
 							<td class="xl6913531"> </td>
 							<td class="xl6913531"> </td>
 							<td class="xl7013531"> </td>

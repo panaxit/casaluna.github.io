@@ -23,8 +23,8 @@ exclude-result-prefixes="#default session sitemap shell"
 	<xsl:template match="*">
 		<span class="menu">
 			<script>
-				<![CDATA[xo.listener.on('click', function(){ 
-			    if (!event.srcElement.closest('.menu')) {
+				<![CDATA[xo.listener.on('click', function(event){ 
+				if (!event.srcElement.closest('.menu')) {
 			        for (let dropdown of [...document.querySelectorAll(".menu .dropdown-toggle.show")]) {
 						let scoped_dropdown = dropdown.scope;
 						const dropdownInstance = new bootstrap.Dropdown(dropdown);
@@ -105,10 +105,13 @@ exclude-result-prefixes="#default session sitemap shell"
 	</xsl:template>
 
 
-	<xsl:template match="*" mode="section">
+	<xsl:template match="*" mode="section-attributes">
 	</xsl:template>
 
-	<xsl:template match="notifications|messages|cart" mode="section">
+	<xsl:template match="notifications|messages|cart" mode="section-attributes">
+		<xsl:attribute name="id">
+			<xsl:value-of select="name()"/>
+		</xsl:attribute>
 		<xsl:attribute name="xo-store">
 			<xsl:text/>#<xsl:value-of select="name()"/>
 		</xsl:attribute>
@@ -119,7 +122,7 @@ exclude-result-prefixes="#default session sitemap shell"
 			<xsl:if test="@state:disabled">disabled</xsl:if>
 		</xsl:variable>
 		<li class="nav-item dropdown no-arrow">
-			<xsl:apply-templates mode="section" select="."/>
+			<xsl:apply-templates mode="section-attributes" select="."/>
 			<a class="nav-link dropdown-toggle {$disabled}" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<xsl:apply-templates mode="icon" select="."/>
 				<xsl:apply-templates mode="icon.badge" select="."/>

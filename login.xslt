@@ -71,6 +71,10 @@ body {
 	z-index: 2;
 }
 
+.form-signin input, .form-signin button {
+	min-width: 300px;
+}
+
 .form-signin input[type="email"] {
 	margin-bottom: -1px;
 	border-bottom-right-radius: 0;
