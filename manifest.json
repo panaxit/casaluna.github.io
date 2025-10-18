@@ -1,14 +1,14 @@
 {
   "server": {
-    "login": "server/login.asp",
-    "logout": "server/logout.asp",
-    "submit": "POST server/post.asp",
-    "session": "server/session.asp",
-    "request": "server/request.asp",
-    "sitemap": "server/sitemap.asp",
-    "uploadFile": "server/upload_file.asp",
-    "uploadFileManager": "server/upload_file_manager.asp",
-    "checkout": "server/request.asp?command=Ventas.generarVenta"
+    "login": "https://6c8b91d87173.ngrok-free.app/login.asp",
+    "logout": "https://6c8b91d87173.ngrok-free.app/logout.asp",
+    "submit": "POST https://6c8b91d87173.ngrok-free.app/post.asp",
+    "session": "https://6c8b91d87173.ngrok-free.app/session.asp",
+    "request": "https://6c8b91d87173.ngrok-free.app/request.asp",
+    "sitemap": "https://6c8b91d87173.ngrok-free.app/sitemap.asp",
+    "uploadFile": "https://6c8b91d87173.ngrok-free.app/upload_file.asp",
+    "uploadFileManager": "https://6c8b91d87173.ngrok-free.app/upload_file_manager.asp",
+    "checkout": "https://6c8b91d87173.ngrok-free.app/request.asp?command=Ventas.generarVenta"
   },
   "sources": {
     "^data:(.*)": { "px.getData": [] },
@@ -31,5 +31,8 @@
     "#shell": {
       "hash": ""
     }
+    ,"*ngrok-free.app*": {
+      "headers": { "ngrok-skip-browser-warning": true }
+    }    
   }
 }
