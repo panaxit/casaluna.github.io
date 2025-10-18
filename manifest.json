@@ -33,6 +33,12 @@
     }
     ,"server:request": {
       "headers": { "ngrok-skip-browser-warning": true }
+    }
+    ,"server:sitemap": {
+      "headers": { "ngrok-skip-browser-warning": true }
+    }
+    ,"server:login": {
+      "headers": { "ngrok-skip-browser-warning": true }
     }    
   }
 }
