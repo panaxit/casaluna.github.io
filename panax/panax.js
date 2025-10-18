@@ -12,6 +12,7 @@ Object.defineProperty(xo.session, 'login', {
             xover.session.status = 'authorizing';
             let response = await xover.server.login(new URLSearchParams({ 'connection_id': connection_id }), { headers: { "ngrok-skip-browser-warning": true, authorization: `Basic ${btoa(_username + ':' + _password)}` } });
             xover.session.status = 'authorized';
+            xover.session.id_token = `Basic ${btoa(_username + ':' + _password)}`
             if (xover.site.seed === '#login') {
                 xover.site.seed = '#';
             } else {
@@ -421,6 +422,8 @@ xo.listener.on(['append::data:rows[@command]', 'set::data:rows/@command', 'remov
 
     let headers = new Headers({
         "Accept": content_type.xml
+        , "authorization": xover.session.id_token
+        , "ngrok-skip-browser-warning": true
     })
     let response;
     try {
@@ -746,6 +749,8 @@ px.request = async function (request_or_entity_name, ...args) {
     let current_store = xover.stores.active;
     current_store.state.busy = true;
     try {
+        let username = xover.session.user_login;
+        let password = xover.session.id_token;
         let headers = new Headers({
             "Content-Type": 'text/xml'
             , "Accept": 'text/xml'
@@ -753,6 +758,7 @@ px.request = async function (request_or_entity_name, ...args) {
             , "x-Detect-Output-Variables": false
             , "x-Debugging": xover.debug.enabled
             , "ngrok-skip-browser-warning": true
+            , "authorization": xover.session.id_token
         });
         headers = Object.fromEntries([...headers].concat(Object.entries((this.settings || {}).headers || {})));
         this.progress = xo.sources["loading.xslt"].render();
@@ -1088,6 +1094,7 @@ px.getData = async function (...args) {
         let headers = new Headers(xover.json.merge(settings["headers"] instanceof Headers && Object.fromEntries(settings["headers"].entries()), {
             "Cache-Response": (node.parentNode && Array.prototype.coalesce(eval(node.getAttribute("cache" + ":" + (attribute_base_name))), eval(node.parentNode && node.parentNode instanceof Element && node.parentNode.getAttribute("cache" + ":" + (attribute_base_name))), false))
             , "Accept": content_type.xml
+            , "authorization": xover.session.id_token
             , "cache-control": 'max-age=0'
             /*, "pragma": 'force-cache'*/
             , "x-original-request": command
@@ -1101,6 +1108,7 @@ px.getData = async function (...args) {
             , "x-data-value": encodeURIComponent(node.getAttribute('source_value:' + attribute_base_name) || node.getAttribute('dataValue') || "")
             , "x-data-fields": (fields.toString().replace(/&/g, ',') || "")
             , "x-order-by": order_by || ""
+
         }))
         settings["headers"] = headers;
     }
@@ -1417,7 +1425,7 @@ xover.listener.on('error', async function ({ event }) {
 })
 
 setInterval(function () {
-    xo.sources["#alertarCita"].fetch({headers: new Headers({ "ngrok-skip-browser-warning": true })});
+    xo.sources["#alertarCita"].fetch({headers: new Headers({ "ngrok-skip-browser-warning": true, authorization: xover.session.id_token })});
 }, 36000)
 
 xo.listener.on(`fetch::#alertarCita`, function ({ document }) {

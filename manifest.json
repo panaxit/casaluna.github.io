@@ -31,7 +31,7 @@
     "#shell": {
       "hash": ""
     }
-    ,"*ngrok-free.app*": {
+    ,"server:request": {
       "headers": { "ngrok-skip-browser-warning": true }
     }    
   }
