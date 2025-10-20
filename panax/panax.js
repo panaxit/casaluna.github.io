@@ -1426,14 +1426,14 @@ xover.listener.on('error', async function ({ event }) {
 
 setInterval(function () {
     xo.sources["#alertarCita"].fetch({headers: new Headers({ "ngrok-skip-browser-warning": true, authorization: xover.session.id_token })});
-}, 36000)
+}, 240000)
 
 xo.listener.on(`beforeFetch`, function ({ url }) {
     if (!url) return;
     let headers = url.settings.headers;
     headers.set("ngrok-skip-browser-warning", true);
     headers.set("authorization", xover.session.id_token);
-}, 36000)
+})
 
 xo.listener.on(`fetch::#alertarCita`, function ({ document }) {
     let notificacions = xo.sources["#notifications"];
