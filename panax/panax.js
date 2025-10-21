@@ -454,7 +454,7 @@ xo.listener.on(['append::data:rows[@command]', 'set::data:rows/@command', 'remov
                 //new_node.append(xover.xml.createNode(`<xo:empty xmlns:xo="http://panax.io/xover"/>`).reseed());
             }
         }
-        new_node.selectNodes("@xo:id").remove()
+        new_node.selectNodes("@xo:id").remove({ silent: true })
         //let prev_value = targetNode.parentNode.getAttribute("prev:value");
         targetNode.disconnect();
         new_node.selectNodes('@*').forEach(attr => targetNode.setAttributeNS(attr.namespaceURI, attr.name, attr.value))
@@ -510,7 +510,7 @@ xo.listener.on('appendTo::data:rows', function () {
                 for (let row of target_rows) {
                     let association_copy = association.cloneNode(true);
                     //let field_association = xo.xml.createNode(`<x:f Name="${association.getAttribute("AssociationName")}"/>`)
-                    association_copy.select(".//@xo:id").remove();
+                    association_copy.select(".//@xo:id").remove({silent:true});
                     association_copy.reseed();
                     row.append(association_copy);
                     let entity = association_copy.$(`px:Entity`);
@@ -1119,8 +1119,12 @@ px.getData = async function (...args) {
         if (!(node && node.parentElement)) return;
         let entity = node.parentElement.$('self::px:Entity[ancestor-or-self::*[@mode="add"] and not(parent::px:Association[@Type="hasMany"]) or parent::px:Association[@Type="hasOne"]]');
         //let entity = node.$('parent::px:Entity[//px:Entity[@mode="add"]]')
-        if (entity && !(response.documentElement.firstElementChild)) {
-            response.documentElement.append(px.createEmptyRow(entity))
+        if (!(response.documentElement.firstElementChild)) {
+            if (entity) {
+                response.documentElement.append(px.createEmptyRow(entity))
+            } else {
+                response.documentElement.set("xsi:nil", true);
+            }
         }
         if (node.$('self::*[not(@xsi:type="mock")]/parent::px:Entity/parent::px:Association[@DataType="junctionTable"]')) {
             response.documentElement.select(`xo:r`).forEach(row => row.set("state:checked", "true"))

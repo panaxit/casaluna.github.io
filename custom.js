@@ -187,6 +187,7 @@ xo.listener.on([`success::#server:checkout`, `success::#server:request`], functi
 
 ventas = {};
 ventas.toggleRecibo = function (scope) {
+    if (!scope) return;
     let document = scope.ownerDocument;
     let stylesheet_recibo = document.stylesheets["recibo.xslt"];
     if (stylesheet_recibo) {
