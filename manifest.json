@@ -1,14 +1,14 @@
 {
   "server": {
-    "login": "https://8f6b98344319.ngrok-free.app/login.asp",
-    "logout": "https://8f6b98344319.ngrok-free.app/logout.asp",
-    "submit": "POST https://8f6b98344319.ngrok-free.app/post.asp",
-    "session": "https://8f6b98344319.ngrok-free.app/session.asp",
-    "request": "https://8f6b98344319.ngrok-free.app/request.asp",
-    "sitemap": "https://8f6b98344319.ngrok-free.app/sitemap.asp",
-    "uploadFile": "https://8f6b98344319.ngrok-free.app/upload_file.asp",
-    "uploadFileManager": "https://8f6b98344319.ngrok-free.app/upload_file_manager.asp",
-    "checkout": "https://8f6b98344319.ngrok-free.app/request.asp?command=Ventas.generarVenta"
+    "login": "https://hdtv-appointed-secretary-sample.trycloudflare.com/login.asp",
+    "logout": "https://hdtv-appointed-secretary-sample.trycloudflare.com/logout.asp",
+    "submit": "POST https://hdtv-appointed-secretary-sample.trycloudflare.com/post.asp",
+    "session": "https://hdtv-appointed-secretary-sample.trycloudflare.com/session.asp",
+    "request": "https://hdtv-appointed-secretary-sample.trycloudflare.com/request.asp",
+    "sitemap": "https://hdtv-appointed-secretary-sample.trycloudflare.com/sitemap.asp",
+    "uploadFile": "https://hdtv-appointed-secretary-sample.trycloudflare.com/upload_file.asp",
+    "uploadFileManager": "https://hdtv-appointed-secretary-sample.trycloudflare.com/upload_file_manager.asp",
+    "checkout": "https://hdtv-appointed-secretary-sample.trycloudflare.com/request.asp?command=Ventas.generarVenta"
   },
   "sources": {
     "^data:(.*)": { "px.getData": [] },

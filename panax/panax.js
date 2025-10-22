@@ -805,7 +805,7 @@ px.request = async function (request_or_entity_name, ...args) {
         let progress = await this.progress;
         progress && progress.remove();
         current_store.state.busy = undefined;
-        if (e.document instanceof HTMLDocument) {
+        if (e && e.document instanceof HTMLDocument) {
             return Promise.reject(xover.dom.createDialog(e.document));
         } else {
             return Promise.reject(e);

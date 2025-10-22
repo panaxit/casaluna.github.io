@@ -62,6 +62,7 @@
 	</xsl:template>
 
 	<xsl:template match="field:ref[@Name='custom:foto']/@*" mode="headerText" priority="5">Foto</xsl:template>
+	<xsl:template match="field:ref[@Name='custom:FK_OrdenDetalle_Orden']/@*" mode="headerText" priority="5">Artículos</xsl:template>
 
 	<xsl:template match="@custom:foto" mode="datagrid:field">
 		<xsl:apply-templates mode="picture:widget" select="."/>

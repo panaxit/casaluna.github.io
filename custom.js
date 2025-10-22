@@ -104,8 +104,36 @@ function agregarFoto ( node, method = '[Catalogos].[obtenerFotoArticulo](Id)' ) 
     }
 }
 
-xo.listener.on(['fetch::px:Entity[@Schema="Catalogos"][@Name="Articulo"][@mode="view"]', 'success::px:Entity[@Schema="Catalogos"][@Name="Articulo"][@mode="view"]'], function ({ document }) {
+xo.listener.on(['fetch::px:Entity[@Schema="Catalogos"][@Name="Articulo"][@mode="view"]'
+, 'success::px:Entity[@Schema="Catalogos"][@Name="Articulo"][@mode="view"]'], function ({ document }) {
     agregarFoto(document.documentElement)
+})
+
+function agregarDetalles ( node, methods = {} ) {
+    let parentNode = node.parentNode;
+    node.setAttributeNS(xover.spaces["xmlns"], "xmlns:custom", "http://panax.io/custom");
+    if (node.matches("self::px:Entity")) {
+        let layout = node.selectSingleNode(`*[name()="layout"]`);
+        let template = node.ownerDocument.createElementNS('http://panax.io/layout/fieldref', 'ref');
+        for (let ref of layout.select(`association:ref`)) {
+            let name = ref.getAttribute("Name");
+            let method = methods[name];
+            let schema = method && ref.selectFirst(`ancestor::px:Entity[1]/px:Record/px:Association[@Type="hasMany"][@AssociationName="${ref.getAttribute("Name")}"]`) || null;
+            if (!schema || !method) continue
+            node.setAttributeNS("http://panax.io/custom", `custom:${name}`, method)
+            let new_ref = template.cloneNode(true);
+            for (let attr of ref.attributes) {
+                new_ref.setAttribute(attr.name, attr.value);
+            }
+            new_ref.setAttribute("Name", `custom:${name}`);
+            ref.replaceWith(new_ref)
+        }
+    }
+}
+
+xo.listener.on(['fetch::px:Entity[@Schema="Ventas"][@Name="Venta"][@mode="view"]'
+, 'success::px:Entity[@Schema="Ventas"][@Name="Venta"][@mode="view"]'], function ({ document }) {
+    agregarDetalles(document.documentElement, {FK_OrdenDetalle_Orden:`Ventas.[describirArticulos](Id)`})
 })
 
 xo.listener.on(['fetch::px:Entity[.//px:Entity[@Schema="Ventas"][@Name="VentaDetalle"][@mode="edit"]]', 'success::px:Entity[.//px:Entity[@Schema="Catalogos"][@Name="VentaDetalle"][@mode="edit"]]'], function ({ document }) {
