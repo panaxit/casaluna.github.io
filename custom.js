@@ -93,6 +93,12 @@ xo.listener.on('fetch::px:Entity[@Schema="Ventas"][@Name="Catalogo"]', function 
     }
 })
 
+xo.listener.on('fetch::px:Entity[@Schema="Compras"][@Name="PedidosPendientes"][@mode="view"]', function ({ document }) {
+    for (let routes of document.select(`px:Entity/px:Routes[not(px:Route)]`)) {
+        routes.append(xo.xml.createNode(`<px:Route xmlns:px="${xo.spaces["px"]}" Method="edit"/>`))
+    }
+})
+
 function agregarFoto ( node, method = '[Catalogos].[obtenerFotoArticulo](Id)' ) {
     let parentNode = node.parentNode;
     node.setAttributeNS(xover.spaces["xmlns"], "xmlns:custom", "http://panax.io/custom")
