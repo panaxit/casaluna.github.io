@@ -1,14 +1,14 @@
 {
   "server": {
-    "login": "https://surgeons-shade-prison-sword.trycloudflare.com/login.asp",
-    "logout": "https://surgeons-shade-prison-sword.trycloudflare.com/logout.asp",
-    "submit": "POST https://surgeons-shade-prison-sword.trycloudflare.com/post.asp",
-    "session": "https://surgeons-shade-prison-sword.trycloudflare.com/session.asp",
-    "request": "https://surgeons-shade-prison-sword.trycloudflare.com/request.asp",
-    "sitemap": "https://surgeons-shade-prison-sword.trycloudflare.com/sitemap.asp",
-    "uploadFile": "https://surgeons-shade-prison-sword.trycloudflare.com/upload_file.asp",
-    "uploadFileManager": "https://surgeons-shade-prison-sword.trycloudflare.com/upload_file_manager.asp",
-    "checkout": "https://surgeons-shade-prison-sword.trycloudflare.com/request.asp?command=Ventas.generarVenta"
+    "login": "https://candidate-apparently-fired-animated.trycloudflare.com/login.asp",
+    "logout": "https://candidate-apparently-fired-animated.trycloudflare.com/logout.asp",
+    "submit": "POST https://candidate-apparently-fired-animated.trycloudflare.com/post.asp",
+    "session": "https://candidate-apparently-fired-animated.trycloudflare.com/session.asp",
+    "request": "https://candidate-apparently-fired-animated.trycloudflare.com/request.asp",
+    "sitemap": "https://candidate-apparently-fired-animated.trycloudflare.com/sitemap.asp",
+    "uploadFile": "https://candidate-apparently-fired-animated.trycloudflare.com/upload_file.asp",
+    "uploadFileManager": "https://candidate-apparently-fired-animated.trycloudflare.com/upload_file_manager.asp",
+    "checkout": "https://candidate-apparently-fired-animated.trycloudflare.com/request.asp?command=Ventas.generarVenta"
   },
   "sources": {
     "^data:(.*)": { "px.getData": [] },
