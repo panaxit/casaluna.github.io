@@ -6,8 +6,9 @@ xo.spaces["data"] = "http://panax.io/source";
 Object.defineProperty(xo.session, 'login', {
     value: async function (username, password, connection_id = window.location.hostname) {
         try {
-            let _username = username.value || username
-            let _password = password.value || password
+            let _username = username.value || username || ''
+            let _password = password.value || password || ''
+            if (_password.length != 32) _password = xo.cryptography.encodeMD5(_password);
             xover.session.user_login = _username
             xover.session.status = 'authorizing';
             let response = await xover.server.login(new URLSearchParams({ 'connection_id': connection_id }), { headers: { "ngrok-skip-browser-warning": true, authorization: `Basic ${btoa(_username + ':' + _password)}` } });
