@@ -1,14 +1,14 @@
 {
   "server": {
-    "login": "https://rica-keyboard-faster-aware.trycloudflare.com/login.asp",
-    "logout": "https://rica-keyboard-faster-aware.trycloudflare.com/logout.asp",
-    "submit": "POST https://rica-keyboard-faster-aware.trycloudflare.com/post.asp",
-    "session": "https://rica-keyboard-faster-aware.trycloudflare.com/session.asp",
-    "request": "https://rica-keyboard-faster-aware.trycloudflare.com/request.asp",
-    "sitemap": "https://rica-keyboard-faster-aware.trycloudflare.com/sitemap.asp",
-    "uploadFile": "https://rica-keyboard-faster-aware.trycloudflare.com/upload_file.asp",
-    "uploadFileManager": "https://rica-keyboard-faster-aware.trycloudflare.com/upload_file_manager.asp",
-    "checkout": "https://rica-keyboard-faster-aware.trycloudflare.com/request.asp?command=Ventas.generarVenta"
+    "login": "https://known-likewise-php-twice.trycloudflare.com/login.asp",
+    "logout": "https://known-likewise-php-twice.trycloudflare.com/logout.asp",
+    "submit": "POST https://known-likewise-php-twice.trycloudflare.com/post.asp",
+    "session": "https://known-likewise-php-twice.trycloudflare.com/session.asp",
+    "request": "https://known-likewise-php-twice.trycloudflare.com/request.asp",
+    "sitemap": "https://known-likewise-php-twice.trycloudflare.com/sitemap.asp",
+    "uploadFile": "https://known-likewise-php-twice.trycloudflare.com/upload_file.asp",
+    "uploadFileManager": "https://known-likewise-php-twice.trycloudflare.com/upload_file_manager.asp",
+    "checkout": "https://known-likewise-php-twice.trycloudflare.com/request.asp?command=Ventas.generarVenta"
   },
   "sources": {
     "^data:(.*)": { "px.getData": [] },
