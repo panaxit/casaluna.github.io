@@ -27,9 +27,10 @@
 	<xsl:key name="data" match="*[@Schema='Catalogos' and @Name='Sucursal']/data:rows/xo:r/@Telefono" use="'telefono_sucursal'"/>
 	<xsl:key name="data" match="@Folio" use="'Folio'"/>
 	<xsl:key name="data" match="@Cliente" use="'Cliente'"/>
-	<xsl:key name="data" match="/px:Entity/@xo:id" use="'FechaImpresion'"/>
+  <xsl:key name="data" match="/px:Entity/@xo:id" use="'FechaImpresion'"/>
 	<xsl:key name="data" match="@Festejada" use="'Festejada'"/>
 	<xsl:key name="data" match="@FechaCita" use="'FechaPrueba'"/>
+  <xsl:key name="data" match="*[@Schema='Ventas' and @Name='Venta']/data:rows/xo:r/@FechaCaptura" use="'FechaVenta'"/>
 	<xsl:key name="data" match="*[@Schema='Ventas' and @Name='Venta']/data:rows/xo:r/@Domicilio" use="'DomicilioCliente'"/>
 	<xsl:key name="data" match="@FechaFoto" use="'FechaFoto'"/>
 	<xsl:key name="data" match="@FechaEvento" use="'FechaEvento'"/>

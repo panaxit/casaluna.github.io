@@ -5,7 +5,7 @@
 	<xsl:key name="data" match="@xsl:cel" use="'cel'"/>
 	<xsl:key name="data" match="@xsl:Folio" use="'Folio'"/>
 	<xsl:key name="data" match="@xsl:Cliente" use="'Cliente'"/>
-	<xsl:key name="data" match="@xsl:FechaImpresion" use="'FechaImpresion'"/>
+	<xsl:key name="data" match="@xsl:FechaVenta" use="'FechaVenta'"/>
 	<xsl:key name="data" match="@xsl:Festejada" use="'Festejada'"/>
 	<xsl:key name="data" match="@xsl:FechaPrueba" use="'FechaPrueba'"/>
 	<xsl:key name="data" match="@xsl:DomicilioCliente" use="'DomicilioCliente'"/>
@@ -2787,11 +2787,11 @@
 							<td class="xl15613531"> </td>
 							<td class="xl7313531"> </td>
 							<td class="xl7213531"> </td>
-							<td colspan="3" class="xl7113531">FECHA DE IMPRESIÓN:</td>
+							<td colspan="3" class="xl7113531">FECHA DE VENTA:</td>
 							<td colspan="3" class="xl14313531">
-								<xsl:apply-templates select="key('data','FechaImpresion')" mode="container"/>
-								<div xmlns="" class="placeholder FechaImpresion">
-									<xsl:apply-templates mode="widget" select="key('data','FechaImpresion')"/>
+								<xsl:apply-templates select="key('data','FechaVenta')" mode="container"/>
+								<div xmlns="" class="placeholder FechaVenta">
+									<xsl:apply-templates mode="widget" select="key('data','FechaVenta')"/>
 								</div>
 							</td>
 							<td class="xl8313531"> </td>
