@@ -37,14 +37,18 @@
 	<xsl:key name="data" match="*[@Schema='Ventas' and @Name='Venta']/data:rows/xo:r/@Telefono" use="'Telefono'"/>
 	<xsl:key name="data" match="@meta:FK_VentaDetalle_Articulos" use="'codigo'"/>
 	<xsl:key name="data" match="*[@Schema='Ventas' and @Name='VentaDetalle']/data:rows/xo:r/@Notas" use="'descripcion'"/>
-	<xsl:key name="data" match="@PrecioUnitario" use="'monto'"/>
+  <xsl:key name="data" match="@PrecioUnitario" use="'monto'"/>
 	<xsl:key name="data" match="@xsl:descuento" use="'descuento'"/>
-	<xsl:key name="data" match="@PrecioUnitario" use="'subtotal'"/>
-	<xsl:key name="data" match="*[@Schema='Ventas' and @Name='Venta']/data:rows/xo:r/@Monto" use="'suma_subtotal'"/>
+  <xsl:key name="data" match="@PrecioUnitario" use="'subtotal'"/>
+  <xsl:key name="data" match="@PrecioUnitario" use="'total'"/>
+  <xsl:key name="data" match="@PrecioUnitario" use="'total_monto'"/>
+  <xsl:key name="data" match="@Anticipos" use="'total_anticipo'"/>
+
+  <xsl:key name="data" match="*[@Schema='Ventas' and @Name='Venta']/data:rows/xo:r/@Monto" use="'suma_subtotal'"/>
 	<xsl:key name="data" match="@Descuento" use="'descuento_extra'"/>
 	<xsl:key name="data" match="@meta:FK_MensajeReciboVenta_MensajeRecibo" use="'mensaje'"/>
 	<xsl:key name="data" match="@MontoTotal" use="'total'"/>
-	<xsl:key name="data" match="@Anticipos" use="'anticipos'"/>
+  <xsl:key name="data" match="@Anticipos" use="'anticipos'"/>
 	<xsl:key name="data" match="*[@Schema='Ventas' and @Name='VentaDetalle']/data:rows/xo:r/@PrecioUnitario" use="'articulos'"/>
 	<xsl:key name="data" match="*[@Schema='Ingresos' and @Name='Cobros']/data:rows/xo:r/@Monto" use="'anticipo'"/>
 	<xsl:key name="data" match="*[@Schema='Ingresos' and @Name='Cobros']/data:rows/xo:r/@FechaMovimiento" use="'fecha_anticipo'"/>
@@ -183,8 +187,12 @@
 		<xsl:value-of select="format-number($monto_total - $descuento - $anticipos, '$###,##0.00', 'money')"/>
 	</xsl:template>
 
-	<xsl:template match="@FechaCaptura|@FechaMovimiento">
+	<xsl:template match="@FechaMovimiento">
 		<xsl:value-of select="substring(., 1, 10)"/>
+	</xsl:template>
+
+	<xsl:template match="@FechaMovimiento">
+		<xsl:value-of select="substring(., 1, 10)"/> - <xsl:value-of select="format-number(../@Monto, '$###,##0.##', 'money')"/>
 	</xsl:template>
 
 	<xsl:template match="@meta:FK_VentaDetalle_Articulos">
