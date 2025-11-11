@@ -3369,6 +3369,17 @@
               </td>
               <td class="xl7013531"> </td>
             </tr>
+						 <tr height="20" style="mso-height-source:userset;height:15.0pt">
+								<td height="20" class="xl1513531" style="height:15.0pt"></td>
+								<td class="xl6813531"></td>
+								<td colspan="16" class="xl10213531" width="314" style="width:237pt">
+									 <div xmlns="" class="placeholder mensaje">
+
+									 </div>
+								</td>
+								<td class="xl1513531"> </td>
+								<td class="xl7013531"></td>
+						 </tr>
             <tr height="16" style="mso-height-source:userset;height:12.0pt">
               <td height="16" class="xl1513531" style="height:12.0pt"/>
               <td class="xl6813531"> </td>
@@ -3378,11 +3389,8 @@
               <td class="xl10313531" width="46" style="width:35pt"> </td>
               <td class="xl10313531" width="65" style="width:49pt"> </td>
               <td class="xl10313531" width="65" style="width:49pt"> </td>
-              <td class="xl10313531" width="79" style="width:59pt"> </td>
-              <td class="xl10313531" width="21" style="width:16pt"> </td>
-              <td class="xl6913531"> </td>
-              <td class="xl6913531"> </td>
-              <td colspan="3" rowspan="3" class="xl12313531" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD">TE ATENDIÓ:</td>
+							 <td colspan="4" rowspan="3" class="xl12313531" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD">FIRMA DEL CLIENTE:</td>
+							 <td colspan="3" rowspan="3" class="xl12313531" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD">TE ATENDIÓ:</td>
               <td colspan="4" rowspan="3" class="xl12313531" style="border-right:1.0pt solid #FFC1DD;   border-bottom:1.0pt solid #FFC1DD">
                 <xsl:apply-templates select="key('data','Vendedor')" mode="container"/>
                 <div xmlns="" class="placeholder Vendedor">
@@ -3394,22 +3402,19 @@
             </tr>
             <tr height="20" style="mso-height-source:userset;height:15.0pt">
               <td height="20" class="xl1513531" style="height:15.0pt"/>
-              <td class="xl6813531"> </td>
-              <td class="xl7213531"> </td>
-              <td colspan="8" rowspan="2" class="xl10213531" width="314" style="width:237pt">
+							<td class="xl6813531"> </td>
+              <td colspan="5" rowspan="2" class="xl10213531" width="314" style="width:237pt">
                 <xsl:apply-templates select="key('data','mensaje')" mode="container"/>
                 <div xmlns="" class="placeholder mensaje">
                   <xsl:apply-templates mode="widget" select="key('data','mensaje')"/>
                 </div>
               </td>
-              <td class="xl6913531"> </td>
-              <td class="xl7013531"> </td>
-              <td class="xl1513531"/>
+              <td class="xl1513531"> </td>
+              <td class="xl7013531"/>
             </tr>
             <tr height="21" style="height:15.75pt">
               <td height="21" class="xl1513531" style="height:15.75pt"/>
-              <td class="xl6813531"> </td>
-              <td class="xl6913531"> </td>
+							<td class="xl6813531"> </td>
               <td class="xl6913531"> </td>
               <td class="xl7013531"> </td>
               <td class="xl1513531"/>

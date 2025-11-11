@@ -70,41 +70,41 @@
 	<xsl:template mode="html.body" match="*">
 		<style>
 			<![CDATA[
-      @media print {
-        footer {page-break-after: always;}
-      }
+   @media print {
+      footer {page-break-after: always;}
+   }
 
-      span.Servicio, span.Ubicacion {
-        white-space: pre-wrap;
-      }
+   span.Servicio, span.Ubicacion {
+      white-space: pre-wrap;
+   }
 	  
-	  .placeholder.fecha_anticipo { display:inline-block }
-	  .placeholder.anticipo { display:inline-block }
+	 .placeholder.fecha_anticipo { display:inline-block }
+	 .placeholder.anticipo { display:inline-block }
 
-      .watermarked::before {
-        position: fixed;
-        top: -75%;
-        left: -75%;
+   .watermarked::before {
+      position: fixed;
+      top: -75%;
+      left: -75%;
 
-        display: block;
-        width: 300%;
-        height: 300%;
+      display: block;
+      width: 300%;
+      height: 300%;
 
-        transform: rotate(-45deg);
-        content: attr(data-watermark);
+      transform: rotate(-45deg);
+      content: attr(data-watermark);
 
-        font-size: 30px;
-        opacity: 0.15;
-        line-height: 4em;
-        letter-spacing: 2px;
-        color: blue;
-        z-index:-1;
-      }
+      font-size: 30px;
+      opacity: 0.15;
+      line-height: 4em;
+      letter-spacing: 2px;
+      color: blue;
+      z-index:-1;
+   }
 	  
-	  .placeholder.domicilio {
-		white-space: break-spaces;
-		text-align: left;
-	  }
+	 .placeholder.domicilio {
+			white-space: break-spaces;
+			text-align: left;
+	 }
 	  
 	.sin_descuento td {
 		color: transparent;
@@ -115,8 +115,7 @@
 		vertical-align: top;
 		padding-left: 1rem;
 		padding-top: .5rem;
-	}
-	
+	}	
 	
 	img[xo-attribute="custom:foto"] {
 		max-width: 95%;

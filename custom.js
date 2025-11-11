@@ -32,6 +32,7 @@ xo.listener.on(`render::#recibo.xslt`, function ({ dom }) {
             descuento.closest('tr').classList.add("sin_descuento")
         }
     }
+   dom.select(`//li[not(div/span/text())]`).remove()
 })
 
 xo.listener.on(`change::xo:r/@FormaPago`, function ({ node, element, attribute, old, value, event }) {
