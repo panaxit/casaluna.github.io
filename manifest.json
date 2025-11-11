@@ -1,14 +1,14 @@
 {
   "server": {
-    "login": "https://known-likewise-php-twice.trycloudflare.com/login.asp",
-    "logout": "https://known-likewise-php-twice.trycloudflare.com/logout.asp",
-    "submit": "POST https://known-likewise-php-twice.trycloudflare.com/post.asp",
-    "session": "https://known-likewise-php-twice.trycloudflare.com/session.asp",
-    "request": "https://known-likewise-php-twice.trycloudflare.com/request.asp",
-    "sitemap": "https://known-likewise-php-twice.trycloudflare.com/sitemap.asp",
-    "uploadFile": "https://known-likewise-php-twice.trycloudflare.com/upload_file.asp",
-    "uploadFileManager": "https://known-likewise-php-twice.trycloudflare.com/upload_file_manager.asp",
-    "checkout": "https://known-likewise-php-twice.trycloudflare.com/request.asp?command=Ventas.generarVenta"
+    "login": "https://peace-read-workers-austin.trycloudflare.com/login.asp",
+    "logout": "https://peace-read-workers-austin.trycloudflare.com/logout.asp",
+    "submit": "POST https://peace-read-workers-austin.trycloudflare.com/post.asp",
+    "session": "https://peace-read-workers-austin.trycloudflare.com/session.asp",
+    "request": "https://peace-read-workers-austin.trycloudflare.com/request.asp",
+    "sitemap": "https://peace-read-workers-austin.trycloudflare.com/sitemap.asp",
+    "uploadFile": "https://peace-read-workers-austin.trycloudflare.com/upload_file.asp",
+    "uploadFileManager": "https://peace-read-workers-austin.trycloudflare.com/upload_file_manager.asp",
+    "checkout": "https://peace-read-workers-austin.trycloudflare.com/request.asp?command=Ventas.generarVenta"
   },
   "sources": {
     "^data:(.*)": { "px.getData": [] },
@@ -30,15 +30,6 @@
   "settings": {
     "#shell": {
       "hash": ""
-    }
-    ,"server:request": {
-      "headers": { "ngrok-skip-browser-warning": true }
-    }
-    ,"server:sitemap": {
-      "headers": { "ngrok-skip-browser-warning": true }
-    }
-    ,"server:login": {
-      "headers": { "ngrok-skip-browser-warning": true }
-    }    
+    }  
   }
 }
