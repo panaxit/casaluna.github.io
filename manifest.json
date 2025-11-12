@@ -1,14 +1,14 @@
 {
   "server": {
-    "login": "https://peace-read-workers-austin.trycloudflare.com/login.asp",
-    "logout": "https://peace-read-workers-austin.trycloudflare.com/logout.asp",
-    "submit": "POST https://peace-read-workers-austin.trycloudflare.com/post.asp",
-    "session": "https://peace-read-workers-austin.trycloudflare.com/session.asp",
-    "request": "https://peace-read-workers-austin.trycloudflare.com/request.asp",
-    "sitemap": "https://peace-read-workers-austin.trycloudflare.com/sitemap.asp",
-    "uploadFile": "https://peace-read-workers-austin.trycloudflare.com/upload_file.asp",
-    "uploadFileManager": "https://peace-read-workers-austin.trycloudflare.com/upload_file_manager.asp",
-    "checkout": "https://peace-read-workers-austin.trycloudflare.com/request.asp?command=Ventas.generarVenta"
+    "login": "https://heat-elements-asian-involve.trycloudflare.com/login.asp",
+    "logout": "https://heat-elements-asian-involve.trycloudflare.com/logout.asp",
+    "submit": "POST https://heat-elements-asian-involve.trycloudflare.com/post.asp",
+    "session": "https://heat-elements-asian-involve.trycloudflare.com/session.asp",
+    "request": "https://heat-elements-asian-involve.trycloudflare.com/request.asp",
+    "sitemap": "https://heat-elements-asian-involve.trycloudflare.com/sitemap.asp",
+    "uploadFile": "https://heat-elements-asian-involve.trycloudflare.com/upload_file.asp",
+    "uploadFileManager": "https://heat-elements-asian-involve.trycloudflare.com/upload_file_manager.asp",
+    "checkout": "https://heat-elements-asian-involve.trycloudflare.com/request.asp?command=Ventas.generarVenta"
   },
   "sources": {
     "^data:(.*)": { "px.getData": [] },
