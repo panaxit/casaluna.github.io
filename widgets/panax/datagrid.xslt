@@ -157,16 +157,16 @@
 
 
 				 <div id="calendarModal"
-							style="display:none; position:fixed; inset:0; background:#0005; z-index:999;">
+     style="display:none; position:fixed; inset:0; background:#0005; z-index:999;">
 
-						<label id="calendar" style="flex-basis:100%; display:block; margin-bottom:6px;">
-							 Filtrar por rango:
-						</label>
-						<div style="background:white; width:320px; margin:80px auto; padding:20px; border-radius:8px; display:flex; gap:6px; align-items:center;">
+						<div style="background:white; width:320px; margin:80px auto; padding:20px; border-radius:8px; display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+
+							 <label id="calendar" style="flex-basis:100%; display:block; margin-bottom:6px;">
+									Filtrar por rango:
+							 </label>
 
 							 <input id="rangePicker" placeholder="Selecciona el rango" style="flex:1;"/>
 
-							 <!-- Botón borrar -->
 							 <button type="button"
 											 id="btnCalendarClear"
 											 title="Borrar selección"
@@ -174,7 +174,6 @@
 									🧹
 							 </button>
 
-							 <!-- Botón cerrar -->
 							 <button type="button"
 											 id="btnCalendarClose"
 											 title="Cerrar"
@@ -183,6 +182,7 @@
 							 </button>
 						</div>
 				 </div>
+
 				 <table class="table table-striped table-hover table-sm datagrid">
 						<xsl:apply-templates mode="datagrid:header-colgroup" select="current()">
 							 <xsl:with-param name="layout" select="$layout"/>
