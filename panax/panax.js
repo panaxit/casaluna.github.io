@@ -1022,16 +1022,17 @@ xo.listener.on(`filter::@*`, async function ({ event }) {
 	 let prompt_text = `Filtrar por ${this.parentNode.getAttribute("headerText") || this.parentNode.getAttribute("Name")}`;
 	 let modal = top.document.querySelector(`#calendarModal`);
 	 let data_type = this.parentNode.getAttribute("DataType");
+	 let filters;
 	 if (typeof (openCalendar) == 'function' && modal && ["datetime", "date"].includes(data_type)) {
-			let maxDate = 'today';
+			let maxDate = null;//'today'
 			let defaultDate = (this.value || '').split("~");
 			const { from, to } = await openCalendar({ label: prompt_text, defaultDate, maxDate });
-			let filters = `${from}~${to}`;
-			applyFilters.call(this, filters);
+			filters = from && to ? `${from}~${to}` : null;
 	 } else {
 			filters = prompt(prompt_text);
-			applyFilters.call(this, filters);
 	 }
+	 if (this.value == filters) return false;
+	 applyFilters.call(this, filters);
 })
 
 xo.listener.on('change::@state:filter', function ({ target, stylesheet }) {
@@ -1053,9 +1054,9 @@ xo.listener.on('change::@state:filter', function ({ target, stylesheet }) {
 			predicate.delete('AND');
 			for (let filter of command.parentNode.select('@state:filter|ancestor-or-self::px:Entity[1]/px:Record/*/@state:filter')) {
 				 let data_type = filter.parentNode.getAttribute("DataType");
-				 if (["datetime"].includes(data_type)) {
+				 if (["datetime","date"].includes(data_type)) {
 						let [first_date, last_date = first_date] = filter.value.split('~');
-						predicate.append('AND', `${formatName(filter)} >= '${first_date}' AND ${formatName(filter)} < DATEADD(DAY,1,CONVERT(DATETIME,'${last_date}',120))`);
+						predicate.append('AND', `${formatName(filter)} >= '${first_date}' AND ${formatName(filter)} < DATEADD(DAY,1,CONVERT(${data_type},'${last_date}',120))`);
 				 } else {
 						predicate.append('AND', `${formatName(filter)} LIKE '%${(filter.value || '').replace(/'/g, "''")}%' COLLATE Latin1_General_CI_AI`);
 				 }
