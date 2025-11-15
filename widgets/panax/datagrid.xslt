@@ -57,7 +57,62 @@
 				}
 				]]>
 			</style>
+
+			 <script>
+					<![CDATA[
+			function openCalendar({ label, defaultDate, maxDate }) {
+				return new Promise(resolve => {
+					 let modal = top.document.querySelector('#calendarModal');
+					 let labelEl = modal.querySelector('label');
+					 let input = modal.querySelector('input');
+
+					 labelEl.innerText = label;
+
+					 // Limpiar estado previo
+					 input.value = '';
+					 if (input._flatpickr) {
+							input._flatpickr.destroy();
+					 }
+
+					 const fp = flatpickr(input, {
+							mode: "range"
+							, dateFormat: "Y-m-d"
+							, rangeSeparator: " al "
+							, defaultDate
+							, maxDate
+
+							, onClose(selectedDates, dateStr, instance) {
+								 // Solo resolver si hay rango completo
+								 if (selectedDates.length === 2) {
+										resolve({
+											 selectedDates,
+											 dateStr,
+											 from: instance.formatDate(selectedDates[0], "Y-m-d"),
+											 to: instance.formatDate(selectedDates[1], "Y-m-d")
+										});
+								 }
+							}
+					 });
+
+					 modal.style.display = 'block';
+					 fp.open();
+				});
+		 }
+
+		 function closeCalendar() {
+				document.getElementById("calendarModal").style.display = "none";
+		 }
+			 ]]></script>
 			<xo-listener attribute="xsi:nil"/>
+			 <div id="calendarModal" style="display:none; position:fixed; inset:0; background:#0005; z-index:999;">
+					<div style="background:white; width:320px; margin:80px auto; padding:20px; border-radius:8px;">
+						 <label id="calendar">Filtrar por rango:</label>
+						 <input id="rangePicker" placeholder="Selecciona el rango" style="width:100%;"/>
+						 <br/>
+						 <br/>
+						 <button onclick="closeCalendar()">Cerrar</button>
+					</div>
+			 </div>
 			<table class="table table-striped table-hover table-sm datagrid">
 				<xsl:apply-templates mode="datagrid:header-colgroup" select="current()">
 					<xsl:with-param name="layout" select="$layout"/>

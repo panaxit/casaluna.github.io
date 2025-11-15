@@ -8270,8 +8270,10 @@ xover.modernize = function (targetWindow) {
                 },
                 set: function (value) {
                     let original_handler = eval(`original_${this.constructor.name}_value`)
-                    let return_value = original_handler.set.call(this, [value]);
+                   let return_value = original_handler.set.call(this, [value]);
+                   if ((event || {}).type !== "change") {
                     this.dispatchEvent(new Event('change'));
+                   }
                     return return_value;
                 }
             }
