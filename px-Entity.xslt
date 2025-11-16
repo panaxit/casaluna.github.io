@@ -61,7 +61,9 @@
 		</xsl:call-template>
 	</xsl:template>
 
-	<xsl:template match="field:ref[@Name='custom:foto']/@*" mode="headerText" priority="5">Foto</xsl:template>
+	 <xsl:template match="field:ref[@Name='custom:clasification']/@*" mode="headerText" priority="5">Clasificación</xsl:template>
+
+	 <xsl:template match="field:ref[@Name='custom:foto']/@*" mode="headerText" priority="5">Foto</xsl:template>
 	<xsl:template match="field:ref[@Name='custom:FK_OrdenDetalle_Orden']/@*" mode="headerText" priority="5">Artículos</xsl:template>
 
 	<xsl:template match="@custom:foto" mode="datagrid:field">

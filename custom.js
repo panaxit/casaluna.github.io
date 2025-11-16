@@ -1,156 +1,174 @@
 xo.listener.on(`change::px:Entity/data:rows/xo:r/@*`, function ({ element: row, attribute, old, value }) {
-    let entity = row.$('ancestor::px:Entity[1]');
-    switch (entity.get("Schema") + '.' + entity.get("Name")) {
-        case "Egresos.Gastos":
-            if (['Total', 'TotalPagado'].includes(attribute.name)) {
-                row.set("Saldo", row.get("Total") - row.get("TotalPagado"))
-            }
-            break;
-        case "Ingresos.Venta":
-            let TotalArticulos = row.get("Monto");
-            let Descuento = row.get("Descuento");
-            row.set("MontoTotal", TotalArticulos - Descuento)
-            break;
-        default:
-            break;
-    }
+	 let entity = row.$('ancestor::px:Entity[1]');
+	 switch (entity.get("Schema") + '.' + entity.get("Name")) {
+			case "Egresos.Gastos":
+				 if (['Total', 'TotalPagado'].includes(attribute.name)) {
+						row.set("Saldo", row.get("Total") - row.get("TotalPagado"))
+				 }
+				 break;
+			case "Ingresos.Venta":
+				 let TotalArticulos = row.get("Monto");
+				 let Descuento = row.get("Descuento");
+				 row.set("MontoTotal", TotalArticulos - Descuento)
+				 break;
+			default:
+				 break;
+	 }
 })
 
 xo.listener.on(`render::#Inventarios/Articulos`, function ({ dom }) {
-    dom && dom.querySelectorAll("fieldset.container-Costos > div").forEach(el => {
-        el.classList.remove("justify-content-between");
-        el.classList.add("flex-wrap");
-    })
+	 dom && dom.querySelectorAll("fieldset.container-Costos > div").forEach(el => {
+			el.classList.remove("justify-content-between");
+			el.classList.add("flex-wrap");
+	 })
 })
 
 xo.listener.on(`render::#recibo.xslt`, function ({ dom }) {
-    for (let field_name of [...new Set([...dom.querySelectorAll("table tr div.placeholder")].map(el => [...el.classList].join('.')))]) {
-        [...dom.querySelectorAll(`tr td .${field_name}`)].map((mensaje, ix) => [...mensaje.querySelectorAll('span')].filter((span, i) => ix != i)).forEach(el => el.removeAll());
-    }
-    for (descuento of dom.querySelectorAll("table tr div.placeholder.descuento_extra")) {
-        if (+descuento.textContent.replace(/[\$,]/g, '') == 0) {
-            descuento.closest('tr').classList.add("sin_descuento")
-        }
-    }
-   dom.select(`//li[not(div/span/text())]`).remove()
+	 for (let field_name of [...new Set([...dom.querySelectorAll("table tr div.placeholder")].map(el => [...el.classList].join('.')))]) {
+			[...dom.querySelectorAll(`tr td .${field_name}`)].map((mensaje, ix) => [...mensaje.querySelectorAll('span')].filter((span, i) => ix != i)).forEach(el => el.removeAll());
+	 }
+	 for (descuento of dom.querySelectorAll("table tr div.placeholder.descuento_extra")) {
+			if (+descuento.textContent.replace(/[\$,]/g, '') == 0) {
+				 descuento.closest('tr').classList.add("sin_descuento")
+			}
+	 }
+	 dom.select(`//li[not(div/span/text())]`).remove()
 })
 
 xo.listener.on(`change::xo:r/@FormaPago`, function ({ node, element, attribute, old, value, event }) {
-    if ([2].includes(+value)) {
-        element.setAttribute("meta:FK_Cobros_EstatusCobro", "Recibido")
-    }
+	 if ([2].includes(+value)) {
+			element.setAttribute("meta:FK_Cobros_EstatusCobro", "Recibido")
+	 }
 })
 
 xo.listener.on(`beforeChange::xo:r/@meta:FK_VentaDetalle_Articulos`, function ({ node, element, attribute, old, value, event }) {
-    let src_element = event.srcEvent.srcElement;
-    let selected_record = src_element[src_element.selectedIndex].scope.filter("self::xo:r")[0];
-    element.set("PrecioTotal", selected_record.get("PrecioVenta"));
+	 let src_element = event.srcEvent.srcElement;
+	 let selected_record = src_element[src_element.selectedIndex].scope.filter("self::xo:r")[0];
+	 element.set("PrecioTotal", selected_record.get("PrecioVenta"));
 })
 
 xo.listener.on('appendTo::px:Entity[@Schema="Ventas" and @Name="Venta"]/px:Record/px:Association[@AssociationName="FK_OrdenDetalle_Orden"]/px:Entity/data:rows', function () {
-    let data_row = this;
-    data_row.select(`ancestor::px:Entity[2]/data:rows[not(xo:r[2])]/xo:r`).forEach(target => {
-        target.set("Monto", data_row.$$("xo:r/@PrecioTotal").reduce((total, item) => { total += Number.parseFloat(item.value); return total }, 0))
-    })
+	 let data_row = this;
+	 data_row.select(`ancestor::px:Entity[2]/data:rows[not(xo:r[2])]/xo:r`).forEach(target => {
+			target.set("Monto", data_row.$$("xo:r/@PrecioTotal").reduce((total, item) => { total += Number.parseFloat(item.value); return total }, 0))
+	 })
 })
 
 xo.listener.on('appendTo::px:Entity[@Schema="Ventas" and @Name="Venta"]/px:Record/px:Association[@AssociationName="FK_Cobros_Venta"]/px:Entity/data:rows', function () {
-    let data_row = this;
-    data_row.select(`ancestor::px:Entity[2]/data:rows[not(xo:r[2])]/xo:r`).forEach(target => {
-        target.set("Cobros", data_row.$$("xo:r/@Monto").reduce((total, item) => { total += Number.parseFloat(item.value); return total }, 0))
-    })
+	 let data_row = this;
+	 data_row.select(`ancestor::px:Entity[2]/data:rows[not(xo:r[2])]/xo:r`).forEach(target => {
+			target.set("Cobros", data_row.$$("xo:r/@Monto").reduce((total, item) => { total += Number.parseFloat(item.value); return total }, 0))
+	 })
 })
 
 xo.listener.on('beforeSubmit::px:Entity[@Schema="Ventas" and @Name="Venta"]/data:rows/xo:r', function ({ post }) {
-    let row = this;
-    let comprobacion_actual = post.selectFirst(`self::post:batch/post:dataTable/*/post:field[@name="Comprobacion"]`);
-    let comprobacion = xo.xml.createNode('<field xmlns="http://panax.io/persistence" name="Comprobacion"><Comprobacion xmlns=""/></field>');
-    if (comprobacion_actual) {
-        comprobacion_actual.replaceWith(comprobacion);
-    } else {
-        post.selectFirst("self::post:batch/post:dataTable/*").insertFirst(comprobacion);
-    }
-    let rows = row.select(`ancestor::px:Entity[1]/px:Record/px:Association[not(@Type="belongsTo")]/px:Entity/data:rows/xo:r`)
-    rows.reduce((entities, row) => {
-        let entity = row.$('ancestor-or-self::px:Entity[1]');
-        !entities.includes(entity) && entities.push(entity);
-        return entities;
-    }, []).forEach(entity => {
-        let dataTable = xo.xml.createNode(`<dataTable Schema="${entity.get("Schema")}" Name="${entity.get("Name")}"/>`)
-        return comprobacion.firstElementChild.insertFirst(dataTable)
-    });
-    rows.forEach(row => {
-        let entity = row.$('ancestor-or-self::px:Entity[1]');
-        let dataTable = comprobacion.firstElementChild.selectFirst(`*[@Schema="${entity.get("Schema")}" and @Name="${entity.get("Name")}"]`);
-        dataTable.append(row.cloneNode());
-        post.selectFirst("self::post:batch/post:dataTable/*").insertFirst(comprobacion)
-    })
-    if (comprobacion) comprobacion.textContent = `'${comprobacion.firstElementChild.toString().replace("'", "''")}'`
+	 let row = this;
+	 let comprobacion_actual = post.selectFirst(`self::post:batch/post:dataTable/*/post:field[@name="Comprobacion"]`);
+	 let comprobacion = xo.xml.createNode('<field xmlns="http://panax.io/persistence" name="Comprobacion"><Comprobacion xmlns=""/></field>');
+	 if (comprobacion_actual) {
+			comprobacion_actual.replaceWith(comprobacion);
+	 } else {
+			post.selectFirst("self::post:batch/post:dataTable/*").insertFirst(comprobacion);
+	 }
+	 let rows = row.select(`ancestor::px:Entity[1]/px:Record/px:Association[not(@Type="belongsTo")]/px:Entity/data:rows/xo:r`)
+	 rows.reduce((entities, row) => {
+			let entity = row.$('ancestor-or-self::px:Entity[1]');
+			!entities.includes(entity) && entities.push(entity);
+			return entities;
+	 }, []).forEach(entity => {
+			let dataTable = xo.xml.createNode(`<dataTable Schema="${entity.get("Schema")}" Name="${entity.get("Name")}"/>`)
+			return comprobacion.firstElementChild.insertFirst(dataTable)
+	 });
+	 rows.forEach(row => {
+			let entity = row.$('ancestor-or-self::px:Entity[1]');
+			let dataTable = comprobacion.firstElementChild.selectFirst(`*[@Schema="${entity.get("Schema")}" and @Name="${entity.get("Name")}"]`);
+			dataTable.append(row.cloneNode());
+			post.selectFirst("self::post:batch/post:dataTable/*").insertFirst(comprobacion)
+	 })
+	 if (comprobacion) comprobacion.textContent = `'${comprobacion.firstElementChild.toString().replace("'", "''")}'`
 })
 
 xo.listener.on('fetch::px:Entity[@Schema="Ventas"][@Name="Catalogo"]', function ({ document }) {
-    for (let routes of document.select(`px:Entity/px:Routes[not(px:Route)]`)) {
-        routes.append(xo.xml.createNode(`<px:Route xmlns:px="${xo.spaces["px"]}" Method="addToCart"/>`))
-    }
+	 for (let routes of document.select(`px:Entity/px:Routes[not(px:Route)]`)) {
+			routes.append(xo.xml.createNode(`<px:Route xmlns:px="${xo.spaces["px"]}" Method="addToCart"/>`))
+	 }
 })
 
 xo.listener.on('fetch::px:Entity[@Schema="Compras"][@Name="PedidosPendientes"][@mode="view"]', function ({ document }) {
-    for (let routes of document.select(`px:Entity/px:Routes[not(px:Route)]`)) {
-        routes.append(xo.xml.createNode(`<px:Route xmlns:px="${xo.spaces["px"]}" Method="edit"/>`))
-    }
+	 for (let routes of document.select(`px:Entity/px:Routes[not(px:Route)]`)) {
+			routes.append(xo.xml.createNode(`<px:Route xmlns:px="${xo.spaces["px"]}" Method="edit"/>`))
+	 }
 })
 
-function agregarFoto ( node, method = '[Catalogos].[obtenerFotoArticulo](Id)' ) {
-    let parentNode = node.parentNode;
-    node.setAttributeNS(xover.spaces["xmlns"], "xmlns:custom", "http://panax.io/custom")
-    if (!parentNode.selectSingleNode(`px:Entity`).getAttribute("custom:foto")) {
-        parentNode.selectSingleNode(`px:Entity`).setAttributeNS("http://panax.io/custom", "custom:foto", method)
-        let foto = parentNode.selectSingleNode(`px:Entity/*[name()="layout"]/*[name()="field:ref"]`).duplicate()
-        foto.getAttributeNode("Name").set("custom:foto");
-        return foto;
-    }
+function agregarFoto(node, method = '[Catalogos].[obtenerFotoArticulo](Id)') {
+	 let parentNode = node.parentNode;
+	 node.setAttributeNS(xover.spaces["xmlns"], "xmlns:custom", "http://panax.io/custom")
+	 if (!parentNode.selectSingleNode(`px:Entity`).getAttribute("custom:foto")) {
+			parentNode.selectSingleNode(`px:Entity`).setAttributeNS("http://panax.io/custom", "custom:foto", method)
+			let foto = parentNode.selectSingleNode(`px:Entity/*[name()="layout"]/*[name()="field:ref"]`).duplicate()
+			foto.getAttributeNode("Name").set("custom:foto");
+			return foto;
+	 }
 }
 
 xo.listener.on(['fetch::px:Entity[@Schema="Catalogos"][@Name="Articulo"][@mode="view"]'
-, 'success::px:Entity[@Schema="Catalogos"][@Name="Articulo"][@mode="view"]'], function ({ document }) {
-    agregarFoto(document.documentElement)
-})
+	 , 'success::px:Entity[@Schema="Catalogos"][@Name="Articulo"][@mode="view"]'], function ({ document }) {
+			agregarFoto(document.documentElement)
+	 })
 
-function agregarDetalles ( node, methods = {} ) {
-    let parentNode = node.parentNode;
-    node.setAttributeNS(xover.spaces["xmlns"], "xmlns:custom", "http://panax.io/custom");
-    if (node.matches("self::px:Entity")) {
-        let layout = node.selectSingleNode(`*[name()="layout"]`);
-        let template = node.ownerDocument.createElementNS('http://panax.io/layout/fieldref', 'ref');
-        for (let ref of layout.select(`association:ref`)) {
-            let name = ref.getAttribute("Name");
-            let method = methods[name];
-            let schema = method && ref.selectFirst(`ancestor::px:Entity[1]/px:Record/px:Association[@Type="hasMany"][@AssociationName="${ref.getAttribute("Name")}"]`) || null;
-            if (!schema || !method) continue
-            node.setAttributeNS("http://panax.io/custom", `custom:${name}`, method)
-            let new_ref = template.cloneNode(true);
-            for (let attr of ref.attributes) {
-                new_ref.setAttribute(attr.name, attr.value);
-            }
-            new_ref.setAttribute("Name", `custom:${name}`);
-            ref.replaceWith(new_ref)
-        }
-    }
+function agregarDetalles(node, methods = {}) {
+	 let parentNode = node.parentNode;
+	 node.setAttributeNS(xover.spaces["xmlns"], "xmlns:custom", "http://panax.io/custom");
+	 if (node.matches("self::px:Entity")) {
+			let layout = node.selectSingleNode(`*[name()="layout"]`);
+			let template = node.ownerDocument.createElementNS('http://panax.io/layout/fieldref', 'ref');
+			for (let ref of layout.select(`association:ref`)) {
+				 let name = ref.getAttribute("Name");
+				 let method = methods[name];
+				 let schema = method && ref.selectFirst(`ancestor::px:Entity[1]/px:Record/px:Association[@Type="hasMany"][@AssociationName="${ref.getAttribute("Name")}"]`) || null;
+				 if (!schema || !method) continue
+				 node.setAttributeNS("http://panax.io/custom", `custom:${name}`, method)
+				 let new_ref = template.cloneNode(true);
+				 for (let attr of ref.attributes) {
+						new_ref.setAttribute(attr.name, attr.value);
+				 }
+				 new_ref.setAttribute("Name", `custom:${name}`);
+				 ref.replaceWith(new_ref)
+				 delete methods[name];
+			}
+			for (let [key, value] of Object.entries(methods).filter(([key]) => key.indexOf("custom:") == 0)) {
+				 if (node.getAttributeNode(key)) continue;
+				 let reference;
+				 if (typeof (value) == 'string') {
+						method = value;
+				 } else if (value.constructor == {}.constructor) {
+						let { method: m, reference: ref } = value;
+						method = m;
+						reference = ref;
+				 }
+				 reference = reference || "field:*";
+				 let target = layout.selectSingleNode(reference);
+				 let new_ref = template.cloneNode(true);
+				 new_ref.setAttribute("Name", key);
+				 target.after(new_ref);
+				 node.setAttributeNS("http://panax.io/custom", key, method)
+			}
+	 }
 }
 
 xo.listener.on(['fetch::px:Entity[@Schema="Ventas"][@Name="Venta"][@mode="view"]'
-, 'success::px:Entity[@Schema="Ventas"][@Name="Venta"][@mode="view"]'], function ({ document }) {
-    agregarDetalles(document.documentElement, {FK_OrdenDetalle_Orden:`Ventas.[describirArticulos](Id)`})
-})
+	 , 'success::px:Entity[@Schema="Ventas"][@Name="Venta"][@mode="view"]'], function ({ document }) {
+	 agregarDetalles(document.documentElement, { FK_OrdenDetalle_Orden: `Ventas.[describirArticulos](Id)`, "custom:clasification": { method: 'Ventas.obtenerClasificacion(Id)', reference: `association:ref[@Name="FK_Venta_Sucursal1"]` } })
+	 })
 
 xo.listener.on(['fetch::px:Entity[.//px:Entity[@Schema="Ventas"][@Name="VentaDetalle"][@mode="edit"]]', 'success::px:Entity[.//px:Entity[@Schema="Catalogos"][@Name="VentaDetalle"][@mode="edit"]]'], function ({ document }) {
-    let foto = agregarFoto(document.selectSingleNode(`.//px:Entity[@Schema="Ventas"][@Name="VentaDetalle"][@mode="edit"]`), `[Catalogos].[obtenerFotoInventario](IdArticuloInventario)`)
+	 let foto = agregarFoto(document.selectSingleNode(`.//px:Entity[@Schema="Ventas"][@Name="VentaDetalle"][@mode="edit"]`), `[Catalogos].[obtenerFotoInventario](IdArticuloInventario)`)
 })
 
 xo.listener.on(['fetch::px:Entity[@Schema="Ventas"][@Name="Catalogo"]', 'success::px:Entity[@Schema="Ventas"][@Name="Catalogo"]'], function ({ document }) {
-    let fotos = document.selectSingleNode(`px:Entity/*[name()="layout"]/field:ref[@Name="Fotos"]`);
-    let modelo = document.selectSingleNode(`px:Entity/*[name()="layout"]/field:ref[@Name="Modelo"]`);
-    modelo.after(fotos);
+	 let fotos = document.selectSingleNode(`px:Entity/*[name()="layout"]/field:ref[@Name="Fotos"]`);
+	 let modelo = document.selectSingleNode(`px:Entity/*[name()="layout"]/field:ref[@Name="Modelo"]`);
+	 modelo.after(fotos);
 })
 
 //xo.listener.on('fetch::px:Entity[@Schema="Ventas"][@Name="Venta"]', function ({ document }) {
@@ -158,100 +176,100 @@ xo.listener.on(['fetch::px:Entity[@Schema="Ventas"][@Name="Catalogo"]', 'success
 //})
 
 xo.listener.on(['fetch::x:prompt[Routine//parameter]'], function () {
-    let document = this;
-    let schema = {
-        "@TipoEvento": {
-            "controlType": 'autocompleteBox',
-            "entity": { Schema: "Catalogos", Name: "TiposEvento" },
-            "fields": {
-                "meta:id": "RTRIM(#panax.prepareString(TipoEvento))",
-                "meta:text": "RTRIM(#panax.prepareString(TipoEvento))"
-            }
-        }
-    }
-    document.documentElement.setAttributeNS(xo.spaces["xmlns"], "xmlns:data", xo.spaces["data"]);
-    document.$$(`/xo:prompt/Routine/parameter/@name`).filter(parameter => parameter.value in schema).map(parameter => [parameter, schema[parameter.value]["entity"], schema[parameter.value]["fields"], schema[parameter.value]["controlType"]]).forEach(([parameter, entity, fields, controlType]) => {
-        controlType && parameter.parentNode.setAttribute("controlType", controlType);
-        if (entity) {
-            parameter.parentNode.setAttribute("data:rows",
-                `${entity["Schema"]}/${entity["Name"]}#${Object.entries(fields).filter(([, value]) => value).map(([key, value]) => `[@${key}]=${value}`).join(',')}`
-            )
-        }
-    });
+	 let document = this;
+	 let schema = {
+			"@TipoEvento": {
+				 "controlType": 'autocompleteBox',
+				 "entity": { Schema: "Catalogos", Name: "TiposEvento" },
+				 "fields": {
+						"meta:id": "RTRIM(#panax.prepareString(TipoEvento))",
+						"meta:text": "RTRIM(#panax.prepareString(TipoEvento))"
+				 }
+			}
+	 }
+	 document.documentElement.setAttributeNS(xo.spaces["xmlns"], "xmlns:data", xo.spaces["data"]);
+	 document.$$(`/xo:prompt/Routine/parameter/@name`).filter(parameter => parameter.value in schema).map(parameter => [parameter, schema[parameter.value]["entity"], schema[parameter.value]["fields"], schema[parameter.value]["controlType"]]).forEach(([parameter, entity, fields, controlType]) => {
+			controlType && parameter.parentNode.setAttribute("controlType", controlType);
+			if (entity) {
+				 parameter.parentNode.setAttribute("data:rows",
+						`${entity["Schema"]}/${entity["Name"]}#${Object.entries(fields).filter(([, value]) => value).map(([key, value]) => `[@${key}]=${value}`).join(',')}`
+				 )
+			}
+	 });
 })
 
 cart = {};
 cart.add = function (item) {
-    let store = xo.stores["#cart"];
-    store.documentElement.append(item);
+	 let store = xo.stores["#cart"];
+	 store.documentElement.append(item);
 }
 
 cart.remove = function (item) {
-    let store = xo.stores["#Ventas/Catalogo"];
-    if (!(store && store.documentElement)) return;
-    let data_rows = store.documentElement.selectSingleNode("data:rows");
-    data_rows.append(item);
+	 let store = xo.stores["#Ventas/Catalogo"];
+	 if (!(store && store.documentElement)) return;
+	 let data_rows = store.documentElement.selectSingleNode("data:rows");
+	 data_rows.append(item);
 }
 
 cart.checkout = function () {
-    let store = xo.stores["#cart"];
-    if (store.documentElement.select("xo:r")) {
-        xo.server.checkout({ "@Articulos": `'${store.documentElement.select("xo:r/@IdArticuloInventario").map(item => item.value).join(',')}'` })
-    }
+	 let store = xo.stores["#cart"];
+	 if (store.documentElement.select("xo:r")) {
+			xo.server.checkout({ "@Articulos": `'${store.documentElement.select("xo:r/@IdArticuloInventario").map(item => item.value).join(',')}'` })
+	 }
 }
 
 xo.listener.on('appendTo::px:Entity[@Name="Catalogo"]/data:rows', function ({ addedNodes }) {
-    let cart = xo.stores["#cart"];
-    let selected = cart.select("*/xo:r/@IdArticuloInventario").map(el => el.value);
-    [...addedNodes].filter(item => selected.includes(item.getAttribute("IdArticuloInventario"))).forEach(el => el.remove());
+	 let cart = xo.stores["#cart"];
+	 let selected = cart.select("*/xo:r/@IdArticuloInventario").map(el => el.value);
+	 [...addedNodes].filter(item => selected.includes(item.getAttribute("IdArticuloInventario"))).forEach(el => el.remove());
 })
 
 xo.listener.on(`removeFrom::cart`, function ({ removedNodes }) {
-    [...removedNodes].forEach(item => cart.remove(item));
+	 [...removedNodes].forEach(item => cart.remove(item));
 })
 
 xo.listener.on([`success::#server:checkout`, `success::#server:request`], function ({ response }) {
-    /*Mejorar este método cuando se pueda especificar que es #server:checkout */
-    let id_venta = response.headers.get("x-idventa");
-    if (id_venta) {
-        px.navigateTo(`#Ventas/Venta:${id_venta}~edit`);
-        xo.stores["#cart"].select("cart/xo:r|cart/@state:expanded").remove();
-        xo.stores["#Ventas/Catalogo"].select("px:Entity/data:rows/@command").set(command => command.value);
-    }
+	 /*Mejorar este método cuando se pueda especificar que es #server:checkout */
+	 let id_venta = response.headers.get("x-idventa");
+	 if (id_venta) {
+			px.navigateTo(`#Ventas/Venta:${id_venta}~edit`);
+			xo.stores["#cart"].select("cart/xo:r|cart/@state:expanded").remove();
+			xo.stores["#Ventas/Catalogo"].select("px:Entity/data:rows/@command").set(command => command.value);
+	 }
 })
 
 ventas = {};
 ventas.toggleRecibo = function (scope) {
-    if (!scope) return;
-    let document = scope.ownerDocument;
-    let stylesheet_recibo = document.stylesheets["recibo.xslt"];
-    if (stylesheet_recibo) {
-        stylesheet_recibo.remove();
-    } else {
-        document.addStylesheet({ href: "recibo.xslt", target: 'main' }, document.documentElement)
-    }
+	 if (!scope) return;
+	 let document = scope.ownerDocument;
+	 let stylesheet_recibo = document.stylesheets["recibo.xslt"];
+	 if (stylesheet_recibo) {
+			stylesheet_recibo.remove();
+	 } else {
+			document.addStylesheet({ href: "recibo.xslt", target: 'main' }, document.documentElement)
+	 }
 }
 
 /*Version 20230313_1436*/
 xo.listener.on(`appendTo::px:Entity[@controlType="calendar"]/data:rows`, function ({ store, node }) {
-    let fechas = this.select("x:r/@Fecha").filter(fecha => fecha.value).map(fecha => new Date(fecha.value + 'T00:00:00'));
-    if (!fechas.length) return;
-    var maxDate = new Date(Math.max.apply(null, fechas));
-    var minDate = new Date(Math.min.apply(null, fechas));
-    let month = minDate.getMonth() + 1;
-    this.ownerDocument.selectFirst("//dias").setAttribute("state:current_month", minDate.getFullYear() + '-' + ('0' + month).substr(-2, 2))
+	 let fechas = this.select("x:r/@Fecha").filter(fecha => fecha.value).map(fecha => new Date(fecha.value + 'T00:00:00'));
+	 if (!fechas.length) return;
+	 var maxDate = new Date(Math.max.apply(null, fechas));
+	 var minDate = new Date(Math.min.apply(null, fechas));
+	 let month = minDate.getMonth() + 1;
+	 this.ownerDocument.selectFirst("//dias").setAttribute("state:current_month", minDate.getFullYear() + '-' + ('0' + month).substr(-2, 2))
 })
 
 xo.listener.on(`beforeTransform::px:Entity[@controlType="calendar"][@env:stylesheet="px-Entity.xslt"]`, function ({ store, node }) {
-    let target_node = this.selectFirst("px:Entity/dias");
-    let [year, month] = target_node.getAttribute("state:current_month").split('-');
-    let dias = xo.xml.createNode(`<dias state:current_month="${year}-${('0' + month).substr(-2, 2)}">${dateRange(new Date(year, month - 1, 1).toJSON().substring(0, 10)).map(el => xo.xml.createNode(`<dia value="${el.toJSON().substring(0, 10)} 00:00:00" text="${el.getDate()}" week="${el.getWeek()}"/>`)).join('')}</dias>`)
-    target_node.append(...dias.childNodes);
+	 let target_node = this.selectFirst("px:Entity/dias");
+	 let [year, month] = target_node.getAttribute("state:current_month").split('-');
+	 let dias = xo.xml.createNode(`<dias state:current_month="${year}-${('0' + month).substr(-2, 2)}">${dateRange(new Date(year, month - 1, 1).toJSON().substring(0, 10)).map(el => xo.xml.createNode(`<dia value="${el.toJSON().substring(0, 10)} 00:00:00" text="${el.getDate()}" week="${el.getWeek()}"/>`)).join('')}</dias>`)
+	 target_node.append(...dias.childNodes);
 })
 
 xo.listener.on(`fetch::px:Entity`, function ({ store, node }) {
-    if (this.documentElement.matches(`*[@controlType="calendar"]`)) {
-        this.documentElement.append(xo.xml.createNode(`<labels>
+	 if (this.documentElement.matches(`*[@controlType="calendar"]`)) {
+			this.documentElement.append(xo.xml.createNode(`<labels>
 		<meses>
 			<mes value="01">Enero</mes>
 			<mes value="02">Febrero</mes>
@@ -277,76 +295,76 @@ xo.listener.on(`fetch::px:Entity`, function ({ store, node }) {
 			<dia>Sabado</dia>
 		</diaSemana>
 	</labels>`))
-        var date = new Date();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear();
-        this.documentElement.append(xo.xml.createNode(`<dias state:current_month="${year}-${('0' + month).substr(-2, 2)}"/>`));
-    }
+			var date = new Date();
+			let month = date.getMonth() + 1;
+			let year = date.getFullYear();
+			this.documentElement.append(xo.xml.createNode(`<dias state:current_month="${year}-${('0' + month).substr(-2, 2)}"/>`));
+	 }
 })
 
 function moveMonth(attr, interval = { m: 1 }) {
-    let date = new Date(attr.value + '-01T00:00:00');
-    date.setMonth(date.getMonth() + interval.m);
-    date.setDate(1)
-    attr.set(date.toJSON().substring(0, 7));
+	 let date = new Date(attr.value + '-01T00:00:00');
+	 date.setMonth(date.getMonth() + interval.m);
+	 date.setDate(1)
+	 attr.set(date.toJSON().substring(0, 7));
 }
 
 function dateRange(date = Date.now(), range = { m: 1 }) {
-    let first_date = new Date(`${date}T00:00:00`);
-    let dates = getDates(first_date, new Date(first_date).setMonth(first_date.getMonth() + (range.m || 0)) - 1);
-    dates = getDates(dates[0].addDays(-dates[0].getDay()), dates[0].addDays(-1)).concat(dates);
-    dates = dates.concat(getDates(dates[dates.length - 1].addDays(1), dates[dates.length - 1].addDays(6 - dates[dates.length - 1].getDay())));
-    return dates;
+	 let first_date = new Date(`${date}T00:00:00`);
+	 let dates = getDates(first_date, new Date(first_date).setMonth(first_date.getMonth() + (range.m || 0)) - 1);
+	 dates = getDates(dates[0].addDays(-dates[0].getDay()), dates[0].addDays(-1)).concat(dates);
+	 dates = dates.concat(getDates(dates[dates.length - 1].addDays(1), dates[dates.length - 1].addDays(6 - dates[dates.length - 1].getDay())));
+	 return dates;
 }
 
 function getDates(startDate, stopDate) {
-    var dateArray = new Array();
-    var currentDate = startDate;
-    while (currentDate <= stopDate) {
-        dateArray.push(new Date(currentDate));
-        currentDate = currentDate.addDays(1);
-    }
-    return dateArray;
+	 var dateArray = new Array();
+	 var currentDate = startDate;
+	 while (currentDate <= stopDate) {
+			dateArray.push(new Date(currentDate));
+			currentDate = currentDate.addDays(1);
+	 }
+	 return dateArray;
 }
 
 function weekNumber(date) {
-    let startDate = new Date(date.getFullYear(), 0, 1);
-    let days = Math.floor((date - startDate) /
-        (24 * 60 * 60 * 1000));
+	 let startDate = new Date(date.getFullYear(), 0, 1);
+	 let days = Math.floor((date - startDate) /
+			(24 * 60 * 60 * 1000));
 
-    return Math.ceil(date.getDay() + 1 + days / 7);
+	 return Math.ceil(date.getDay() + 1 + days / 7);
 }
 
 Date.prototype.getWeek = function () {
-    var onejan = new Date(this.getFullYear(), 0, 1);
-    return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+	 var onejan = new Date(this.getFullYear(), 0, 1);
+	 return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
 };
 
 /**/
 xo.listener.on(`fetch::px:Entity[@Schema="Agenda" and not(@mode="edit" or @mode="add")]`, function ({ store, node }) {
-    this.documentElement.set('controlType', 'calendar')
+	 this.documentElement.set('controlType', 'calendar')
 })
 
 xo.listener.on(`fetch::px:Entity[@Schema="Ventas" and @Name="Citas"]`, function ({ store, node }) {
-    this.documentElement.set('controlType', 'calendar')
+	 this.documentElement.set('controlType', 'calendar')
 })
 xo.listener.on([`change::@CostoDolares`, `change::@TipoCambio`], function ({ element }) {
-    if (element.hasAttribute('CostoPesos') && element.hasAttribute("CostoDolares") && element.hasAttribute("TipoCambio")) {
-        element.setAttribute('CostoPesos', element.getAttribute("CostoDolares") * element.getAttribute("TipoCambio"))
-    }
+	 if (element.hasAttribute('CostoPesos') && element.hasAttribute("CostoDolares") && element.hasAttribute("TipoCambio")) {
+			element.setAttribute('CostoPesos', element.getAttribute("CostoDolares") * element.getAttribute("TipoCambio"))
+	 }
 })
 
 xover.listener.on('error', function ({ event }) {
-    if (!(event && !(event.defaultPrevented))) return;
-    let srcElement = event.target;
-    srcElement.setAttribute("src", `images/no_photo.gif`)
-    event.stopPropagation()
+	 if (!(event && !(event.defaultPrevented))) return;
+	 let srcElement = event.target;
+	 srcElement.setAttribute("src", `images/no_photo.gif`)
+	 event.stopPropagation()
 })
 
 xo.listener.on(['beforeTransform::#recibo.xslt'], function ({ document }) {
-    let fks = this.select(`/px:Entity/data:rows/xo:r/@meta:*`);
-    for (let fk of fks) {
-        let rows = this.select(`/px:Entity/px:Record/px:Association[@AssociationName="${fk.localName}"]/px:Entity/data:rows/xo:r[not(@meta:text="${fk.value}")]`);
-        rows.remove()
-    }
+	 let fks = this.select(`/px:Entity/data:rows/xo:r/@meta:*`);
+	 for (let fk of fks) {
+			let rows = this.select(`/px:Entity/px:Record/px:Association[@AssociationName="${fk.localName}"]/px:Entity/data:rows/xo:r[not(@meta:text="${fk.value}")]`);
+			rows.remove()
+	 }
 })
