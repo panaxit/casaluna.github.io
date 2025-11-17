@@ -1340,6 +1340,6 @@ div.aiia-wizard-steps-wrapper {
 }
 
 [xo-attribute="custom:foto"] {
-    width: 200px;
+    max-width: 200px;
     display: block;
 }
