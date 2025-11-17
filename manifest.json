@@ -1,15 +1,18 @@
 {
-  "server": {
-    "login": "https://heat-elements-asian-involve.trycloudflare.com/login.asp",
-    "logout": "https://heat-elements-asian-involve.trycloudflare.com/logout.asp",
-    "submit": "POST https://heat-elements-asian-involve.trycloudflare.com/post.asp",
-    "session": "https://heat-elements-asian-involve.trycloudflare.com/session.asp",
-    "request": "https://heat-elements-asian-involve.trycloudflare.com/request.asp",
-    "sitemap": "https://heat-elements-asian-involve.trycloudflare.com/sitemap.asp",
-    "uploadFile": "https://heat-elements-asian-involve.trycloudflare.com/upload_file.asp",
-    "uploadFileManager": "https://heat-elements-asian-involve.trycloudflare.com/upload_file_manager.asp",
-    "checkout": "https://heat-elements-asian-involve.trycloudflare.com/request.asp?command=Ventas.generarVenta"
-  },
+   "server": {
+      "login": "https://heat-elements-asian-involve.trycloudflare.com/login.asp",
+      "logout": "https://heat-elements-asian-involve.trycloudflare.com/logout.asp",
+      "submit": "POST https://heat-elements-asian-involve.trycloudflare.com/post.asp",
+      "session": "https://heat-elements-asian-involve.trycloudflare.com/session.asp",
+      "request": "https://heat-elements-asian-involve.trycloudflare.com/request.asp",
+      "sitemap": "https://heat-elements-asian-involve.trycloudflare.com/sitemap.asp",
+      "uploadFile": "https://heat-elements-asian-involve.trycloudflare.com/upload_file.asp",
+      "uploadFileManager": "https://heat-elements-asian-involve.trycloudflare.com/upload_file_manager.asp",
+      "checkout": "https://heat-elements-asian-involve.trycloudflare.com/request.asp?command=Ventas.generarVenta"
+   },
+   "session": {
+      "tunnel": "https://heat-elements-asian-involve.trycloudflare.com/"
+   },
   "sources": {
     "^data:(.*)": { "px.getData": [] },
     "^#([^\\/]+\\/.+)$": { "px.request": [ "{$1}" ] },

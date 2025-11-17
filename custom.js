@@ -357,7 +357,12 @@ xo.listener.on([`change::@CostoDolares`, `change::@TipoCambio`], function ({ ele
 xover.listener.on('error', function ({ event }) {
 	 if (!(event && !(event.defaultPrevented))) return;
 	 let srcElement = event.target;
-	 srcElement.setAttribute("src", `images/no_photo.gif`)
+	 let src = srcElement.getAttribute("src");
+	 if (src.indexOf("FilesRepository") == 0) {
+			srcElement.setAttribute("src", xo.manifest.session.tunnel + src)
+	 } else {
+			srcElement.setAttribute("src", `images/no_photo.gif`)
+	 }
 	 event.stopPropagation()
 })
 

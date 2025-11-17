@@ -972,6 +972,7 @@ xover.Manifest = function (manifest = {}) {
     let base_manifest = {
         "server": {},
         "sources": {},
+        "session": {},
         "stores": {},
         "stylesheets": [],
         "spaces": {},
