@@ -201,6 +201,7 @@
 
 	<xsl:template match="@custom:foto[.!='']">
 		<img src="{$js:resources-path}../{.}" style="min-height:2rem; max-height:100px" xo-attribute="custom:foto"/>
+		 <br/>
 	</xsl:template>
 
 	<xsl:template match="@Color[.!='']">

@@ -32,6 +32,10 @@ xo.listener.on(`render::#recibo.xslt`, function ({ dom }) {
 				 descuento.closest('tr').classList.add("sin_descuento")
 			}
 	 }
+	 for (let srcElement of dom.querySelectorAll(`img[src*=FilesRepository]`)) {
+			let src = srcElement.getAttribute("src");
+			srcElement.setAttribute("src", xo.manifest.session.tunnel + src.replace(/^.*FilesRepository/, "FilesRepository_casaluna"))
+	 }
 	 dom.select(`//li[not(div/span/text())]`).remove()
 })
 
@@ -359,7 +363,7 @@ xover.listener.on('error', function ({ event }) {
 	 let srcElement = event.target;
 	 let src = srcElement.getAttribute("src");
 	 if (src.indexOf("FilesRepository") == 0) {
-			srcElement.setAttribute("src", xo.manifest.session.tunnel + src)
+			srcElement.setAttribute("src", xo.manifest.session.tunnel + src.replace("FilesRepository", "FilesRepository_casaluna"))
 	 } else {
 			srcElement.setAttribute("src", `images/no_photo.gif`)
 	 }
