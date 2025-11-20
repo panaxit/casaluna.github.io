@@ -1,17 +1,17 @@
 {
    "server": {
-      "login": "https://shower-jason-rows-any.trycloudflare.com/login.asp",
-      "logout": "https://shower-jason-rows-any.trycloudflare.com/logout.asp",
-      "submit": "POST https://shower-jason-rows-any.trycloudflare.com/post.asp",
-      "session": "https://shower-jason-rows-any.trycloudflare.com/session.asp",
-      "request": "https://shower-jason-rows-any.trycloudflare.com/request.asp",
-      "sitemap": "https://shower-jason-rows-any.trycloudflare.com/sitemap.asp",
-      "uploadFile": "https://shower-jason-rows-any.trycloudflare.com/upload_file.asp",
-      "uploadFileManager": "https://shower-jason-rows-any.trycloudflare.com/upload_file_manager.asp",
-      "checkout": "https://shower-jason-rows-any.trycloudflare.com/request.asp?command=Ventas.generarVenta"
+      "login": "https://cons-winds-lbs-planning.trycloudflare.com/login.asp",
+      "logout": "https://cons-winds-lbs-planning.trycloudflare.com/logout.asp",
+      "submit": "POST https://cons-winds-lbs-planning.trycloudflare.com/post.asp",
+      "session": "https://cons-winds-lbs-planning.trycloudflare.com/session.asp",
+      "request": "https://cons-winds-lbs-planning.trycloudflare.com/request.asp",
+      "sitemap": "https://cons-winds-lbs-planning.trycloudflare.com/sitemap.asp",
+      "uploadFile": "https://cons-winds-lbs-planning.trycloudflare.com/upload_file.asp",
+      "uploadFileManager": "https://cons-winds-lbs-planning.trycloudflare.com/upload_file_manager.asp",
+      "checkout": "https://cons-winds-lbs-planning.trycloudflare.com/request.asp?command=Ventas.generarVenta"
    },
    "session": {
-      "tunnel": "https://shower-jason-rows-any.trycloudflare.com/"
+      "tunnel": "https://cons-winds-lbs-planning.trycloudflare.com/"
    },
   "sources": {
     "^data:(.*)": { "px.getData": [] },
