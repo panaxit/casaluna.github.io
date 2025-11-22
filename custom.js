@@ -34,7 +34,7 @@ xo.listener.on(`render::#recibo.xslt`, function ({ dom }) {
 	 }
 	 for (let srcElement of dom.querySelectorAll(`img[src*=FilesRepository]`)) {
 			let src = srcElement.getAttribute("src");
-			srcElement.setAttribute("src", xo.manifest.session.tunnel + src.replace(/^.*FilesRepository/, "FilesRepository_casaluna"))
+			srcElement.setAttribute("src", xover.session.server + '/' + src.replace(/^.*FilesRepository/, "FilesRepository_casaluna"))
 	 }
 	 dom.select(`//li[not(div/span/text())]`).remove()
 })
@@ -363,7 +363,7 @@ xover.listener.on('error', function ({ event }) {
 	 let srcElement = event.target;
 	 let src = srcElement.getAttribute("src");
 	 if (src.indexOf("FilesRepository") == 0) {
-			srcElement.setAttribute("src", xo.manifest.session.tunnel + src.replace("FilesRepository", "FilesRepository_casaluna"))
+			srcElement.setAttribute("src", xover.session.server + '/' + src.replace("FilesRepository", "FilesRepository_casaluna"))
 	 } else {
 			srcElement.setAttribute("src", `images/no_photo.gif`)
 	 }
@@ -377,3 +377,14 @@ xo.listener.on(['beforeTransform::#recibo.xslt'], function ({ document }) {
 			rows.remove()
 	 }
 })
+async function updateTunnel() {
+	 try {
+			let gist = xover.manifest.session.gist;
+			if (!gist) return;
+			fetch(gist)
+				 .then(res => res.json())
+				 .then(gist => xover.session.server = gist["tunnel"])
+	 } catch (e) {
+			console.error(e)
+	 }
+}

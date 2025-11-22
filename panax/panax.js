@@ -1122,6 +1122,7 @@ px.getData = async function (...args) {
 				 , "x-original-request": command
 				 , "x-namespaces": `'${node.resolveNS(node.prefix)}' as ${node.prefix}`
 				 , "x-Root-Node": root_node
+				 , "x-row-Node": "xo:r"
 				 , "x-Page-Index": (page_index || '')
 				 , "x-Page-Size": (page_size || '')
 				 , "x-Detect-Missing-Variables": "false"

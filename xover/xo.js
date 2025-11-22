@@ -544,7 +544,26 @@ xover.init = async function () {
             } catch (e) {
                 Promise.reject(e);
             }
-        }
+       }
+       await Promise.all(xover.manifest.start.map(async href => {
+          if (href.constructor === {}.constructor) {
+             for (let [fn, args] of Object.entries(href)) {
+               fn = eval(fn);
+               await fn(args);
+             }
+          } else {
+             return await xover.sources[href].ready && xover.sources[href];
+          }
+       })).catch((e = {}) => {
+          console.error(`Couldn't start manifest entry`, e);
+          Object.defineProperty(e, 'initiator', {
+             enumerable: false, writable: true, configurable: true,
+             value: 'xover.init:start'
+          });
+          if (e && e.status != 404 && e.render) {
+             e.render && e.render()
+          }
+       });
         Object.assign(xover.spaces, xover.manifest.spaces);
         let stylesheet_promises = []
         for (let source of xover.manifest.stylesheets.map(href => xover.sources[href])) {
@@ -973,6 +992,7 @@ xover.Manifest = function (manifest = {}) {
         "server": {},
         "sources": {},
         "session": {},
+        "start": [],
         "stores": {},
         "stylesheets": [],
         "spaces": {},
@@ -1017,8 +1037,10 @@ xover.server = new Proxy({}, {
                 settings = this.settings || {};
             }
             //let settings = this.settings || {};
-            //this.settings = settings.merge(Object.fromEntries(xo.manifest.getSettings(`server:${key}`) || []));
-            let url = new xover.URL(xover.manifest.server[key], undefined, { payload, ...settings.merge(Object.fromEntries(xo.manifest.getSettings(`server:${key}`) || [])) });
+           //this.settings = settings.merge(Object.fromEntries(xo.manifest.getSettings(`server:${key}`) || []));
+           let href = xover.manifest.server[key];
+           href = decodeURI(href).replace(/\$\{([^}]*)\}/g, function (_, match) { return eval(match) });
+           let url = new xover.URL(href, undefined, { payload, ...settings.merge(Object.fromEntries(xo.manifest.getSettings(`server:${key}`) || [])) });
             request = new xover.Request(url);
             request.tag = `#server:${key}`;
             window.top.dispatchEvent(new xover.listener.Event(`beforeFetch`, { url, request, href: url.href }, request));

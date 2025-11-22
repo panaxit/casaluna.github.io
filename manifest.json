@@ -1,19 +1,20 @@
 {
    "server": {
-      "login": "https://cons-winds-lbs-planning.trycloudflare.com/login.asp",
-      "logout": "https://cons-winds-lbs-planning.trycloudflare.com/logout.asp",
-      "submit": "POST https://cons-winds-lbs-planning.trycloudflare.com/post.asp",
-      "session": "https://cons-winds-lbs-planning.trycloudflare.com/session.asp",
-      "request": "https://cons-winds-lbs-planning.trycloudflare.com/request.asp",
-      "sitemap": "https://cons-winds-lbs-planning.trycloudflare.com/sitemap.asp",
-      "uploadFile": "https://cons-winds-lbs-planning.trycloudflare.com/upload_file.asp",
-      "uploadFileManager": "https://cons-winds-lbs-planning.trycloudflare.com/upload_file_manager.asp",
-      "checkout": "https://cons-winds-lbs-planning.trycloudflare.com/request.asp?command=Ventas.generarVenta"
+      "login": "${xover.session.server}/login.asp",
+      "logout": "${xover.session.server}/logout.asp",
+      "submit": "POST ${xover.session.server}/post.asp",
+      "session": "${xover.session.server}/session.asp",
+      "request": "${xover.session.server}/request.asp",
+      "sitemap": "${xover.session.server}/sitemap.asp",
+      "uploadFile": "${xover.session.server}/upload_file.asp",
+      "uploadFileManager": "${xover.session.server}/upload_file_manager.asp",
+      "checkout": "${xover.session.server}/request.asp?command=Ventas.generarVenta"
    },
    "session": {
-      "tunnel": "https://cons-winds-lbs-planning.trycloudflare.com/"
+      "gist": "https://gist.githubusercontent.com/uriel-online/17685de3e6ff832b0cc499c82949d336/raw/panax-server"
    },
-  "sources": {
+   "start": [ { "updateTunnel": [] } ],
+   "sources": {
     "^data:(.*)": { "px.getData": [] },
     "^#([^\\/]+\\/.+)$": { "px.request": [ "{$1}" ] },
     "#alertarCita": {
