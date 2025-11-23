@@ -381,9 +381,10 @@ async function updateTunnel() {
 	 try {
 			let gist = xover.manifest.session.gist;
 			if (!gist) return;
-			fetch(gist)
-				 .then(res => res.json())
+			await fetch(gist)
+				 .then(res => res.text())
 				 .then(gist => xover.session.server = gist["tunnel"] || gist)
+			if (!xover.session.server) xover.session.server = prompt("Proporcione la dirección del túnel")
 	 } catch (e) {
 			console.error(e)
 	 }
