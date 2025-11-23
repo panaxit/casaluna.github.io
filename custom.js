@@ -383,7 +383,7 @@ async function updateTunnel() {
 			if (!gist) return;
 			fetch(gist)
 				 .then(res => res.json())
-				 .then(gist => xover.session.server = gist["tunnel"])
+				 .then(gist => xover.session.server = gist["tunnel"] || gist)
 	 } catch (e) {
 			console.error(e)
 	 }
