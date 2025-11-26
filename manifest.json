@@ -11,7 +11,7 @@
       "checkout": "${xover.session.server}/request.asp?command=Ventas.generarVenta"
    },
    "session": {
-      "gist": "https://gist.githubusercontent.com/uriel-online/17685de3e6ff832b0cc499c82949d336/raw/panax-server"
+      "gist": "https://gist.githubusercontent.com/uriel-online/800af4cecfa9471b81712394e5aff147/raw/panax-server"
    },
    "start": [ { "updateTunnel": [] } ],
    "sources": {
