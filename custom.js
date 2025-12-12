@@ -362,12 +362,18 @@ xover.listener.on('error', function ({ event }) {
 	 if (!(event && !(event.defaultPrevented))) return;
 	 let srcElement = event.target;
 	 let src = srcElement.getAttribute("src");
-	 if (src.indexOf("FilesRepository") == 0) {
-			srcElement.setAttribute("src", xover.session.server + '/' + src.replace("FilesRepository", "FilesRepository_casaluna"))
+	 if (src.match(/^(\.\.[\\/])?FilesRepository([\\/]casaluna)?/)) {
+			srcElement.setAttribute("src", xover.session.server + '/' + src.replace(/(\.\.[\\/])?FilesRepository([\\/]casaluna)?/, "FilesRepository_casaluna"))
 	 } else {
 			srcElement.setAttribute("src", `images/no_photo.gif`)
 	 }
 	 event.stopPropagation()
+})
+
+xover.listener.on(['change::input[type="file"]'], async function () {
+	 let scope = this.scope;
+	 if (!scope) return;
+	 scope.parentFolder = '../FilesRepository/casaluna';
 })
 
 xo.listener.on(['beforeTransform::#recibo.xslt'], function ({ document }) {

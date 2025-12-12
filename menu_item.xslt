@@ -70,12 +70,18 @@ exclude-result-prefixes="#default session sitemap shell"
 		</svg>
 	</xsl:template>
 
-	<xsl:template match="print" mode="icon">
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16" onclick="xover.dom.print()">
-			<path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
-			<path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
-		</svg>
-	</xsl:template>
+	 <xsl:template match="print" mode="icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16" onclick="xover.dom.print()">
+				 <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
+				 <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
+			</svg>
+	 </xsl:template>
+
+	 <xsl:template match="excel" mode="icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16" onclick="try {{ xover.dom.toExcel(document.querySelector('table'),xo.stores.active.tag) }} catch (e) {{ return Promise.reject('No se pudo crear hoja de cálculo') }}">
+				 <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z"></path>
+			</svg>
+	 </xsl:template>
 
 	<xsl:template match="cart" mode="icon">
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
@@ -195,7 +201,7 @@ exclude-result-prefixes="#default session sitemap shell"
 		</div>
 	</xsl:template>
 
-	<xsl:template match="print" priority="5">
+	<xsl:template match="print|excel" priority="5">
 		<a class="nav-link" href="#" role="button">
 			<xsl:apply-templates mode="icon" select="."/>
 		</a>

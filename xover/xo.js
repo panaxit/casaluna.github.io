@@ -2423,8 +2423,9 @@ Object.defineProperty(xover.server, 'uploadFile', {
                 reader.onload = function (e) {
                     var formData = new FormData();
                     formData.append(file.name, file);
-
-                    let request = new xover.Request(xover.manifest.server["uploadFile"] + `?UploadID=${file.id}&saveAs=${file.saveAs}&parentFolder=${(file.parentFolder || '').replace(/\//g, '\\')}`, { method: 'POST', body: formData });
+                   let href = xover.manifest.server["uploadFile"];
+                   href = decodeURI(href).replace(/\$\{([^}]*)\}/g, function (_, match) { return eval(match) });
+                   let request = new xover.Request(href + `?UploadID=${file.id}&saveAs=${file.saveAs}&parentFolder=${(file.parentFolder || source.parentFolder || '').replace(/\//g, '\\')}`, { method: 'POST', body: formData });
                     fetch(request).then(async response => {
                         let file_name = response.headers.get("File-Name") + `?name=${file.name.normalize()}`;
                         if (!file_name) throw (new Error("Cound't get file name"));
